@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="xofz.Core">
       <HintPath>C:\Dropbox\Libraries\xofz.Core\xofz.Core.dll</HintPath>
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Presentation\HomeNavPresenter.cs" />
+    <Compile Include="Presentation\HomePresenter.cs" />
     <Compile Include="Presentation\MainPresenter.cs" />
     <Compile Include="Start\FormsBootstrapper.cs" />
     <Compile Include="UI\Forms\FormMainUi.cs">
@@ -60,6 +62,12 @@
     <Compile Include="UI\Forms\UserControlHomeNavUi.Designer.cs">
       <DependentUpon>UserControlHomeNavUi.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\UserControlHomeUi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlHomeUi.Designer.cs">
+      <DependentUpon>UserControlHomeUi.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\UserControlNavUi.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -67,6 +75,7 @@
       <DependentUpon>UserControlNavUi.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\HomeNavUi.cs" />
+    <Compile Include="UI\HomeUi.cs" />
     <Compile Include="UI\MainUi.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -83,6 +92,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UserControlHomeNavUi.resx">
       <DependentUpon>UserControlHomeNavUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UserControlHomeUi.resx">
+      <DependentUpon>UserControlHomeUi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UserControlNavUi.resx">
       <DependentUpon>UserControlNavUi.cs</DependentUpon>

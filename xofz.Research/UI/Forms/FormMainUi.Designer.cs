@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.navUi = new xofz.Research.UI.Forms.UserControlNavUi();
+            this.screenPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // navUi
@@ -39,10 +40,19 @@
             this.navUi.Size = new System.Drawing.Size(1088, 50);
             this.navUi.TabIndex = 0;
             // 
+            // screenPanel
+            // 
+            this.screenPanel.Location = new System.Drawing.Point(0, 50);
+            this.screenPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.screenPanel.Name = "screenPanel";
+            this.screenPanel.Size = new System.Drawing.Size(1088, 601);
+            this.screenPanel.TabIndex = 1;
+            // 
             // FormMainUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1088, 651);
+            this.Controls.Add(this.screenPanel);
             this.Controls.Add(this.navUi);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -56,6 +66,7 @@
         #endregion
 
         private UserControlNavUi navUi;
+        private System.Windows.Forms.Panel screenPanel;
     }
 }
 

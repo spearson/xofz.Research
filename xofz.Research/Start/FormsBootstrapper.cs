@@ -1,8 +1,10 @@
 ﻿namespace xofz.Research.Start
 {
+    using System;
     using System.Windows.Forms;
     using Framework;
     using Presentation;
+    using Transformation;
     using UI.Forms;
     using xofz.Presentation;
     using xofz.UI.Forms;
@@ -37,12 +39,19 @@
                 this.navigator);
             hnp.Setup();
 
+            var hp = new HomePresenter(
+                new UserControlHomeUi(),
+                this.shell,
+                new Random(),
+                new EnumerableRotator());
+            hp.Setup(this.navigator);
+
             var sp = new ShutdownPresenter(
                 this.shell, null, () => { });
             this.navigator.RegisterPresenter(sp);
 
-            // todo: present a HomePresenter
             this.navigator.PresentFluidly<HomeNavPresenter>();
+            this.navigator.Present<HomePresenter>();
         }
 
         private FormMainUi shell;

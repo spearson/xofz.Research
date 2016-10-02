@@ -18,11 +18,16 @@
 
         public ShellUi NavUi => this.navUi;
 
+        public void SwitchUi(Ui newUi)
+        {
+            var control = newUi as Control;
+            control.SafeReplace(this.screenPanel);
+        }
+
         private void this_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
 
             new Thread(() => this.ShutdownRequested?.Invoke()).Start();
-        }
-    }
+        }}
 }
