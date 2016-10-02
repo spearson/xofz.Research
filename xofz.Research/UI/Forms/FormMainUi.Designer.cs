@@ -28,36 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.loginKey = new System.Windows.Forms.Button();
+            this.navUi = new xofz.Research.UI.Forms.UserControlNavUi();
             this.SuspendLayout();
             // 
-            // loginKey
+            // navUi
             // 
-            this.loginKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
-            this.loginKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.loginKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.loginKey.Location = new System.Drawing.Point(12, 12);
-            this.loginKey.Name = "loginKey";
-            this.loginKey.Size = new System.Drawing.Size(159, 52);
-            this.loginKey.TabIndex = 0;
-            this.loginKey.Text = "Log In";
-            this.loginKey.UseVisualStyleBackColor = true;
-            this.loginKey.Click += new System.EventHandler(this.loginKey_Click);
+            this.navUi.Location = new System.Drawing.Point(0, 0);
+            this.navUi.Margin = new System.Windows.Forms.Padding(0);
+            this.navUi.Name = "navUi";
+            this.navUi.Size = new System.Drawing.Size(1088, 50);
+            this.navUi.TabIndex = 0;
             // 
             // FormMainUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1088, 651);
-            this.Controls.Add(this.loginKey);
+            this.Controls.Add(this.navUi);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "FormMainUi";
             this.Text = "xofz.Research";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.this_FormClosing);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button loginKey;
+        private UserControlNavUi navUi;
     }
 }
 

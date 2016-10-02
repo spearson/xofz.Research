@@ -2,6 +2,8 @@
 {
     using System;
     using System.Threading;
+    using System.Windows.Forms;
+    using xofz.UI;
     using xofz.UI.Forms;
 
     public partial class FormMainUi : FormUi, MainUi
@@ -12,11 +14,15 @@
             var h = this.Handle;
         }
 
-        public event Action LoginKeyTapped;
+        public event Action ShutdownRequested;
 
-        private void loginKey_Click(object sender, EventArgs e)
+        public ShellUi NavUi => this.navUi;
+
+        private void this_FormClosing(object sender, FormClosingEventArgs e)
         {
-            new Thread(() => this.LoginKeyTapped?.Invoke()).Start();
+            e.Cancel = true;
+
+            new Thread(() => this.ShutdownRequested?.Invoke()).Start();
         }
     }
 }

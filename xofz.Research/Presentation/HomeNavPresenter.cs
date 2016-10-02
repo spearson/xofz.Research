@@ -5,10 +5,10 @@
     using xofz.Presentation;
     using xofz.UI;
 
-    public sealed class MainPresenter : Presenter
+    public sealed class HomeNavPresenter : Presenter
     {
-        public MainPresenter(
-            MainUi ui, 
+        public HomeNavPresenter(
+            HomeNavUi ui, 
             ShellUi shell,
             Navigator navigator) 
             : base(ui, shell)
@@ -24,21 +24,23 @@
                 return;
             }
 
-            this.ui.ShutdownRequested += this.ui_ShutdownRequested;
+            this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
+            this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
             this.navigator.RegisterPresenter(this);
         }
 
-        public override void Start()
+        private void ui_LogInKeyTapped()
         {
+            this.navigator.PresentFluidly<LoginPresenter>();
         }
 
-        private void ui_ShutdownRequested()
+        private void ui_ShutdownKeyTapped()
         {
             this.navigator.Present<ShutdownPresenter>();
         }
 
         private int setupIf1;
-        private readonly MainUi ui;
+        private readonly HomeNavUi ui;
         private readonly Navigator navigator;
     }
 }

@@ -5,6 +5,6 @@
 
     public interface MainUi : Ui
     {
-        event Action LoginKeyTapped;
+        event Action ShutdownRequested;
     }
 }

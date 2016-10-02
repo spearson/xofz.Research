@@ -30,6 +30,19 @@
                 null, 
                 this.navigator);
             mp.Setup();
+
+            var hnp = new HomeNavPresenter(
+                new UserControlHomeNavUi(), 
+                this.shell.NavUi,
+                this.navigator);
+            hnp.Setup();
+
+            var sp = new ShutdownPresenter(
+                this.shell, null, () => { });
+            this.navigator.RegisterPresenter(sp);
+
+            // todo: present a HomePresenter
+            this.navigator.PresentFluidly<HomeNavPresenter>();
         }
 
         private FormMainUi shell;
