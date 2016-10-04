@@ -4,16 +4,18 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Windows.Forms;
-    using Materialization;
     using xofz.UI.Forms;
 
     public partial class UserControlHomeUi : UserControlUi, HomeUi
     {
-        public UserControlHomeUi()
+        public UserControlHomeUi(
+            Func<List<TextBox>, MaterializedEnumerable<TextBox>> materializeTextBoxes,
+            Func<LinkedList<int>, MaterializedEnumerable<int>> materializeNumbers)
         {
+            this.materializeNumbers = materializeNumbers;
             InitializeComponent();
             this.numbersTextBoxes =
-                new OrderedMaterializedEnumerable<TextBox>(
+                materializeTextBoxes(
                     new List<TextBox>(15)
                     {
                         this.n1TextBox,
@@ -64,8 +66,7 @@
                     ll.AddLast(int.Parse(tb.Text));
                 }
 
-                return new LinkedListMaterializedEnumerable<int>(
-                    ll);
+                return this.materializeNumbers(ll);
             }
 
             set
@@ -90,5 +91,6 @@
         }
 
         private readonly MaterializedEnumerable<TextBox> numbersTextBoxes;
+        private readonly Func<LinkedList<int>, MaterializedEnumerable<int>> materializeNumbers;
     }
 }

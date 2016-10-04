@@ -4,8 +4,9 @@
     using System.Windows.Forms;
     using Framework;
     using Presentation;
-    using Transformation;
     using UI.Forms;
+    using xofz.Framework.Materialization;
+    using xofz.Framework.Transformation;
     using xofz.Presentation;
     using xofz.UI.Forms;
 
@@ -40,7 +41,9 @@
             hnp.Setup();
 
             var hp = new HomePresenter(
-                new UserControlHomeUi(),
+                new UserControlHomeUi(
+                    list => new OrderedMaterializedEnumerable<TextBox>(list),
+                    ll => new LinkedListMaterializedEnumerable<int>(ll)),
                 this.shell,
                 new Random(),
                 new EnumerableRotator());
