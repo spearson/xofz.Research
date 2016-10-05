@@ -10,6 +10,8 @@
 
         event Action RotateKeyTapped;
 
+        bool RandomizeRotations { get; set; }
+
         int MaxValue { get; set; }
 
         int NumberOfRotations { get; set; }

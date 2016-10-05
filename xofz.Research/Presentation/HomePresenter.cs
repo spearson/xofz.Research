@@ -56,10 +56,23 @@
 
         private void ui_RotateKeyTapped()
         {
-            var rotatedNumbers = this.rotator.Rotate(
-                UiHelpers.Read(this.ui, () => this.ui.Numbers),
-                UiHelpers.Read(this.ui, () => this.ui.NumberOfRotations));
-
+            var numbers = UiHelpers.Read(this.ui, () => this.ui.Numbers);
+            MaterializedEnumerable<int> rotatedNumbers;
+            if (UiHelpers.Read(this.ui, () => this.ui.RandomizeRotations))
+            {
+                var rotations = this.rng.Next(1, 6);
+                rotatedNumbers = this.rotator.Rotate(
+                    numbers,
+                    rotations);
+                UiHelpers.Write(this.ui, () => this.ui.NumberOfRotations = rotations);
+            }
+            else
+            {
+                rotatedNumbers = this.rotator.Rotate(
+                    numbers,
+                    UiHelpers.Read(this.ui, () => this.ui.NumberOfRotations));
+            }
+            
             UiHelpers.Write(this.ui, () => this.ui.Numbers = rotatedNumbers);
         }
 

@@ -66,6 +66,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.randomizeCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // welcomeLabel
@@ -467,9 +468,20 @@
             this.label17.TabIndex = 36;
             this.label17.Text = "15";
             // 
+            // randomizeCheckBox
+            // 
+            this.randomizeCheckBox.AutoSize = true;
+            this.randomizeCheckBox.Location = new System.Drawing.Point(489, 104);
+            this.randomizeCheckBox.Name = "randomizeCheckBox";
+            this.randomizeCheckBox.Size = new System.Drawing.Size(103, 17);
+            this.randomizeCheckBox.TabIndex = 37;
+            this.randomizeCheckBox.Text = "Randomize (1-5)";
+            this.randomizeCheckBox.UseVisualStyleBackColor = true;
+            // 
             // UserControlHomeUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.randomizeCheckBox);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
@@ -556,5 +568,6 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.CheckBox randomizeCheckBox;
     }
 }

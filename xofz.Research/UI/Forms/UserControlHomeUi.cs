@@ -42,6 +42,13 @@
 
         public event Action RotateKeyTapped;
 
+        bool HomeUi.RandomizeRotations
+        {
+            get { return this.randomizeCheckBox.Checked; }
+
+            set { this.randomizeCheckBox.Checked = value; }
+        }
+
         int HomeUi.MaxValue
         {
             get { return int.Parse(this.maxValueTextBox.Text); }
