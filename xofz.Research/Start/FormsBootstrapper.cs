@@ -29,8 +29,7 @@
             lp.Setup(this.navigator);
 
             var mp = new MainPresenter(
-                this.shell, 
-                null, 
+                this.shell,
                 this.navigator);
             mp.Setup();
 
@@ -50,7 +49,9 @@
             hp.Setup(this.navigator);
 
             var sp = new ShutdownPresenter(
-                this.shell, null, () => { });
+                this.shell,
+                null,
+                () => { });
             this.navigator.RegisterPresenter(sp);
 
             this.navigator.PresentFluidly<HomeNavPresenter>();

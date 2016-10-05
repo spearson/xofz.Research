@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="Presentation\HomeNavPresenter.cs" />
     <Compile Include="Presentation\HomePresenter.cs" />
-    <Compile Include="Presentation\MainPresenter.cs" />
     <Compile Include="Start\FormsBootstrapper.cs" />
     <Compile Include="UI\Forms\FormMainUi.cs">
       <SubType>Form</SubType>
@@ -76,7 +75,6 @@
     </Compile>
     <Compile Include="UI\HomeNavUi.cs" />
     <Compile Include="UI\HomeUi.cs" />
-    <Compile Include="UI\MainUi.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
