@@ -50,7 +50,6 @@
 
             var sp = new ShutdownPresenter(
                 this.shell,
-                null,
                 () => { });
             this.navigator.RegisterPresenter(sp);
 
