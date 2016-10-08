@@ -3,6 +3,7 @@
     using System;
     using System.Windows.Forms;
     using Framework;
+    using Framework.Computation;
     using Presentation;
     using UI.Forms;
     using xofz.Framework.Materialization;
@@ -47,6 +48,18 @@
                 new Random(),
                 new EnumerableRotator());
             hp.Setup(this.navigator);
+
+            var pnp = new PrimesNavPresenter(
+                new UserControlPrimesNavUi(), 
+                this.shell.NavUi,
+                this.navigator);
+            pnp.Setup();
+
+            var pp = new PrimesPresenter(
+                new UserControlPrimesUi(), 
+                this.shell,
+                new PrimeGenerator());
+            pp.Setup(this.navigator);
 
             var sp = new ShutdownPresenter(
                 this.shell,

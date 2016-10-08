@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Presentation\HomeNavPresenter.cs" />
     <Compile Include="Presentation\HomePresenter.cs" />
+    <Compile Include="Presentation\PrimesNavPresenter.cs" />
+    <Compile Include="Presentation\PrimesPresenter.cs" />
     <Compile Include="Start\FormsBootstrapper.cs" />
     <Compile Include="UI\Forms\FormMainUi.cs">
       <SubType>Form</SubType>
@@ -73,8 +75,22 @@
     <Compile Include="UI\Forms\UserControlNavUi.Designer.cs">
       <DependentUpon>UserControlNavUi.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\UserControlPrimesNavUi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlPrimesNavUi.Designer.cs">
+      <DependentUpon>UserControlPrimesNavUi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlPrimesUi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlPrimesUi.Designer.cs">
+      <DependentUpon>UserControlPrimesUi.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\HomeNavUi.cs" />
     <Compile Include="UI\HomeUi.cs" />
+    <Compile Include="UI\PrimesNavUi.cs" />
+    <Compile Include="UI\PrimesUi.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -96,6 +112,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UserControlNavUi.resx">
       <DependentUpon>UserControlNavUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UserControlPrimesNavUi.resx">
+      <DependentUpon>UserControlPrimesNavUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UserControlPrimesUi.resx">
+      <DependentUpon>UserControlPrimesUi.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

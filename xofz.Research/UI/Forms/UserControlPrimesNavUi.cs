@@ -4,21 +4,26 @@
     using System.Threading;
     using xofz.UI.Forms;
 
-    public partial class UserControlHomeNavUi : UserControlUi, HomeNavUi
+    public partial class UserControlPrimesNavUi : UserControlUi, PrimesNavUi
     {
-        public UserControlHomeNavUi()
+        public UserControlPrimesNavUi()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             var h = this.Handle;
         }
 
-        public event Action PrimesKeyTapped;
+        public event Action RotationKeyTapped;
 
         public event Action LogInKeyTapped;
 
         public event Action ShutdownKeyTapped;
-       
+
+        private void rotationKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.RotationKeyTapped?.Invoke()).Start();
+        }
+
         private void loginKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.LogInKeyTapped?.Invoke()).Start();
@@ -27,11 +32,6 @@
         private void shutdownKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.ShutdownKeyTapped?.Invoke()).Start();
-        }
-
-        private void primesKey_Click(object sender, EventArgs e)
-        {
-            new Thread(() => this.PrimesKeyTapped?.Invoke()).Start();
         }
     }
 }

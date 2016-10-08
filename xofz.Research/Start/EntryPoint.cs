@@ -2,7 +2,6 @@
 {
     using System;
     using System.Windows.Forms;
-    using UI.Forms;
     using xofz.Presentation;
 
     internal static class EntryPoint
