@@ -36,6 +36,8 @@
             this.currentPrimeLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.currentPrimeIndexLabel = new System.Windows.Forms.Label();
+            this.restartKey = new System.Windows.Forms.Button();
+            this.saveKey = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // titleLabel
@@ -124,9 +126,43 @@
             this.currentPrimeIndexLabel.TabIndex = 9;
             this.currentPrimeIndexLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // restartKey
+            // 
+            this.restartKey.AutoSize = true;
+            this.restartKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.restartKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.restartKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.restartKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.restartKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.restartKey.Location = new System.Drawing.Point(7, 257);
+            this.restartKey.Name = "restartKey";
+            this.restartKey.Size = new System.Drawing.Size(81, 32);
+            this.restartKey.TabIndex = 10;
+            this.restartKey.Text = "Restart";
+            this.restartKey.UseVisualStyleBackColor = true;
+            this.restartKey.Click += new System.EventHandler(this.restartKey_Click);
+            // 
+            // saveKey
+            // 
+            this.saveKey.AutoSize = true;
+            this.saveKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.saveKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.saveKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.saveKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.saveKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveKey.Location = new System.Drawing.Point(7, 337);
+            this.saveKey.Name = "saveKey";
+            this.saveKey.Size = new System.Drawing.Size(159, 32);
+            this.saveKey.TabIndex = 11;
+            this.saveKey.Text = "Save Current Set";
+            this.saveKey.UseVisualStyleBackColor = true;
+            this.saveKey.Click += new System.EventHandler(this.saveKey_Click);
+            // 
             // UserControlPrimesUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.saveKey);
+            this.Controls.Add(this.restartKey);
             this.Controls.Add(this.currentPrimeIndexLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.currentPrimeLabel);
@@ -153,5 +189,7 @@
         private System.Windows.Forms.Label currentPrimeLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label currentPrimeIndexLabel;
+        private System.Windows.Forms.Button restartKey;
+        private System.Windows.Forms.Button saveKey;
     }
 }

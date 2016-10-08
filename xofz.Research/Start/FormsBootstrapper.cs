@@ -3,9 +3,10 @@
     using System;
     using System.Windows.Forms;
     using Framework;
-    using Framework.Computation;
     using Presentation;
     using UI.Forms;
+    using xofz.Framework;
+    using xofz.Framework.Computation;
     using xofz.Framework.Materialization;
     using xofz.Framework.Transformation;
     using xofz.Presentation;
@@ -56,9 +57,11 @@
             pnp.Setup();
 
             var pp = new PrimesPresenter(
-                new UserControlPrimesUi(), 
+                new UserControlPrimesUi(),
                 this.shell,
-                new PrimeGenerator());
+                () => new PrimeGenerator(),
+                new PrimeSaver(),
+                new FormsMessenger { Subscriber = this.shell });
             pp.Setup(this.navigator);
 
             var sp = new ShutdownPresenter(

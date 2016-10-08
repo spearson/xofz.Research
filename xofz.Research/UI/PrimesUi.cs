@@ -6,12 +6,16 @@
     {
         event Action GenerateKeyTapped;
 
+        event Action RestartKeyTapped;
+
+        event Action SaveKeyTapped;
+
         bool Generating { get; set; }
 
         int NumberToGenerate { get; set; }
 
-        long CurrentPrime { get; set; }
+        long? CurrentPrime { get; set; }
 
-        int CurrentPrimeIndex { get; set; }
+        int? CurrentPrimeIndex { get; set; }
     }
 }

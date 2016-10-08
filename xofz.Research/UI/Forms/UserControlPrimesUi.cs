@@ -15,6 +15,10 @@
 
         public event Action GenerateKeyTapped;
 
+        public event Action RestartKeyTapped;
+
+        public event Action SaveKeyTapped;
+
         bool PrimesUi.Generating
         {
             get { return this.generateKey.Text == @"Generating..."; }
@@ -29,16 +33,27 @@
             set { this.numberToGenerateTextBox.Text = value.ToString(); }
         }
 
-        long PrimesUi.CurrentPrime
+        long? PrimesUi.CurrentPrime
         {
-            get { return long.Parse(this.currentPrimeLabel.Text); }
+            get
+            {
+                return long.Parse(this.currentPrimeLabel.Text);
+            }
 
             set { this.currentPrimeLabel.Text = value.ToString(); }
         }
 
-        int PrimesUi.CurrentPrimeIndex
+        int? PrimesUi.CurrentPrimeIndex
         {
-            get { return int.Parse(this.currentPrimeIndexLabel.Text); }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(this.currentPrimeIndexLabel.Text))
+                {
+                    return null;
+                }
+
+                return int.Parse(this.currentPrimeIndexLabel.Text);
+            }
 
             set { this.currentPrimeIndexLabel.Text = value.ToString(); }
         }
@@ -46,6 +61,16 @@
         private void generateKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.GenerateKeyTapped?.Invoke()).Start();
+        }
+
+        private void restartKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.RestartKeyTapped?.Invoke()).Start();
+        }
+
+        private void saveKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.SaveKeyTapped?.Invoke()).Start();
         }
     }
 }
