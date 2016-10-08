@@ -14,14 +14,14 @@
         public PrimesPresenter(
             PrimesUi ui, 
             ShellUi shell,
-            Func<PrimeGenerator> createGenerator,
-            PrimeSaver saver,
+            Func<LinkedList<long>, PrimeGenerator> createGenerator,
+            PrimeManager manager,
             Messenger messenger) 
             : base(ui, shell)
         {
             this.ui = ui;
             this.createGenerator = createGenerator;
-            this.saver = saver;
+            this.manager = manager;
             this.messenger = messenger;
         }
 
@@ -35,9 +35,41 @@
             this.ui.GenerateKeyTapped += this.ui_GenerateKeyTapped;
             this.ui.StopKeyTapped += this.ui_StopKeyTapped;
             this.ui.RestartKeyTapped += this.ui_RestartKeyTapped;
+            this.ui.LoadKeyTapped += this.ui_LoadKeyTapped;
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
             navigator.RegisterPresenter(this);
             this.ui_RestartKeyTapped();
+        }
+
+        private void ui_LoadKeyTapped()
+        {
+            UiHelpers.Write(this.ui, () => this.ui.DisplayLoadLocator());
+            this.ui.WriteFinished.WaitOne();
+            var location = UiHelpers.Read(this.ui, () => this.ui.LoadLocation);
+            if (string.IsNullOrWhiteSpace(location))
+            {
+                return;
+            }
+
+            this.setGenerator(
+                this.createGenerator(
+                    this.manager.LoadSet(location)));
+            var g = this.generator;
+            var e = g.Generate().GetEnumerator();
+            var pi = 0;
+            foreach (var prime in g.CurrentSet)
+            {
+                e.MoveNext();
+                ++pi;
+            }
+
+            UiHelpers.Write(this.ui, () =>
+            {
+                this.ui.CurrentPrime = g.CurrentSet.Last.Value;
+            });
+
+            this.setCurrentPrimeIndex(pi);
+            this.setEnumerator(e);
         }
 
         private void ui_GenerateKeyTapped()
@@ -71,6 +103,8 @@
                 this.ui.RestartKeyVisible = true;
                 this.ui.Generating = false;
             });
+
+            this.ui.WriteFinished.WaitOne();
         }
 
         private void ui_StopKeyTapped()
@@ -80,10 +114,11 @@
 
         private void ui_RestartKeyTapped()
         {
-            this.setGenerator(this.createGenerator());
-            this.enumerator = this.generator.Generate().GetEnumerator();
+            this.setGenerator(this.createGenerator(null));
+            this.setEnumerator(this.generator.Generate().GetEnumerator());
             this.setCurrentPrimeIndex(0);
             UiHelpers.Write(this.ui, () => this.ui.CurrentPrime = null);
+            this.ui.WriteFinished.WaitOne();
         }
 
         private void setGenerator(PrimeGenerator generator)
@@ -91,10 +126,15 @@
             this.generator = generator;
         }
 
+        private void setEnumerator(IEnumerator<long> enumerator)
+        {
+            this.enumerator = enumerator;
+        }
+
         private void ui_SaveKeyTapped()
         {
             const string location = "Primes - Current Set.txt";
-            this.saver.Save(new List<long>(this.generator.CurrentSet), location);
+            this.manager.Save(new List<long>(this.generator.CurrentSet), location);
             UiHelpers.Write(this.messenger.Subscriber as Ui, () =>
             {
                 this.messenger.Inform(
@@ -116,8 +156,8 @@
         private PrimeGenerator generator;
         private IEnumerator<long> enumerator;
         private readonly PrimesUi ui;
-        private readonly Func<PrimeGenerator> createGenerator;
-        private readonly PrimeSaver saver;
+        private readonly Func<LinkedList<long>, PrimeGenerator> createGenerator;
+        private readonly PrimeManager manager;
         private readonly Messenger messenger;
     }
 }

@@ -20,6 +20,15 @@
         public event Action RestartKeyTapped;
 
         public event Action SaveKeyTapped;
+        
+        public event Action LoadKeyTapped;
+
+        string PrimesUi.LoadLocation
+        {
+            get { return this.locator.FileName; }
+
+            set { this.locator.FileName = value; }
+        }
 
         bool PrimesUi.Generating
         {
@@ -78,6 +87,11 @@
             set { this.currentPrimeIndexLabel.Text = value.ToString(); }
         }
 
+        void PrimesUi.DisplayLoadLocator()
+        {
+            this.locator.ShowDialog();
+        }
+
         private void generateKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.GenerateKeyTapped?.Invoke()).Start();
@@ -96,6 +110,11 @@
         private void stopKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.StopKeyTapped?.Invoke()).Start();
+        }
+
+        private void loadKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.LoadKeyTapped?.Invoke()).Start();
         }
     }
 }

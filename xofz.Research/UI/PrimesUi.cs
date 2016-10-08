@@ -12,6 +12,10 @@
 
         event Action SaveKeyTapped;
 
+        event Action LoadKeyTapped;
+
+        string LoadLocation { get; set; }
+
         bool Generating { get; set; }
 
         bool RestartKeyVisible { get; set; }
@@ -23,5 +27,7 @@
         long? CurrentPrime { get; set; }
 
         int? CurrentPrimeIndex { get; set; }
+
+        void DisplayLoadLocator();
     }
 }

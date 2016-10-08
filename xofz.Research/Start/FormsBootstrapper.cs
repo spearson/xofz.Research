@@ -59,8 +59,8 @@
             var pp = new PrimesPresenter(
                 new UserControlPrimesUi(),
                 this.shell,
-                () => new PrimeGenerator(),
-                new PrimeSaver(),
+                ll => ll == null ? new PrimeGenerator() : new PrimeGenerator(ll),
+                new PrimeManager(),
                 new FormsMessenger { Subscriber = this.shell });
             pp.Setup(this.navigator);
 

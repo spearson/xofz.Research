@@ -39,6 +39,8 @@
             this.restartKey = new System.Windows.Forms.Button();
             this.saveKey = new System.Windows.Forms.Button();
             this.stopKey = new System.Windows.Forms.Button();
+            this.loadKey = new System.Windows.Forms.Button();
+            this.locator = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // titleLabel
@@ -176,9 +178,30 @@
             this.stopKey.Visible = false;
             this.stopKey.Click += new System.EventHandler(this.stopKey_Click);
             // 
+            // loadKey
+            // 
+            this.loadKey.AutoSize = true;
+            this.loadKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.loadKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.loadKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.loadKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.loadKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loadKey.Location = new System.Drawing.Point(7, 436);
+            this.loadKey.Name = "loadKey";
+            this.loadKey.Size = new System.Drawing.Size(94, 32);
+            this.loadKey.TabIndex = 13;
+            this.loadKey.Text = "Load Set";
+            this.loadKey.UseVisualStyleBackColor = true;
+            this.loadKey.Click += new System.EventHandler(this.loadKey_Click);
+            // 
+            // locator
+            // 
+            this.locator.Filter = "Text files|*.txt|All files|*.*";
+            // 
             // UserControlPrimesUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.loadKey);
             this.Controls.Add(this.stopKey);
             this.Controls.Add(this.saveKey);
             this.Controls.Add(this.restartKey);
@@ -211,5 +234,7 @@
         private System.Windows.Forms.Button restartKey;
         private System.Windows.Forms.Button saveKey;
         private System.Windows.Forms.Button stopKey;
+        private System.Windows.Forms.Button loadKey;
+        private System.Windows.Forms.OpenFileDialog locator;
     }
 }
