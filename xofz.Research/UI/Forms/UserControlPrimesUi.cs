@@ -15,6 +15,8 @@
 
         public event Action GenerateKeyTapped;
 
+        public event Action StopKeyTapped;
+
         public event Action RestartKeyTapped;
 
         public event Action SaveKeyTapped;
@@ -23,7 +25,25 @@
         {
             get { return this.generateKey.Text == @"Generating..."; }
 
-            set { this.generateKey.Text = value ? @"Generating..." : "Generate"; }
+            set
+            {
+                this.generateKey.Text = value ? @"Generating..." : "Generate";
+                this.generateKey.Enabled = !value;
+            }
+        }
+
+        public bool RestartKeyVisible
+        {
+            get { return this.restartKey.Visible; }
+
+            set { this.restartKey.Visible = value; }
+        }
+
+        bool PrimesUi.StopKeyVisible
+        {
+            get { return this.stopKey.Visible; }
+
+            set { this.stopKey.Visible = value; }
         }
 
         int PrimesUi.NumberToGenerate
@@ -71,6 +91,11 @@
         private void saveKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.SaveKeyTapped?.Invoke()).Start();
+        }
+
+        private void stopKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.StopKeyTapped?.Invoke()).Start();
         }
     }
 }

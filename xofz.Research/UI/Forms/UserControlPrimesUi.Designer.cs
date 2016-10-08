@@ -38,6 +38,7 @@
             this.currentPrimeIndexLabel = new System.Windows.Forms.Label();
             this.restartKey = new System.Windows.Forms.Button();
             this.saveKey = new System.Windows.Forms.Button();
+            this.stopKey = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // titleLabel
@@ -158,9 +159,27 @@
             this.saveKey.UseVisualStyleBackColor = true;
             this.saveKey.Click += new System.EventHandler(this.saveKey_Click);
             // 
+            // stopKey
+            // 
+            this.stopKey.AutoSize = true;
+            this.stopKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.stopKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.stopKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.stopKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stopKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stopKey.Location = new System.Drawing.Point(186, 85);
+            this.stopKey.Name = "stopKey";
+            this.stopKey.Size = new System.Drawing.Size(59, 32);
+            this.stopKey.TabIndex = 12;
+            this.stopKey.Text = "Stop";
+            this.stopKey.UseVisualStyleBackColor = true;
+            this.stopKey.Visible = false;
+            this.stopKey.Click += new System.EventHandler(this.stopKey_Click);
+            // 
             // UserControlPrimesUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.stopKey);
             this.Controls.Add(this.saveKey);
             this.Controls.Add(this.restartKey);
             this.Controls.Add(this.currentPrimeIndexLabel);
@@ -191,5 +210,6 @@
         private System.Windows.Forms.Label currentPrimeIndexLabel;
         private System.Windows.Forms.Button restartKey;
         private System.Windows.Forms.Button saveKey;
+        private System.Windows.Forms.Button stopKey;
     }
 }

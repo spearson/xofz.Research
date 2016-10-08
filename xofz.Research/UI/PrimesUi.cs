@@ -6,11 +6,17 @@
     {
         event Action GenerateKeyTapped;
 
+        event Action StopKeyTapped;
+
         event Action RestartKeyTapped;
 
         event Action SaveKeyTapped;
 
         bool Generating { get; set; }
+
+        bool RestartKeyVisible { get; set; }
+
+        bool StopKeyVisible { get; set; }
 
         int NumberToGenerate { get; set; }
 

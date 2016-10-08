@@ -33,6 +33,7 @@
             }
 
             this.ui.GenerateKeyTapped += this.ui_GenerateKeyTapped;
+            this.ui.StopKeyTapped += this.ui_StopKeyTapped;
             this.ui.RestartKeyTapped += this.ui_RestartKeyTapped;
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
             navigator.RegisterPresenter(this);
@@ -41,18 +42,40 @@
 
         private void ui_GenerateKeyTapped()
         {
-            UiHelpers.Write(this.ui, () => this.ui.Generating = true);
+            Interlocked.CompareExchange(ref this.startedIf1, 1, 0);
+            UiHelpers.Write(this.ui, () =>
+            {
+                this.ui.StopKeyVisible = true;
+                this.ui.RestartKeyVisible = false;
+                this.ui.Generating = true;
+            });
+
             var numberToGenerate = UiHelpers.Read(this.ui, () => this.ui.NumberToGenerate);
             var e = this.enumerator;
 
             for (var i = 0; i < numberToGenerate; ++i)
             {
+                if (Interlocked.Read(ref this.startedIf1) == 0)
+                {
+                    break;
+                }
+
                 e.MoveNext();
                 UiHelpers.Write(this.ui, () => this.ui.CurrentPrime = e.Current);
                 this.setCurrentPrimeIndex(this.currentPrimeIndex + 1);
             }
 
-            UiHelpers.Write(this.ui, () => this.ui.Generating = false);
+            UiHelpers.Write(this.ui, () =>
+            {
+                this.ui.StopKeyVisible = false;
+                this.ui.RestartKeyVisible = true;
+                this.ui.Generating = false;
+            });
+        }
+
+        private void ui_StopKeyTapped()
+        {
+            Interlocked.CompareExchange(ref this.startedIf1, 0, 1);
         }
 
         private void ui_RestartKeyTapped()
@@ -88,6 +111,7 @@
         }
 
         private int setupIf1;
+        private long startedIf1;
         private int currentPrimeIndex;
         private PrimeGenerator generator;
         private IEnumerator<long> enumerator;
