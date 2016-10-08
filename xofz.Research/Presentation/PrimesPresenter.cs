@@ -77,6 +77,7 @@
             Interlocked.CompareExchange(ref this.startedIf1, 1, 0);
             UiHelpers.Write(this.ui, () =>
             {
+                this.ui.LoadKeyVisible = false;
                 this.ui.StopKeyVisible = true;
                 this.ui.RestartKeyVisible = false;
                 this.ui.Generating = true;
@@ -99,6 +100,7 @@
 
             UiHelpers.Write(this.ui, () =>
             {
+                this.ui.LoadKeyVisible = true;
                 this.ui.StopKeyVisible = false;
                 this.ui.RestartKeyVisible = true;
                 this.ui.Generating = false;

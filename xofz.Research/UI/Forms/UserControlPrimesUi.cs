@@ -55,6 +55,13 @@
             set { this.stopKey.Visible = value; }
         }
 
+        bool PrimesUi.LoadKeyVisible
+        {
+            get { return this.loadKey.Visible; }
+
+            set { this.loadKey.Visible = value; }
+        }
+
         int PrimesUi.NumberToGenerate
         {
             get { return int.Parse(this.numberToGenerateTextBox.Text); }

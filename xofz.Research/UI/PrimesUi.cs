@@ -22,6 +22,8 @@
 
         bool StopKeyVisible { get; set; }
 
+        bool LoadKeyVisible { get; set; }
+
         int NumberToGenerate { get; set; }
 
         long? CurrentPrime { get; set; }
