@@ -94,7 +94,7 @@
         private void ui_SaveKeyTapped()
         {
             const string location = "Primes - Current Set.txt";
-            this.saver.Save(this.generator.CurrentSet, location);
+            this.saver.Save(new List<long>(this.generator.CurrentSet), location);
             UiHelpers.Write(this.messenger.Subscriber as Ui, () =>
             {
                 this.messenger.Inform(

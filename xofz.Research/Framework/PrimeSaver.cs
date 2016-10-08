@@ -6,7 +6,7 @@
 
     public class PrimeSaver
     {
-        public virtual void Save(LinkedList<long> currentSet, string location)
+        public virtual void Save(IEnumerable<long> currentSet, string location)
         {
             File.WriteAllLines(location, currentSet.Select(p => p.ToString()));
         }
