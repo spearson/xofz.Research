@@ -34,8 +34,9 @@
             UiHelpers.Write(this.ui, () => this.ui.Computing = true);
             var factorial = this.computer.Compute(
                 UiHelpers.Read(this.ui, () => this.ui.Input));
-            
-            UiHelpers.Write(this.ui, () => this.ui.Factorial = factorial.ToString());
+            UiHelpers.Write(this.ui, () => this.ui.Factorial = "Computed, now waiting for ToString()...");
+            var s = factorial.ToString();
+            UiHelpers.Write(this.ui, () => this.ui.Factorial = s);
             UiHelpers.Write(this.ui, () => this.ui.Computing = false);
         }
 
