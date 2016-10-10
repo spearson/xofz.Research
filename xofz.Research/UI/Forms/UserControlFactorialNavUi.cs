@@ -4,18 +4,18 @@
     using System.Threading;
     using xofz.UI.Forms;
 
-    public partial class UserControlPrimesNavUi : UserControlUi, PrimesNavUi
+    public partial class UserControlFactorialNavUi : UserControlUi, FactorialNavUi
     {
-        public UserControlPrimesNavUi()
+        public UserControlFactorialNavUi()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             var h = this.Handle;
         }
 
         public event Action HomeKeyTapped;
 
-        public event Action FactorialKeyTapped;
+        public event Action PrimesKeyTapped;
 
         public event Action RotationKeyTapped;
 
@@ -23,9 +23,9 @@
 
         public event Action ShutdownKeyTapped;
 
-        private void factorialKey_Click(object sender, EventArgs e)
+        private void primesKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.FactorialKeyTapped?.Invoke()).Start();
+            new Thread(() => this.PrimesKeyTapped?.Invoke()).Start();
         }
 
         private void rotationKey_Click(object sender, EventArgs e)

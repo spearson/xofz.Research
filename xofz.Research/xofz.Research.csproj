@@ -45,11 +45,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Framework\PrimeManager.cs" />
+    <Compile Include="Presentation\FactorialNavPresenter.cs" />
+    <Compile Include="Presentation\FactorialPresenter.cs" />
     <Compile Include="Presentation\HomeNavPresenter.cs" />
     <Compile Include="Presentation\HomePresenter.cs" />
+    <Compile Include="Presentation\RotationNavPresenter.cs" />
+    <Compile Include="Presentation\RotationPresenter.cs" />
     <Compile Include="Presentation\PrimesNavPresenter.cs" />
     <Compile Include="Presentation\PrimesPresenter.cs" />
     <Compile Include="Start\FormsBootstrapper.cs" />
+    <Compile Include="UI\FactorialNavUi.cs" />
+    <Compile Include="UI\FactorialUi.cs" />
     <Compile Include="UI\Forms\FormMainUi.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,6 +64,18 @@
     </Compile>
     <Compile Include="Start\EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Forms\UserControlFactorialUi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlFactorialUi.Designer.cs">
+      <DependentUpon>UserControlFactorialUi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlFactorialNavUi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlFactorialNavUi.Designer.cs">
+      <DependentUpon>UserControlFactorialNavUi.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\UserControlHomeNavUi.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -69,6 +87,18 @@
     </Compile>
     <Compile Include="UI\Forms\UserControlHomeUi.Designer.cs">
       <DependentUpon>UserControlHomeUi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlRotationNavUi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlRotationNavUi.Designer.cs">
+      <DependentUpon>UserControlRotationNavUi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlRotationUi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlRotationUi.Designer.cs">
+      <DependentUpon>UserControlRotationUi.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\UserControlNavUi.cs">
       <SubType>UserControl</SubType>
@@ -90,6 +120,8 @@
     </Compile>
     <Compile Include="UI\HomeNavUi.cs" />
     <Compile Include="UI\HomeUi.cs" />
+    <Compile Include="UI\RotationNavUi.cs" />
+    <Compile Include="UI\Rotationui.cs" />
     <Compile Include="UI\PrimesNavUi.cs" />
     <Compile Include="UI\PrimesUi.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -105,11 +137,23 @@
     <EmbeddedResource Include="UI\Forms\FormMainUi.resx">
       <DependentUpon>FormMainUi.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UserControlFactorialUi.resx">
+      <DependentUpon>UserControlFactorialUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UserControlFactorialNavUi.resx">
+      <DependentUpon>UserControlFactorialNavUi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UserControlHomeNavUi.resx">
       <DependentUpon>UserControlHomeNavUi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UserControlHomeUi.resx">
       <DependentUpon>UserControlHomeUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UserControlRotationNavUi.resx">
+      <DependentUpon>UserControlRotationNavUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UserControlRotationUi.resx">
+      <DependentUpon>UserControlRotationUi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UserControlNavUi.resx">
       <DependentUpon>UserControlNavUi.cs</DependentUpon>

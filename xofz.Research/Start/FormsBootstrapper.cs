@@ -42,13 +42,24 @@
             hnp.Setup();
 
             var hp = new HomePresenter(
-                new UserControlHomeUi(
+                new UserControlHomeUi(), 
+                this.shell);
+            hp.Setup(this.navigator);
+
+            var rnp = new RotationNavPresenter(
+                new UserControlRotationNavUi(), 
+                this.shell.NavUi,
+                this.navigator);
+            rnp.Setup();
+
+            var rp = new RotationPresenter(
+                new UserControlRotationUi(
                     list => new OrderedMaterializedEnumerable<TextBox>(list),
                     ll => new LinkedListMaterializedEnumerable<int>(ll)),
                 this.shell,
                 new Random(),
                 new EnumerableRotator());
-            hp.Setup(this.navigator);
+            rp.Setup(this.navigator);
 
             var pnp = new PrimesNavPresenter(
                 new UserControlPrimesNavUi(), 
@@ -64,13 +75,25 @@
                 new FormsMessenger { Subscriber = this.shell });
             pp.Setup(this.navigator);
 
+            var fnp = new FactorialNavPresenter(
+                new UserControlFactorialNavUi(), 
+                this.shell.NavUi,
+                this.navigator);
+            fnp.Setup();
+
+            var fp = new FactorialPresenter(
+                new UserControlFactorialUi(), 
+                this.shell,
+                new FactorialComputer());
+            fp.Setup(this.navigator);
+
             var sp = new ShutdownPresenter(
                 this.shell,
                 () => { });
             this.navigator.RegisterPresenter(sp);
 
-            this.navigator.PresentFluidly<HomeNavPresenter>();
             this.navigator.Present<HomePresenter>();
+            this.navigator.PresentFluidly<HomeNavPresenter>();
         }
 
         private FormMainUi shell;

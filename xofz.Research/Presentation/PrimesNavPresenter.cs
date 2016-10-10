@@ -25,16 +25,30 @@
                 return;
             }
 
+            this.ui.HomeKeyTapped += this.ui_HomeKeyTapped;
+            this.ui.FactorialKeyTapped += this.ui_FactorialKeyTapped;
             this.ui.RotationKeyTapped += this.ui_RotationKeyTapped;
             this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
             this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
             this.navigator.RegisterPresenter(this);
         }
 
-        private void ui_RotationKeyTapped()
+        private void ui_HomeKeyTapped()
         {
             this.navigator.Present<HomePresenter>();
             this.navigator.PresentFluidly<HomeNavPresenter>();
+        }
+
+        private void ui_FactorialKeyTapped()
+        {
+            this.navigator.Present<FactorialPresenter>();
+            this.navigator.PresentFluidly<FactorialNavPresenter>();
+        }
+
+        private void ui_RotationKeyTapped()
+        {
+            this.navigator.Present<RotationPresenter>();
+            this.navigator.PresentFluidly<RotationNavPresenter>();
         }
 
         private void ui_LogInKeyTapped()

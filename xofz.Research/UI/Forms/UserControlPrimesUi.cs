@@ -41,7 +41,7 @@
             }
         }
 
-        public bool RestartKeyVisible
+        bool PrimesUi.RestartKeyVisible
         {
             get { return this.restartKey.Visible; }
 

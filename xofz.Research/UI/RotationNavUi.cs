@@ -2,13 +2,14 @@
 {
     using System;
     using xofz.UI;
-    public interface HomeNavUi : Ui
+
+    public interface RotationNavUi : Ui
     {
+        event Action HomeKeyTapped;
+
         event Action PrimesKeyTapped;
 
         event Action FactorialKeyTapped;
-
-        event Action RotationKeyTapped;
 
         event Action LogInKeyTapped;
 

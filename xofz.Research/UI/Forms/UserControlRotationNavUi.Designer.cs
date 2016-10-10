@@ -1,6 +1,6 @@
 ﻿namespace xofz.Research.UI.Forms
 {
-    partial class UserControlHomeNavUi
+    partial class UserControlRotationNavUi
     {
         /// <summary> 
         /// Required designer variable.
@@ -33,7 +33,7 @@
             this.primesKey = new System.Windows.Forms.Button();
             this.loginKey = new System.Windows.Forms.Button();
             this.shutdownKey = new System.Windows.Forms.Button();
-            this.rotationKey = new System.Windows.Forms.Button();
+            this.homeKey = new System.Windows.Forms.Button();
             this.tableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +48,7 @@
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136F));
-            this.tableLayoutPanel.Controls.Add(this.rotationKey, 3, 0);
+            this.tableLayoutPanel.Controls.Add(this.homeKey, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.factorialKey, 2, 0);
             this.tableLayoutPanel.Controls.Add(this.primesKey, 1, 0);
             this.tableLayoutPanel.Controls.Add(this.loginKey, 6, 0);
@@ -60,7 +60,7 @@
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(1088, 50);
-            this.tableLayoutPanel.TabIndex = 1;
+            this.tableLayoutPanel.TabIndex = 0;
             // 
             // factorialKey
             // 
@@ -126,27 +126,28 @@
             this.shutdownKey.UseVisualStyleBackColor = true;
             this.shutdownKey.Click += new System.EventHandler(this.shutdownKey_Click);
             // 
-            // rotationKey
+            // homeKey
             // 
-            this.rotationKey.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.homeKey.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rotationKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
-            this.rotationKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.rotationKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.rotationKey.Location = new System.Drawing.Point(411, 3);
-            this.rotationKey.Name = "rotationKey";
-            this.rotationKey.Size = new System.Drawing.Size(130, 44);
-            this.rotationKey.TabIndex = 5;
-            this.rotationKey.Text = "Rotation";
-            this.rotationKey.UseVisualStyleBackColor = true;
-            this.rotationKey.Click += new System.EventHandler(this.rotationKey_Click);
+            this.homeKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.homeKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.homeKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.homeKey.Location = new System.Drawing.Point(3, 3);
+            this.homeKey.Name = "homeKey";
+            this.homeKey.Size = new System.Drawing.Size(130, 44);
+            this.homeKey.TabIndex = 5;
+            this.homeKey.Text = "Home";
+            this.homeKey.UseVisualStyleBackColor = true;
+            this.homeKey.Click += new System.EventHandler(this.homeKey_Click);
             // 
-            // UserControlHomeNavUi
+            // UserControlRotationNavUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.Controls.Add(this.tableLayoutPanel);
-            this.Name = "UserControlHomeNavUi";
+            this.Margin = new System.Windows.Forms.Padding(0);
+            this.Name = "UserControlRotationNavUi";
             this.Size = new System.Drawing.Size(1088, 50);
             this.tableLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -156,10 +157,10 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-        private System.Windows.Forms.Button factorialKey;
-        private System.Windows.Forms.Button primesKey;
         private System.Windows.Forms.Button loginKey;
         private System.Windows.Forms.Button shutdownKey;
-        private System.Windows.Forms.Button rotationKey;
+        private System.Windows.Forms.Button primesKey;
+        private System.Windows.Forms.Button factorialKey;
+        private System.Windows.Forms.Button homeKey;
     }
 }
