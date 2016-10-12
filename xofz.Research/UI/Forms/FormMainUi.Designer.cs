@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMainUi));
             this.navUi = new xofz.Research.UI.Forms.UserControlNavUi();
             this.screenPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
@@ -55,6 +56,7 @@
             this.Controls.Add(this.screenPanel);
             this.Controls.Add(this.navUi);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMainUi";
             this.Text = "xofz.Research";
