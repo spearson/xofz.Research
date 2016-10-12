@@ -18,6 +18,8 @@
 
         bool Generating { get; set; }
 
+        bool Stopping { get; set; }
+
         bool RestartKeyVisible { get; set; }
 
         bool StopKeyVisible { get; set; }

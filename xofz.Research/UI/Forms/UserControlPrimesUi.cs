@@ -41,6 +41,17 @@
             }
         }
 
+        bool PrimesUi.Stopping
+        {
+            get { return this.stopKey.Text == @"Stopping..."; }
+
+            set
+            {
+                this.stopKey.Text = value ? @"Stopping..." : "Stop";
+                this.stopKey.Enabled = !value;
+            }
+        }
+
         bool PrimesUi.RestartKeyVisible
         {
             get { return this.restartKey.Visible; }

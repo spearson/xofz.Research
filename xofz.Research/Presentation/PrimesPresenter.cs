@@ -104,6 +104,7 @@
                 this.ui.StopKeyVisible = false;
                 this.ui.RestartKeyVisible = true;
                 this.ui.Generating = false;
+                this.ui.Stopping = false;
             });
 
             this.ui.WriteFinished.WaitOne();
@@ -112,6 +113,7 @@
         private void ui_StopKeyTapped()
         {
             Interlocked.CompareExchange(ref this.startedIf1, 0, 1);
+            UiHelpers.Write(this.ui, () => this.ui.Stopping = true);
         }
 
         private void ui_RestartKeyTapped()
