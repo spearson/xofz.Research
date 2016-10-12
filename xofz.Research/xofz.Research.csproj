@@ -124,7 +124,7 @@
     <Compile Include="UI\HomeNavUi.cs" />
     <Compile Include="UI\HomeUi.cs" />
     <Compile Include="UI\RotationNavUi.cs" />
-    <Compile Include="UI\Rotationui.cs" />
+    <Compile Include="UI\RotationUi.cs" />
     <Compile Include="UI\PrimesNavUi.cs" />
     <Compile Include="UI\PrimesUi.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

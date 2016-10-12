@@ -26,6 +26,7 @@
             }
 
             this.ui.ComputeKeyTapped += this.ui_ComputeKeyTapped;
+            UiHelpers.Write(this.ui, () => this.ui.Input = 1000);
             navigator.RegisterPresenter(this);
         }
 

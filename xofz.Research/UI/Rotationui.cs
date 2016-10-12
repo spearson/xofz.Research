@@ -1,14 +1,15 @@
 ﻿namespace xofz.Research.UI
 {
     using System;
-    using System.Numerics;
     using xofz.UI;
 
     public interface RotationUi : Ui
     {
         event Action GenerateKeyTapped;
 
-        event Action RotateKeyTapped;
+        event Action RotateLeftKeyTapped;
+
+        event Action RotateRightKeyTapped;
 
         bool RandomizeRotations { get; set; }
 

@@ -40,7 +40,9 @@
 
         public event Action GenerateKeyTapped;
 
-        public event Action RotateKeyTapped;
+        public event Action RotateLeftKeyTapped;
+
+        public event Action RotateRightKeyTapped;
 
         bool RotationUi.RandomizeRotations
         {
@@ -92,9 +94,14 @@
             new Thread(() => this.GenerateKeyTapped?.Invoke()).Start();
         }
 
-        private void rotateKey_Click(object sender, EventArgs e)
+        private void rotateRightKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.RotateKeyTapped?.Invoke()).Start();
+            new Thread(() => this.RotateRightKeyTapped?.Invoke()).Start();
+        }
+
+        private void rotateLeftKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.RotateLeftKeyTapped?.Invoke()).Start();
         }
 
         private readonly MaterializedEnumerable<TextBox> numbersTextBoxes;

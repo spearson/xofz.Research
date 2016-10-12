@@ -33,7 +33,8 @@
             this.ui.NumberOfRotations = 1;
             this.ui.MaxValue = 1000;
             this.ui.GenerateKeyTapped += this.ui_GenerateKeyTapped;
-            this.ui.RotateKeyTapped += this.ui_RotateKeyTapped;
+            this.ui.RotateRightKeyTapped += this.ui_RotateRightKeyTapped;
+            this.ui.RotateLeftKeyTapped += this.ui_RotateLeftKeyTapped;
             this.ui_GenerateKeyTapped();
             navigator.RegisterPresenter(this);
         }
@@ -54,7 +55,17 @@
 
         }
 
-        private void ui_RotateKeyTapped()
+        private void ui_RotateRightKeyTapped()
+        {
+            this.rotateKeyTapped(true);
+        }
+
+        private void ui_RotateLeftKeyTapped()
+        {
+            this.rotateKeyTapped(false);
+        }
+
+        private void rotateKeyTapped(bool goRight)
         {
             var numbers = UiHelpers.Read(this.ui, () => this.ui.Numbers);
             MaterializedEnumerable<int> rotatedNumbers;
@@ -63,16 +74,18 @@
                 var rotations = this.rng.Next(1, 6);
                 rotatedNumbers = this.rotator.Rotate(
                     numbers,
-                    rotations);
+                    rotations,
+                    goRight);
                 UiHelpers.Write(this.ui, () => this.ui.NumberOfRotations = rotations);
             }
             else
             {
                 rotatedNumbers = this.rotator.Rotate(
                     numbers,
-                    UiHelpers.Read(this.ui, () => this.ui.NumberOfRotations));
+                    UiHelpers.Read(this.ui, () => this.ui.NumberOfRotations),
+                    goRight);
             }
-            
+
             UiHelpers.Write(this.ui, () => this.ui.Numbers = rotatedNumbers);
         }
 
