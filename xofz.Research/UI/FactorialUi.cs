@@ -12,6 +12,10 @@
 
         string Factorial { get; set; }
 
+        string DurationInfo { get; set; }
+
+        bool DurationInfoVisible { get; set; }
+
         bool Computing { get; set; }
     }
 }

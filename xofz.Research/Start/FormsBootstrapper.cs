@@ -24,10 +24,11 @@
         public void Bootstrap()
         {
             this.shell = new FormMainUi();
+            var ac = new AccessController(new[] { "1111", "2222" });
             var lp = new LoginPresenter(
                 new FormLoginUi(this.shell),
                 new xofz.Framework.Timer(),
-                new AccessController(new[] {"2554", "8384"}));
+                ac);
             lp.Setup(this.navigator);
 
             var mp = new MainPresenter(
@@ -84,7 +85,9 @@
             var fp = new FactorialPresenter(
                 new UserControlFactorialUi(), 
                 this.shell,
-                new FactorialComputer());
+                new FactorialComputer(),
+                ac,
+                new xofz.Framework.Timer());
             fp.Setup(this.navigator);
 
             var sp = new ShutdownPresenter(

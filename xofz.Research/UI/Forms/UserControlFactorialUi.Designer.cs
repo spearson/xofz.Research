@@ -34,6 +34,7 @@
             this.factorialTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.computeKey = new System.Windows.Forms.Button();
+            this.durationLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // titleLabel
@@ -102,9 +103,20 @@
             this.computeKey.UseVisualStyleBackColor = true;
             this.computeKey.Click += new System.EventHandler(this.computeKey_Click);
             // 
+            // durationLabel
+            // 
+            this.durationLabel.AutoSize = true;
+            this.durationLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.durationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.durationLabel.Location = new System.Drawing.Point(431, 60);
+            this.durationLabel.Name = "durationLabel";
+            this.durationLabel.Size = new System.Drawing.Size(2, 18);
+            this.durationLabel.TabIndex = 9;
+            // 
             // UserControlFactorialUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.durationLabel);
             this.Controls.Add(this.computeKey);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.factorialTextBox);
@@ -127,5 +139,6 @@
         private System.Windows.Forms.TextBox factorialTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button computeKey;
+        private System.Windows.Forms.Label durationLabel;
     }
 }

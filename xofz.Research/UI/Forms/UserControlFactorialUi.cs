@@ -30,6 +30,20 @@
             set { this.factorialTextBox.Text = value; }
         }
 
+        string FactorialUi.DurationInfo
+        {
+            get { return this.durationLabel.Text; }
+
+            set { this.durationLabel.Text = value; }
+        }
+
+        bool FactorialUi.DurationInfoVisible
+        {
+            get { return this.durationLabel.Visible; }
+
+            set { this.durationLabel.Visible = value; }
+        }
+
         bool FactorialUi.Computing
         {
             get { return this.computeKey.Text == @"Computing..."; }

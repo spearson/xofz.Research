@@ -30,6 +30,7 @@
         {
             this.welcomeLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // welcomeLabel
@@ -52,9 +53,20 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "(Please select an item above)";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(332, 444);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(388, 20);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "(The login password for Level 1 access is 1111)";
+            // 
             // UserControlHomeUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.welcomeLabel);
             this.Margin = new System.Windows.Forms.Padding(0);
@@ -69,5 +81,6 @@
 
         private System.Windows.Forms.Label welcomeLabel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
