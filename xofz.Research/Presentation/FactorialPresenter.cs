@@ -48,24 +48,31 @@
                 this.ui.Computing = true;
                 this.ui.DurationInfo = null;
             });
+            this.ui.WriteFinished.WaitOne();
 
             var sw = Stopwatch.StartNew();
             var factorial = this.computer.Compute(
                 UiHelpers.Read(this.ui, () => this.ui.Input));
             sw.Stop();
+
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.DurationInfo = "Computation took " + sw.Elapsed;
                 this.ui.Factorial = "Computed, now waiting for ToString()...";
             });
+            this.ui.WriteFinished.WaitOne();
+
             var sw2 = Stopwatch.StartNew();
             var s = factorial.ToString();
             sw2.Stop();
+
             UiHelpers.Write(this.ui, () =>
                 this.ui.DurationInfo += Environment.NewLine +
                                         "ToString() took " + sw2.Elapsed);
             this.ui.WriteFinished.WaitOne();
+
             var sw3 = Stopwatch.StartNew();
+
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.Factorial = s;
@@ -74,7 +81,9 @@
                                         "Setting TextBox Text property took " + sw3.Elapsed;
             });
             this.ui.WriteFinished.WaitOne();
+
             UiHelpers.Write(this.ui, () => this.ui.Computing = false);
+            this.ui.WriteFinished.WaitOne();
         }
 
         private void timer_Elapsed()
