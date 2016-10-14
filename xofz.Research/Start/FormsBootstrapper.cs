@@ -68,12 +68,13 @@
                 this.navigator);
             pnp.Setup();
 
+            var fm = new FormsMessenger { Subscriber = this.shell };
             var pp = new PrimesPresenter(
                 new UserControlPrimesUi(),
                 this.shell,
                 ll => ll == null ? new PrimeGenerator() : new PrimeGenerator(ll),
                 new PrimeManager(),
-                new FormsMessenger { Subscriber = this.shell });
+                fm);
             pp.Setup(this.navigator);
 
             var fnp = new FactorialNavPresenter(
@@ -87,7 +88,9 @@
                 this.shell,
                 new FactorialComputer(),
                 ac,
-                new xofz.Framework.Timer());
+                new xofz.Framework.Timer(),
+                new FactorialSaver(),
+                fm);
             fp.Setup(this.navigator);
 
             var sp = new ShutdownPresenter(

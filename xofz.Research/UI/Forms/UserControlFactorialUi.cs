@@ -16,6 +16,8 @@
 
         public event Action ComputeKeyTapped;
 
+        public event Action SaveKeyTapped;
+
         BigInteger FactorialUi.Input
         {
             get { return BigInteger.Parse(this.inputTextBox.Text); }
@@ -55,9 +57,21 @@
             }
         }
 
+        bool FactorialUi.SaveKeyVisible
+        {
+            get { return this.saveKey.Visible; }
+
+            set { this.saveKey.Visible = value; }
+        }
+
         private void computeKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.ComputeKeyTapped?.Invoke()).Start();
+        }
+
+        private void saveKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.SaveKeyTapped?.Invoke()).Start();
         }
     }
 }

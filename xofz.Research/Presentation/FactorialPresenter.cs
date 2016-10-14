@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Threading;
+    using Framework;
     using UI;
     using xofz.Framework;
     using xofz.Framework.Computation;
@@ -16,13 +17,17 @@
             ShellUi shell,
             FactorialComputer computer,
             AccessController accessController,
-            xofz.Framework.Timer timer) 
+            xofz.Framework.Timer timer,
+            FactorialSaver saver,
+            Messenger messenger) 
             : base(ui, shell)
         {
             this.ui = ui;
             this.computer = computer;
             this.accessController = accessController;
             this.timer = timer;
+            this.saver = saver;
+            this.messenger = messenger;
         }
 
         public void Setup(Navigator navigator)
@@ -33,9 +38,14 @@
             }
 
             this.ui.ComputeKeyTapped += this.ui_ComputeKeyTapped;
+            this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
             this.timer.Elapsed += this.timer_Elapsed;
             this.timer.Start(1000);
-            UiHelpers.Write(this.ui, () => this.ui.Input = 1000);
+            UiHelpers.Write(this.ui, () =>
+            {
+                this.ui.Input = 1000;
+                this.ui.SaveKeyVisible = false;
+            });
             navigator.RegisterPresenter(this);
             this.timer_Elapsed();
             this.timer.Start(1000);
@@ -82,8 +92,26 @@
             });
             this.ui.WriteFinished.WaitOne();
 
-            UiHelpers.Write(this.ui, () => this.ui.Computing = false);
+            UiHelpers.Write(this.ui, () =>
+            {
+                this.ui.Computing = false;
+                this.ui.SaveKeyVisible = true;
+            });
             this.ui.WriteFinished.WaitOne();
+        }
+
+        private void ui_SaveKeyTapped()
+        {
+            var input = UiHelpers.Read(this.ui, () => this.ui.Input);
+            this.saver.Save(
+                input,
+                UiHelpers.Read(this.ui, () => this.ui.Factorial));
+            UiHelpers.Write(
+                this.messenger.Subscriber as Ui, 
+                () => this.messenger.Inform(
+                    "Saved the factorial of " 
+                    + input
+                    + " to the current program directory."));
         }
 
         private void timer_Elapsed()
@@ -97,5 +125,7 @@
         private readonly FactorialComputer computer;
         private readonly AccessController accessController;
         private readonly xofz.Framework.Timer timer;
+        private readonly FactorialSaver saver;
+        private readonly Messenger messenger;
     }
 }

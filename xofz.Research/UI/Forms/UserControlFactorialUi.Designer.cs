@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.computeKey = new System.Windows.Forms.Button();
             this.durationLabel = new System.Windows.Forms.Label();
+            this.saveKey = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // titleLabel
@@ -108,14 +109,31 @@
             this.durationLabel.AutoSize = true;
             this.durationLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.durationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.durationLabel.Location = new System.Drawing.Point(431, 60);
+            this.durationLabel.Location = new System.Drawing.Point(506, 60);
             this.durationLabel.Name = "durationLabel";
             this.durationLabel.Size = new System.Drawing.Size(2, 18);
             this.durationLabel.TabIndex = 9;
             // 
+            // saveKey
+            // 
+            this.saveKey.AutoSize = true;
+            this.saveKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.saveKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.saveKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.saveKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.saveKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveKey.Location = new System.Drawing.Point(385, 60);
+            this.saveKey.Name = "saveKey";
+            this.saveKey.Size = new System.Drawing.Size(61, 32);
+            this.saveKey.TabIndex = 10;
+            this.saveKey.Text = "Save";
+            this.saveKey.UseVisualStyleBackColor = true;
+            this.saveKey.Click += new System.EventHandler(this.saveKey_Click);
+            // 
             // UserControlFactorialUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.saveKey);
             this.Controls.Add(this.durationLabel);
             this.Controls.Add(this.computeKey);
             this.Controls.Add(this.label2);
@@ -140,5 +158,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button computeKey;
         private System.Windows.Forms.Label durationLabel;
+        private System.Windows.Forms.Button saveKey;
     }
 }

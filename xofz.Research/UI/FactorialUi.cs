@@ -8,6 +8,8 @@
     {
         event Action ComputeKeyTapped;
 
+        event Action SaveKeyTapped;
+
         BigInteger Input { get; set; }
 
         string Factorial { get; set; }
@@ -17,5 +19,7 @@
         bool DurationInfoVisible { get; set; }
 
         bool Computing { get; set; }
+
+        bool SaveKeyVisible { get; set; }
     }
 }
