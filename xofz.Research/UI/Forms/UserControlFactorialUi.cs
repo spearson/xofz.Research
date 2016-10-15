@@ -36,7 +36,11 @@
         {
             get { return this.durationLabel.Text; }
 
-            set { this.durationLabel.Text = value; }
+            set
+            {
+                this.durationLabel.Text = value;
+                this.Refresh();
+            }
         }
 
         bool FactorialUi.DurationInfoVisible
