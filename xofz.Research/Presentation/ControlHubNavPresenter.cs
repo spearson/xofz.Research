@@ -6,10 +6,10 @@
     using xofz.Presentation;
     using xofz.UI;
 
-    public sealed class FactorialNavPresenter : Presenter
+    public sealed class ControlHubNavPresenter : Presenter
     {
-        public FactorialNavPresenter(
-            FactorialNavUi ui, 
+        public ControlHubNavPresenter(
+            ControlHubNavUi ui, 
             ShellUi shell,
             Navigator navigator,
             AccessController accessController,
@@ -31,38 +31,32 @@
 
             this.ui.HomeKeyTapped += this.ui_HomeKeyTapped;
             this.ui.PrimesKeyTapped += this.ui_PrimesKeyTapped;
+            this.ui.FactorialKeyTapped += this.ui_FactorialKeyTapped;
             this.ui.RotationKeyTapped += this.ui_RotationKeyTapped;
             this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
             this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
-            this.ui.ControlHubKeyTapped += this.ui_ControlHubKeyTapped;
             this.timer.Elapsed += this.timer_Elapsed;
             this.navigator.RegisterPresenter(this);
         }
 
+        private void timer_Elapsed()
+        {
+            if (this.accessController.CurrentAccessLevel < AccessLevel.Level2)
+            {
+                this.navigator.Present<HomePresenter>();
+                this.navigator.PresentFluidly<HomeNavPresenter>();
+            }
+        }
+
         public override void Start()
         {
-            base.Start();
-
             this.timer.Start(1000);
+            base.Start();
         }
 
         public override void Stop()
         {
             this.timer.Stop();
-        }
-
-        private void timer_Elapsed()
-        {
-            var level2 = this.accessController.CurrentAccessLevel > AccessLevel.Level1;
-            UiHelpers.Write(
-                this.ui,
-                () => this.ui.ControlHubKeyVisible = level2);
-        }
-
-        private void ui_ControlHubKeyTapped()
-        {
-            this.navigator.Present<ControlHubPresenter>();
-            this.navigator.PresentFluidly<ControlHubNavPresenter>();
         }
 
         private void ui_HomeKeyTapped()
@@ -75,6 +69,12 @@
         {
             this.navigator.Present<PrimesPresenter>();
             this.navigator.PresentFluidly<PrimesNavPresenter>();
+        }
+
+        private void ui_FactorialKeyTapped()
+        {
+            this.navigator.Present<FactorialPresenter>();
+            this.navigator.PresentFluidly<FactorialNavPresenter>();
         }
 
         private void ui_RotationKeyTapped()
@@ -94,7 +94,7 @@
         }
 
         private int setupIf1;
-        private readonly FactorialNavUi ui;
+        private readonly ControlHubNavUi ui;
         private readonly Navigator navigator;
         private readonly AccessController accessController;
         private readonly xofz.Framework.Timer timer;

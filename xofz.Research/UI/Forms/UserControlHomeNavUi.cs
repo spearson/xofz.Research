@@ -19,9 +19,18 @@
 
         public event Action RotationKeyTapped;
 
+        public event Action ControlHubKeyTapped;
+
         public event Action LogInKeyTapped;
 
         public event Action ShutdownKeyTapped;
+
+        bool HomeNavUi.ControlHubKeyVisible
+        {
+            get { return this.controlHubKey.Visible; }
+
+            set { this.controlHubKey.Visible = value; }
+        }
 
         private void primesKey_Click(object sender, EventArgs e)
         {
@@ -46,6 +55,11 @@
         private void shutdownKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.ShutdownKeyTapped?.Invoke()).Start();
+        }
+
+        private void controlHubKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.ControlHubKeyTapped?.Invoke()).Start();
         }
     }
 }

@@ -4,9 +4,9 @@
     using System.Threading;
     using xofz.UI.Forms;
 
-    public partial class UserControlPrimesNavUi : UserControlUi, PrimesNavUi
+    public partial class UserControlControlHubNavUi : UserControlUi, ControlHubNavUi
     {
-        public UserControlPrimesNavUi()
+        public UserControlControlHubNavUi()
         {
             InitializeComponent();
 
@@ -15,21 +15,24 @@
 
         public event Action HomeKeyTapped;
 
+        public event Action PrimesKeyTapped;
+
         public event Action FactorialKeyTapped;
 
         public event Action RotationKeyTapped;
-
-        public event Action ControlHubKeyTapped;
 
         public event Action LogInKeyTapped;
 
         public event Action ShutdownKeyTapped;
 
-        bool PrimesNavUi.ControlHubKeyVisible
+        private void homeKey_Click(object sender, EventArgs e)
         {
-            get { return this.controlHubKey.Visible; }
+            new Thread(() => this.HomeKeyTapped?.Invoke()).Start();
+        }
 
-            set { this.controlHubKey.Visible = value; }
+        private void primesKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.PrimesKeyTapped?.Invoke()).Start();
         }
 
         private void factorialKey_Click(object sender, EventArgs e)
@@ -50,16 +53,6 @@
         private void shutdownKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.ShutdownKeyTapped?.Invoke()).Start();
-        }
-
-        private void homeKey_Click(object sender, EventArgs e)
-        {
-            new Thread(() => this.HomeKeyTapped?.Invoke()).Start();
-        }
-
-        private void controlHubKey_Click(object sender, EventArgs e)
-        {
-            new Thread(() => this.ControlHubKeyTapped?.Invoke()).Start();
         }
     }
 }

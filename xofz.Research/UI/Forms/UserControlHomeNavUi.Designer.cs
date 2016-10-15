@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.rotationKey = new System.Windows.Forms.Button();
             this.factorialKey = new System.Windows.Forms.Button();
             this.primesKey = new System.Windows.Forms.Button();
             this.loginKey = new System.Windows.Forms.Button();
             this.shutdownKey = new System.Windows.Forms.Button();
-            this.rotationKey = new System.Windows.Forms.Button();
+            this.controlHubKey = new System.Windows.Forms.Button();
             this.tableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +49,7 @@
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136F));
+            this.tableLayoutPanel.Controls.Add(this.controlHubKey, 5, 0);
             this.tableLayoutPanel.Controls.Add(this.rotationKey, 3, 0);
             this.tableLayoutPanel.Controls.Add(this.factorialKey, 2, 0);
             this.tableLayoutPanel.Controls.Add(this.primesKey, 1, 0);
@@ -61,6 +63,22 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(1088, 50);
             this.tableLayoutPanel.TabIndex = 1;
+            // 
+            // rotationKey
+            // 
+            this.rotationKey.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rotationKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.rotationKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.rotationKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.rotationKey.Location = new System.Drawing.Point(411, 3);
+            this.rotationKey.Name = "rotationKey";
+            this.rotationKey.Size = new System.Drawing.Size(130, 44);
+            this.rotationKey.TabIndex = 5;
+            this.rotationKey.Text = "Rotation";
+            this.rotationKey.UseVisualStyleBackColor = true;
+            this.rotationKey.Click += new System.EventHandler(this.rotationKey_Click);
             // 
             // factorialKey
             // 
@@ -126,21 +144,22 @@
             this.shutdownKey.UseVisualStyleBackColor = true;
             this.shutdownKey.Click += new System.EventHandler(this.shutdownKey_Click);
             // 
-            // rotationKey
+            // controlHubKey
             // 
-            this.rotationKey.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.controlHubKey.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rotationKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
-            this.rotationKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.rotationKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.rotationKey.Location = new System.Drawing.Point(411, 3);
-            this.rotationKey.Name = "rotationKey";
-            this.rotationKey.Size = new System.Drawing.Size(130, 44);
-            this.rotationKey.TabIndex = 5;
-            this.rotationKey.Text = "Rotation";
-            this.rotationKey.UseVisualStyleBackColor = true;
-            this.rotationKey.Click += new System.EventHandler(this.rotationKey_Click);
+            this.controlHubKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.controlHubKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.controlHubKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.controlHubKey.Location = new System.Drawing.Point(683, 3);
+            this.controlHubKey.Name = "controlHubKey";
+            this.controlHubKey.Size = new System.Drawing.Size(130, 44);
+            this.controlHubKey.TabIndex = 6;
+            this.controlHubKey.Text = "Control Hub";
+            this.controlHubKey.UseVisualStyleBackColor = true;
+            this.controlHubKey.Visible = false;
+            this.controlHubKey.Click += new System.EventHandler(this.controlHubKey_Click);
             // 
             // UserControlHomeNavUi
             // 
@@ -161,5 +180,6 @@
         private System.Windows.Forms.Button loginKey;
         private System.Windows.Forms.Button shutdownKey;
         private System.Windows.Forms.Button rotationKey;
+        private System.Windows.Forms.Button controlHubKey;
     }
 }

@@ -3,7 +3,7 @@
     using System;
     using xofz.UI;
 
-    public interface RotationNavUi : Ui
+    public interface ControlHubNavUi : Ui
     {
         event Action HomeKeyTapped;
 
@@ -11,12 +11,10 @@
 
         event Action FactorialKeyTapped;
 
-        event Action ControlHubKeyTapped;
+        event Action RotationKeyTapped;
 
         event Action LogInKeyTapped;
 
         event Action ShutdownKeyTapped;
-
-        bool ControlHubKeyVisible { get; set; }
     }
 }

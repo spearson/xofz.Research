@@ -39,7 +39,9 @@
             var hnp = new HomeNavPresenter(
                 new UserControlHomeNavUi(), 
                 this.shell.NavUi,
-                this.navigator);
+                this.navigator,
+                ac,
+                new xofz.Framework.Timer());
             hnp.Setup();
 
             var hp = new HomePresenter(
@@ -50,7 +52,9 @@
             var rnp = new RotationNavPresenter(
                 new UserControlRotationNavUi(), 
                 this.shell.NavUi,
-                this.navigator);
+                this.navigator,
+                ac,
+                new xofz.Framework.Timer());
             rnp.Setup();
 
             var rp = new RotationPresenter(
@@ -65,7 +69,9 @@
             var pnp = new PrimesNavPresenter(
                 new UserControlPrimesNavUi(), 
                 this.shell.NavUi,
-                this.navigator);
+                this.navigator,
+                ac,
+                new xofz.Framework.Timer());
             pnp.Setup();
 
             var fm = new FormsMessenger { Subscriber = this.shell };
@@ -80,7 +86,9 @@
             var fnp = new FactorialNavPresenter(
                 new UserControlFactorialNavUi(), 
                 this.shell.NavUi,
-                this.navigator);
+                this.navigator,
+                ac,
+                new xofz.Framework.Timer());
             fnp.Setup();
 
             var fp = new FactorialPresenter(
@@ -92,6 +100,21 @@
                 new FactorialSaver(),
                 fm);
             fp.Setup(this.navigator);
+
+            var chnp = new ControlHubNavPresenter(
+                new UserControlControlHubNavUi(), 
+                this.shell.NavUi,
+                this.navigator,
+                ac,
+                new xofz.Framework.Timer());
+            chnp.Setup();
+
+            var chp = new ControlHubPresenter(
+                new UserControlControlHubUi(), 
+                this.shell,
+                this.navigator,
+                new EventRaiser());
+            chp.Setup();
 
             var sp = new ShutdownPresenter(
                 this.shell,

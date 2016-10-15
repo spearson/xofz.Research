@@ -10,8 +10,12 @@
 
         event Action RotationKeyTapped;
 
+        event Action ControlHubKeyTapped;
+
         event Action LogInKeyTapped;
 
         event Action ShutdownKeyTapped;
+
+        bool ControlHubKeyVisible { get; set; }
     }
 }

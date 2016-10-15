@@ -2,6 +2,7 @@
 {
     using System.Threading;
     using UI;
+    using xofz.Framework;
     using xofz.Presentation;
     using xofz.UI;
 
@@ -10,11 +11,15 @@
         public PrimesNavPresenter(
             PrimesNavUi ui, 
             ShellUi shell,
-            Navigator navigator) 
+            Navigator navigator,
+            AccessController accessController,
+            xofz.Framework.Timer timer) 
             : base(ui, shell)
         {
             this.ui = ui;
             this.navigator = navigator;
+            this.accessController = accessController;
+            this.timer = timer;
         }
 
 
@@ -30,7 +35,35 @@
             this.ui.RotationKeyTapped += this.ui_RotationKeyTapped;
             this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
             this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
+            this.ui.ControlHubKeyTapped += this.ui_ControlHubKeyTapped;
+            this.timer.Elapsed += this.timer_Elapsed;
             this.navigator.RegisterPresenter(this);
+        }
+
+        public override void Start()
+        {
+            base.Start();
+
+            this.timer.Start(1000);
+        }
+
+        public override void Stop()
+        {
+            this.timer.Stop();
+        }
+
+        private void timer_Elapsed()
+        {
+            var level2 = this.accessController.CurrentAccessLevel > AccessLevel.Level1;
+            UiHelpers.Write(
+                this.ui,
+                () => this.ui.ControlHubKeyVisible = level2);
+        }
+
+        private void ui_ControlHubKeyTapped()
+        {
+            this.navigator.Present<ControlHubPresenter>();
+            this.navigator.PresentFluidly<ControlHubNavPresenter>();
         }
 
         private void ui_HomeKeyTapped()
@@ -64,5 +97,7 @@
         private int setupIf1;
         private readonly PrimesNavUi ui;
         private readonly Navigator navigator;
+        private readonly AccessController accessController;
+        private readonly xofz.Framework.Timer timer;
     }
 }
