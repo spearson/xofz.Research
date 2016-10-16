@@ -3,6 +3,7 @@
     using System;
     using System.Windows.Forms;
     using xofz.Presentation;
+    using xofz.Start;
 
     internal static class EntryPoint
     {
@@ -12,7 +13,9 @@
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var bootstrapper = new FormsBootstrapper(new Navigator());
+            var bootstrapper = new FormsBootstrapper(
+                new Navigator(),
+                new CommandExecutor());
             bootstrapper.Bootstrap();
 
             Application.Run(bootstrapper.Shell);

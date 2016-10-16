@@ -10,13 +10,15 @@
     using xofz.Framework.Materialization;
     using xofz.Framework.Transformation;
     using xofz.Presentation;
+    using xofz.Start;
     using xofz.UI.Forms;
 
     public class FormsBootstrapper
     {
-        public FormsBootstrapper(Navigator navigator)
+        public FormsBootstrapper(Navigator navigator, CommandExecutor executor)
         {
             this.navigator = navigator;
+            this.executor = executor;
         }
 
         public Form Shell => this.shell;
@@ -25,101 +27,59 @@
         {
             this.shell = new FormMainUi();
             var ac = new AccessController(new[] { "1111", "2222" });
-            var lp = new LoginPresenter(
-                new FormLoginUi(this.shell),
-                new xofz.Framework.Timer(),
-                ac);
-            lp.Setup(this.navigator);
-
-            var mp = new MainPresenter(
-                this.shell,
-                this.navigator);
-            mp.Setup();
-
-            var hnp = new HomeNavPresenter(
-                new UserControlHomeNavUi(), 
-                this.shell.NavUi,
-                this.navigator,
-                ac,
-                new xofz.Framework.Timer());
-            hnp.Setup();
-
-            var hp = new HomePresenter(
-                new UserControlHomeUi(), 
-                this.shell);
-            hp.Setup(this.navigator);
-
-            var rnp = new RotationNavPresenter(
-                new UserControlRotationNavUi(), 
-                this.shell.NavUi,
-                this.navigator,
-                ac,
-                new xofz.Framework.Timer());
-            rnp.Setup();
-
-            var rp = new RotationPresenter(
-                new UserControlRotationUi(
-                    list => new OrderedMaterializedEnumerable<TextBox>(list),
-                    ll => new LinkedListMaterializedEnumerable<int>(ll)),
-                this.shell,
-                new Random(),
-                new EnumerableRotator());
-            rp.Setup(this.navigator);
-
-            var pnp = new PrimesNavPresenter(
-                new UserControlPrimesNavUi(), 
-                this.shell.NavUi,
-                this.navigator,
-                ac,
-                new xofz.Framework.Timer());
-            pnp.Setup();
-
             var fm = new FormsMessenger { Subscriber = this.shell };
-            var pp = new PrimesPresenter(
-                new UserControlPrimesUi(),
-                this.shell,
-                ll => ll == null ? new PrimeGenerator() : new PrimeGenerator(ll),
-                new PrimeManager(),
-                fm);
-            pp.Setup(this.navigator);
-
-            var fnp = new FactorialNavPresenter(
-                new UserControlFactorialNavUi(), 
-                this.shell.NavUi,
-                this.navigator,
-                ac,
-                new xofz.Framework.Timer());
-            fnp.Setup();
-
-            var fp = new FactorialPresenter(
-                new UserControlFactorialUi(), 
-                this.shell,
-                new FactorialComputer(),
-                ac,
-                new xofz.Framework.Timer(),
-                new FactorialSaver(),
-                fm);
-            fp.Setup(this.navigator);
-
-            var chnp = new ControlHubNavPresenter(
-                new UserControlControlHubNavUi(), 
-                this.shell.NavUi,
-                this.navigator,
-                ac,
-                new xofz.Framework.Timer());
-            chnp.Setup();
-
-            var chp = new ControlHubPresenter(
-                new UserControlControlHubUi(), 
-                this.shell,
-                this.navigator,
-                new EventRaiser());
-            chp.Setup();
-
-            var sp = new ShutdownPresenter(
-                this.shell,
-                () => { });
-            this.navigator.RegisterPresenter(sp);
+            this.executor
+                .Execute(new SetupLoginCommand(
+                    new FormLoginUi(this.shell),
+                    ac,
+                    this.navigator))
+                .Execute(new SetupMainCommand(
+                    this.shell,
+                    this.navigator))
+                .Execute(new SetupHomeCommand(
+                    new UserControlHomeNavUi(),
+                    new UserControlHomeUi(),
+                    this.shell.NavUi,
+                    this.shell,
+                    this.navigator,
+                    ac))
+                .Execute(new SetupRotationCommand(
+                    new UserControlRotationNavUi(),
+                    new UserControlRotationUi(
+                        list => new OrderedMaterializedEnumerable<TextBox>(list),
+                        ll => new LinkedListMaterializedEnumerable<int>(ll)),
+                    this.shell.NavUi,
+                    this.shell,
+                    this.navigator,
+                    ac))
+                .Execute(new SetupPrimesCommand(
+                    new UserControlPrimesNavUi(),
+                    new UserControlPrimesUi(),
+                    this.shell.NavUi,
+                    this.shell,
+                    this.navigator,
+                    ac,
+                    fm))
+                .Execute(new SetupFactorialCommand(
+                    new UserControlFactorialNavUi(),
+                    new UserControlFactorialUi(),
+                    this.shell.NavUi,
+                    this.shell,
+                    this.navigator,
+                    ac,
+                    fm))
+                .Execute(new SetupControlHubCommand(
+                    new UserControlControlHubNavUi(),
+                    new UserControlControlHubUi(),
+                    this.shell.NavUi,
+                    this.shell,
+                    this.navigator,
+                    ac))
+                .Execute(new SetupShutdownCommand(
+                    this.shell,
+                    () => { },
+                    this.navigator));
+            
 
             this.navigator.Present<HomePresenter>();
             this.navigator.PresentFluidly<HomeNavPresenter>();
@@ -127,5 +87,6 @@
 
         private FormMainUi shell;
         private readonly Navigator navigator;
+        private readonly CommandExecutor executor;
     }
 }

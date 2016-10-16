@@ -60,6 +60,14 @@
     <Compile Include="Presentation\PrimesNavPresenter.cs" />
     <Compile Include="Presentation\PrimesPresenter.cs" />
     <Compile Include="Start\FormsBootstrapper.cs" />
+    <Compile Include="Start\SetupControlHubCommand.cs" />
+    <Compile Include="Start\SetupFactorialCommand.cs" />
+    <Compile Include="Start\SetupHomeCommand.cs" />
+    <Compile Include="Start\SetupLoginCommand.cs" />
+    <Compile Include="Start\SetupMainCommand.cs" />
+    <Compile Include="Start\SetupPrimesCommand.cs" />
+    <Compile Include="Start\SetupRotationCommand.cs" />
+    <Compile Include="Start\SetupShutdownCommand.cs" />
     <Compile Include="UI\ControlHubNavUi.cs" />
     <Compile Include="UI\FactorialNavUi.cs" />
     <Compile Include="UI\FactorialUi.cs" />
