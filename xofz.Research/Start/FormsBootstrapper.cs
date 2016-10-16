@@ -21,64 +21,72 @@
 
         public virtual void Bootstrap()
         {
-            this.shell = new FormMainUi();
-            var ac = new AccessController(new[] { "1111", "2222" });
+            this.setShell(new FormMainUi());
+            var n = this.navigator;
+            var s = this.shell;
             var fm = new FormsMessenger { Subscriber = this.shell };
+            var ac = new AccessController(new[] { "1111", "2222" });
+
             this.executor
                 .Execute(new SetupLoginCommand(
-                    new FormLoginUi(this.shell),
+                    new FormLoginUi(s),
                     ac,
-                    this.navigator))
+                    n))
                 .Execute(new SetupMainCommand(
-                    this.shell,
-                    this.navigator))
+                    s,
+                    n))
                 .Execute(new SetupHomeCommand(
                     new UserControlHomeNavUi(),
                     new UserControlHomeUi(),
-                    this.shell.NavUi,
-                    this.shell,
-                    this.navigator,
+                    s.NavUi,
+                    s,
+                    n,
                     ac))
                 .Execute(new SetupRotationCommand(
                     new UserControlRotationNavUi(),
                     new UserControlRotationUi(
                         list => new OrderedMaterializedEnumerable<TextBox>(list),
                         ll => new LinkedListMaterializedEnumerable<int>(ll)),
-                    this.shell.NavUi,
-                    this.shell,
-                    this.navigator,
+                    s.NavUi,
+                    s,
+                    n,
                     ac))
                 .Execute(new SetupPrimesCommand(
                     new UserControlPrimesNavUi(),
                     new UserControlPrimesUi(),
-                    this.shell.NavUi,
-                    this.shell,
-                    this.navigator,
+                    s.NavUi,
+                    s,
+                    n,
                     ac,
                     fm))
                 .Execute(new SetupFactorialCommand(
                     new UserControlFactorialNavUi(),
                     new UserControlFactorialUi(),
-                    this.shell.NavUi,
-                    this.shell,
-                    this.navigator,
+                    s.NavUi,
+                    s,
+                    n,
                     ac,
                     fm))
                 .Execute(new SetupControlHubCommand(
                     new UserControlControlHubNavUi(),
                     new UserControlControlHubUi(),
-                    this.shell.NavUi,
-                    this.shell,
-                    this.navigator,
+                    s.NavUi,
+                    s,
+                    n,
                     ac))
                 .Execute(new SetupShutdownCommand(
-                    this.shell,
+                    s,
                     () => { },
-                    this.navigator));
+                    n));
             
 
             this.navigator.Present<HomePresenter>();
             this.navigator.PresentFluidly<HomeNavPresenter>();
+        }
+
+        private void setShell(FormMainUi shell)
+        {
+            this.shell = shell;
         }
 
         private FormMainUi shell;
