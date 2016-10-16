@@ -1,14 +1,10 @@
 ﻿namespace xofz.Research.Start
 {
-    using System;
     using System.Windows.Forms;
-    using Framework;
     using Presentation;
     using UI.Forms;
     using xofz.Framework;
-    using xofz.Framework.Computation;
     using xofz.Framework.Materialization;
-    using xofz.Framework.Transformation;
     using xofz.Presentation;
     using xofz.Start;
     using xofz.UI.Forms;
@@ -21,9 +17,9 @@
             this.executor = executor;
         }
 
-        public Form Shell => this.shell;
+        public virtual Form Shell => this.shell;
 
-        public void Bootstrap()
+        public virtual void Bootstrap()
         {
             this.shell = new FormMainUi();
             var ac = new AccessController(new[] { "1111", "2222" });

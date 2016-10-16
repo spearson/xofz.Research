@@ -42,6 +42,7 @@
 
         public override void Start()
         {
+            this.timer_Elapsed();
             base.Start();
 
             this.timer.Start(1000);

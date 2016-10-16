@@ -50,8 +50,10 @@
 
         public override void Start()
         {
-            this.timer.Start(1000);
+            this.timer_Elapsed();
             base.Start();
+
+            this.timer.Start(1000);
         }
 
         public override void Stop()
