@@ -16,6 +16,7 @@
             this.cleanup = cleanup;
             this.navigator = navigator;
         }
+
         public override void Execute()
         {
             new ShutdownPresenter(

@@ -79,7 +79,6 @@
                     () => { },
                     n));
             
-
             this.navigator.Present<HomePresenter>();
             this.navigator.PresentFluidly<HomeNavPresenter>();
         }
