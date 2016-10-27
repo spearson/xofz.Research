@@ -32,6 +32,7 @@
             this.ui.HomeKeyTapped += this.ui_HomeKeyTapped;
             this.ui.PrimesKeyTapped += this.ui_PrimesKeyTapped;
             this.ui.FactorialKeyTapped += this.ui_FactorialKeyTapped;
+            this.ui.BigPowKeyTapped += this.ui_BigPowKeyTapped;
             this.ui.ControlHubKeyTapped += this.ui_ControlHubKeyTapped;
             this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
             this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
@@ -55,26 +56,37 @@
 
         private void ui_HomeKeyTapped()
         {
-            this.navigator.Present<HomePresenter>();
-            this.navigator.PresentFluidly<HomeNavPresenter>();
+            var n = this.navigator;
+            n.Present<HomePresenter>();
+            n.PresentFluidly<HomeNavPresenter>();
         }
 
         private void ui_PrimesKeyTapped()
         {
-            this.navigator.Present<PrimesPresenter>();
-            this.navigator.PresentFluidly<PrimesNavPresenter>();
+            var n = this.navigator;
+            n.Present<PrimesPresenter>();
+            n.PresentFluidly<PrimesNavPresenter>();
         }
 
         private void ui_FactorialKeyTapped()
         {
-            this.navigator.Present<FactorialPresenter>();
-            this.navigator.PresentFluidly<FactorialNavPresenter>();
+            var n = this.navigator;
+            n.Present<FactorialPresenter>();
+            n.PresentFluidly<FactorialNavPresenter>();
+        }
+
+        private void ui_BigPowKeyTapped()
+        {
+            var n = this.navigator;
+            n.Present<BigPowPresenter>();
+            n.PresentFluidly<BigPowNavPresenter>();
         }
 
         private void ui_ControlHubKeyTapped()
         {
-            this.navigator.Present<ControlHubPresenter>();
-            this.navigator.PresentFluidly<ControlHubNavPresenter>();
+            var n = this.navigator;
+            n.Present<ControlHubPresenter>();
+            n.PresentFluidly<ControlHubNavPresenter>();
         }
 
         private void ui_LogInKeyTapped()

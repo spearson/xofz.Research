@@ -2,15 +2,16 @@
 {
     using System;
     using xofz.UI;
-    public interface PrimesNavUi : Ui
+
+    public interface BigPowNavUi : Ui
     {
         event Action HomeKeyTapped;
+
+        event Action PrimesKeyTapped;
 
         event Action FactorialKeyTapped;
 
         event Action RotationKeyTapped;
-
-        event Action BigPowKeyTapped;
 
         event Action ControlHubKeyTapped;
 

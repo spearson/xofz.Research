@@ -33,9 +33,10 @@
             this.ui.HomeKeyTapped += this.ui_HomeKeyTapped;
             this.ui.FactorialKeyTapped += this.ui_FactorialKeyTapped;
             this.ui.RotationKeyTapped += this.ui_RotationKeyTapped;
+            this.ui.BigPowKeyTapped += this.ui_BigPowKeyTapped;
+            this.ui.ControlHubKeyTapped += this.ui_ControlHubKeyTapped;
             this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
             this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
-            this.ui.ControlHubKeyTapped += this.ui_ControlHubKeyTapped;
             this.timer.Elapsed += this.timer_Elapsed;
             this.navigator.RegisterPresenter(this);
         }
@@ -61,28 +62,39 @@
                 () => this.ui.ControlHubKeyVisible = level2);
         }
 
-        private void ui_ControlHubKeyTapped()
-        {
-            this.navigator.Present<ControlHubPresenter>();
-            this.navigator.PresentFluidly<ControlHubNavPresenter>();
-        }
-
         private void ui_HomeKeyTapped()
         {
-            this.navigator.Present<HomePresenter>();
-            this.navigator.PresentFluidly<HomeNavPresenter>();
+            var n = this.navigator;
+            n.Present<HomePresenter>();
+            n.PresentFluidly<HomeNavPresenter>();
         }
 
         private void ui_FactorialKeyTapped()
         {
-            this.navigator.Present<FactorialPresenter>();
-            this.navigator.PresentFluidly<FactorialNavPresenter>();
+            var n = this.navigator;
+            n.Present<FactorialPresenter>();
+            n.PresentFluidly<FactorialNavPresenter>();
         }
 
         private void ui_RotationKeyTapped()
         {
-            this.navigator.Present<RotationPresenter>();
-            this.navigator.PresentFluidly<RotationNavPresenter>();
+            var n = this.navigator;
+            n.Present<RotationPresenter>();
+            n.PresentFluidly<RotationNavPresenter>();
+        }
+
+        private void ui_BigPowKeyTapped()
+        {
+            var n = this.navigator;
+            n.Present<BigPowPresenter>();
+            n.PresentFluidly<BigPowNavPresenter>();
+        }
+
+        private void ui_ControlHubKeyTapped()
+        {
+            var n = this.navigator;
+            n.Present<ControlHubPresenter>();
+            n.PresentFluidly<ControlHubNavPresenter>();
         }
 
         private void ui_LogInKeyTapped()

@@ -30,25 +30,12 @@
             var ac = new AccessController(new[] { "1111", "2222" });
 
             this.executor
-                .Execute(new SetupLoginCommand(
-                    new FormLoginUi(s),
-                    ac,
-                    n))
                 .Execute(new SetupMainCommand(
                     s,
                     n))
                 .Execute(new SetupHomeCommand(
                     new UserControlHomeNavUi(),
                     new UserControlHomeUi(),
-                    s.NavUi,
-                    s,
-                    n,
-                    ac))
-                .Execute(new SetupRotationCommand(
-                    new UserControlRotationNavUi(),
-                    new UserControlRotationUi(
-                        list => new OrderedMaterializedEnumerable<TextBox>(list),
-                        ll => new LinkedListMaterializedEnumerable<int>(ll)),
                     s.NavUi,
                     s,
                     n,
@@ -69,6 +56,23 @@
                     n,
                     ac,
                     fm))
+                .Execute(new SetupRotationCommand(
+                    new UserControlRotationNavUi(),
+                    new UserControlRotationUi(
+                        list => new OrderedMaterializedEnumerable<TextBox>(list),
+                        ll => new LinkedListMaterializedEnumerable<int>(ll)),
+                    s.NavUi,
+                    s,
+                    n,
+                    ac))
+                .Execute(new SetupBigPowCommand(
+                    new UserControlBigPowNavUi(),
+                    new UserControlBigPowUi(),
+                    s.NavUi,
+                    s,
+                    n,
+                    ac,
+                    fm))
                 .Execute(new SetupControlHubCommand(
                     new UserControlControlHubNavUi(),
                     new UserControlControlHubUi(),
@@ -76,6 +80,10 @@
                     s,
                     n,
                     ac))
+                .Execute(new SetupLoginCommand(
+                    new FormLoginUi(s),
+                    ac,
+                    n))
                 .Execute(new SetupShutdownCommand(
                     s,
                     n,

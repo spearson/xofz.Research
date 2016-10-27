@@ -4,9 +4,9 @@
     using System.Threading;
     using xofz.UI.Forms;
 
-    public partial class UserControlFactorialNavUi : UserControlUi, FactorialNavUi
+    public partial class UserControlBigPowNavUi : UserControlUi, BigPowNavUi
     {
-        public UserControlFactorialNavUi()
+        public UserControlBigPowNavUi()
         {
             this.InitializeComponent();
 
@@ -17,9 +17,9 @@
 
         public event Action PrimesKeyTapped;
 
-        public event Action RotationKeyTapped;
+        public event Action FactorialKeyTapped;
 
-        public event Action BigPowKeyTapped;
+        public event Action RotationKeyTapped;
 
         public event Action ControlHubKeyTapped;
 
@@ -27,7 +27,7 @@
 
         public event Action ShutdownKeyTapped;
 
-        bool FactorialNavUi.ControlHubKeyVisible
+        bool BigPowNavUi.ControlHubKeyVisible
         {
             get { return this.controlHubKey.Visible; }
 
@@ -44,14 +44,14 @@
             new Thread(() => this.PrimesKeyTapped?.Invoke()).Start();
         }
 
+        private void factorialKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.FactorialKeyTapped?.Invoke()).Start();
+        }
+
         private void rotationKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.RotationKeyTapped?.Invoke()).Start();
-        }
-
-        private void bigPowKey_Click(object sender, EventArgs e)
-        {
-            new Thread(() => this.BigPowKeyTapped?.Invoke()).Start();
         }
 
         private void controlHubKey_Click(object sender, EventArgs e)

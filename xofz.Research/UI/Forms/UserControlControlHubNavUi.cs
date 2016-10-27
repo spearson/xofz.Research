@@ -8,7 +8,7 @@
     {
         public UserControlControlHubNavUi()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             var h = this.Handle;
         }
@@ -20,6 +20,8 @@
         public event Action FactorialKeyTapped;
 
         public event Action RotationKeyTapped;
+
+        public event Action BigPowKeyTapped;
 
         public event Action LogInKeyTapped;
 
@@ -43,6 +45,11 @@
         private void rotationKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.RotationKeyTapped?.Invoke()).Start();
+        }
+
+        private void bigPowKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.BigPowKeyTapped?.Invoke()).Start();
         }
 
         private void loginKey_Click(object sender, EventArgs e)

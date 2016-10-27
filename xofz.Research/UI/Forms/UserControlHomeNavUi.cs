@@ -8,7 +8,7 @@
     {
         public UserControlHomeNavUi()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             var h = this.Handle;
         }
@@ -18,6 +18,8 @@
         public event Action FactorialKeyTapped;
 
         public event Action RotationKeyTapped;
+
+        public event Action BigPowKeyTapped;
 
         public event Action ControlHubKeyTapped;
 
@@ -47,6 +49,16 @@
             new Thread(() => this.RotationKeyTapped?.Invoke()).Start();
         }
 
+        private void bigPowKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.BigPowKeyTapped?.Invoke()).Start();
+        }
+
+        private void controlHubKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.ControlHubKeyTapped?.Invoke()).Start();
+        }
+
         private void loginKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.LogInKeyTapped?.Invoke()).Start();
@@ -55,11 +67,6 @@
         private void shutdownKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.ShutdownKeyTapped?.Invoke()).Start();
-        }
-
-        private void controlHubKey_Click(object sender, EventArgs e)
-        {
-            new Thread(() => this.ControlHubKeyTapped?.Invoke()).Start();
         }
     }
 }

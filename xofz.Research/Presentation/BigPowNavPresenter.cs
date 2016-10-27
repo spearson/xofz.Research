@@ -1,15 +1,15 @@
 ﻿namespace xofz.Research.Presentation
 {
     using System.Threading;
-    using UI;
     using xofz.Framework;
     using xofz.Presentation;
+    using xofz.Research.UI;
     using xofz.UI;
 
-    public sealed class ControlHubNavPresenter : Presenter
+    public sealed class BigPowNavPresenter : Presenter
     {
-        public ControlHubNavPresenter(
-            ControlHubNavUi ui, 
+        public BigPowNavPresenter(
+            BigPowNavUi ui, 
             ShellUi shell,
             Navigator navigator,
             AccessController accessController,
@@ -33,20 +33,11 @@
             this.ui.PrimesKeyTapped += this.ui_PrimesKeyTapped;
             this.ui.FactorialKeyTapped += this.ui_FactorialKeyTapped;
             this.ui.RotationKeyTapped += this.ui_RotationKeyTapped;
-            this.ui.BigPowKeyTapped += this.ui_BigPowKeyTapped;
             this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
             this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
+            this.ui.ControlHubKeyTapped += this.ui_ControlHubKeyTapped;
             this.timer.Elapsed += this.timer_Elapsed;
             this.navigator.RegisterPresenter(this);
-        }
-
-        private void timer_Elapsed()
-        {
-            if (this.accessController.CurrentAccessLevel < AccessLevel.Level2)
-            {
-                this.navigator.Present<HomePresenter>();
-                this.navigator.PresentFluidly<HomeNavPresenter>();
-            }
         }
 
         public override void Start()
@@ -60,6 +51,21 @@
         public override void Stop()
         {
             this.timer.Stop();
+        }
+
+        private void timer_Elapsed()
+        {
+            var level2 = this.accessController.CurrentAccessLevel > AccessLevel.Level1;
+            UiHelpers.Write(
+                this.ui,
+                () => this.ui.ControlHubKeyVisible = level2);
+        }
+
+        private void ui_ControlHubKeyTapped()
+        {
+            var n = this.navigator;
+            n.Present<ControlHubPresenter>();
+            n.PresentFluidly<ControlHubNavPresenter>();
         }
 
         private void ui_HomeKeyTapped()
@@ -90,13 +96,6 @@
             n.PresentFluidly<RotationNavPresenter>();
         }
 
-        private void ui_BigPowKeyTapped()
-        {
-            var n = this.navigator;
-            n.Present<BigPowPresenter>();
-            n.PresentFluidly<BigPowNavPresenter>();
-        }
-
         private void ui_LogInKeyTapped()
         {
             this.navigator.PresentFluidly<LoginPresenter>();
@@ -108,7 +107,7 @@
         }
 
         private int setupIf1;
-        private readonly ControlHubNavUi ui;
+        private readonly BigPowNavUi ui;
         private readonly Navigator navigator;
         private readonly AccessController accessController;
         private readonly xofz.Framework.Timer timer;

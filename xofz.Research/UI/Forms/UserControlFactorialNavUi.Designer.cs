@@ -35,6 +35,7 @@
             this.primesKey = new System.Windows.Forms.Button();
             this.loginKey = new System.Windows.Forms.Button();
             this.shutdownKey = new System.Windows.Forms.Button();
+            this.bigPowKey = new System.Windows.Forms.Button();
             this.tableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,6 +56,7 @@
             this.tableLayoutPanel.Controls.Add(this.primesKey, 1, 0);
             this.tableLayoutPanel.Controls.Add(this.loginKey, 6, 0);
             this.tableLayoutPanel.Controls.Add(this.shutdownKey, 7, 0);
+            this.tableLayoutPanel.Controls.Add(this.bigPowKey, 4, 0);
             this.tableLayoutPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -161,6 +163,22 @@
             this.shutdownKey.UseVisualStyleBackColor = true;
             this.shutdownKey.Click += new System.EventHandler(this.shutdownKey_Click);
             // 
+            // bigPowKey
+            // 
+            this.bigPowKey.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bigPowKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.bigPowKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.bigPowKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bigPowKey.Location = new System.Drawing.Point(547, 3);
+            this.bigPowKey.Name = "bigPowKey";
+            this.bigPowKey.Size = new System.Drawing.Size(130, 44);
+            this.bigPowKey.TabIndex = 11;
+            this.bigPowKey.Text = "Big Pow";
+            this.bigPowKey.UseVisualStyleBackColor = true;
+            this.bigPowKey.Click += new System.EventHandler(this.bigPowKey_Click);
+            // 
             // UserControlFactorialNavUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -182,5 +200,6 @@
         private System.Windows.Forms.Button rotationKey;
         private System.Windows.Forms.Button homeKey;
         private System.Windows.Forms.Button controlHubKey;
+        private System.Windows.Forms.Button bigPowKey;
     }
 }

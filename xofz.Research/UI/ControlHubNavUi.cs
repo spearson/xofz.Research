@@ -13,6 +13,8 @@
 
         event Action RotationKeyTapped;
 
+        event Action BigPowKeyTapped;
+
         event Action LogInKeyTapped;
 
         event Action ShutdownKeyTapped;

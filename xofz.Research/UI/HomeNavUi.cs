@@ -10,6 +10,8 @@
 
         event Action RotationKeyTapped;
 
+        event Action BigPowKeyTapped;
+
         event Action ControlHubKeyTapped;
 
         event Action LogInKeyTapped;

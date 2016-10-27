@@ -5,9 +5,9 @@
     using System.Threading;
     using xofz.UI.Forms;
 
-    public partial class UserControlFactorialUi : UserControlUi, FactorialUi
+    public partial class UserControlBigPowUi : UserControlUi, BigPowUi
     {
-        public UserControlFactorialUi()
+        public UserControlBigPowUi()
         {
             this.InitializeComponent();
 
@@ -18,21 +18,28 @@
 
         public event Action SaveKeyTapped;
 
-        BigInteger FactorialUi.Input
+        BigInteger BigPowUi.NumberInput
         {
-            get { return BigInteger.Parse(this.inputTextBox.Text); }
+            get { return BigInteger.Parse(this.numberInputTextBox.Text); }
 
-            set { this.inputTextBox.Text = value.ToString(); }
+            set { this.numberInputTextBox.Text = value.ToString(); }
         }
 
-        string FactorialUi.Factorial
+        BigInteger BigPowUi.ExponentInput
         {
-            get { return this.factorialTextBox.Text; }
+            get { return BigInteger.Parse(this.exponentInputTextBox.Text); }
 
-            set { this.factorialTextBox.Text = value; }
+            set { this.exponentInputTextBox.Text = value.ToString(); }
         }
 
-        string FactorialUi.DurationInfo
+        string BigPowUi.Power
+        {
+            get { return this.powerTextBox.Text; }
+
+            set { this.powerTextBox.Text = value; }
+        }
+
+        string BigPowUi.DurationInfo
         {
             get { return this.durationLabel.Text; }
 
@@ -43,14 +50,14 @@
             }
         }
 
-        bool FactorialUi.DurationInfoVisible
+        bool BigPowUi.DurationInfoVisible
         {
             get { return this.durationLabel.Visible; }
 
             set { this.durationLabel.Visible = value; }
         }
 
-        bool FactorialUi.Computing
+        bool BigPowUi.Computing
         {
             get { return this.computeKey.Text == @"Computing..."; }
 
@@ -61,7 +68,7 @@
             }
         }
 
-        bool FactorialUi.SaveKeyVisible
+        bool BigPowUi.SaveKeyVisible
         {
             get { return this.saveKey.Visible; }
 

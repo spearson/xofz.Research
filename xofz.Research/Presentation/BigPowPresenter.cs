@@ -3,27 +3,27 @@
     using System;
     using System.Diagnostics;
     using System.Threading;
-    using Framework;
-    using UI;
     using xofz.Framework;
     using xofz.Framework.Computation;
     using xofz.Presentation;
+    using xofz.Research.Framework;
+    using xofz.Research.UI;
     using xofz.UI;
 
-    public sealed class FactorialPresenter : Presenter
+    public sealed class BigPowPresenter : Presenter
     {
-        public FactorialPresenter(
-            FactorialUi ui, 
+        public BigPowPresenter(
+            BigPowUi ui,
             ShellUi shell,
-            FactorialComputer computer,
+            BigPow bigPow,
             AccessController accessController,
             xofz.Framework.Timer timer,
-            FactorialSaver saver,
-            Messenger messenger) 
+            BigPowSaver saver,
+            Messenger messenger)
             : base(ui, shell)
         {
             this.ui = ui;
-            this.computer = computer;
+            this.bigPow = bigPow;
             this.accessController = accessController;
             this.timer = timer;
             this.saver = saver;
@@ -43,7 +43,8 @@
 
             UiHelpers.Write(this.ui, () =>
             {
-                this.ui.Input = 1000;
+                this.ui.NumberInput = 1000;
+                this.ui.ExponentInput = 1000;
                 this.ui.SaveKeyVisible = false;
             });
             navigator.RegisterPresenter(this);
@@ -61,19 +62,20 @@
             this.ui.WriteFinished.WaitOne();
 
             var sw = Stopwatch.StartNew();
-            var factorial = this.computer.Compute(
-                UiHelpers.Read(this.ui, () => this.ui.Input));
+            var power = this.bigPow.Compute(
+                UiHelpers.Read(this.ui, () => this.ui.NumberInput),
+                UiHelpers.Read(this.ui, () => this.ui.ExponentInput));
             sw.Stop();
 
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.DurationInfo = "Computation took " + sw.Elapsed;
-                this.ui.Factorial = "Computed, now waiting for ToString()...";
+                this.ui.Power = "Computed, now waiting for ToString()...";
             });
             this.ui.WriteFinished.WaitOne();
 
             var sw2 = Stopwatch.StartNew();
-            var s = factorial.ToString();
+            var s = power.ToString();
             sw2.Stop();
 
             UiHelpers.Write(this.ui, () =>
@@ -85,7 +87,7 @@
 
             UiHelpers.Write(this.ui, () =>
             {
-                this.ui.Factorial = s;
+                this.ui.Power = s;
                 sw3.Stop();
                 this.ui.DurationInfo += Environment.NewLine +
                                         "Setting TextBox Text property took " + sw3.Elapsed;
@@ -102,16 +104,20 @@
 
         private void ui_SaveKeyTapped()
         {
-            var input = UiHelpers.Read(this.ui, () => this.ui.Input);
+            var number = UiHelpers.Read(this.ui, () => this.ui.NumberInput);
+            var exponent = UiHelpers.Read(this.ui, () => this.ui.ExponentInput);
             this.saver.Save(
-                input,
-                UiHelpers.Read(this.ui, () => this.ui.Factorial));
+                number,
+                exponent,
+                UiHelpers.Read(this.ui, () => this.ui.Power));
             UiHelpers.Write(
-                this.messenger.Subscriber, 
+                this.messenger.Subscriber,
                 () => this.messenger.Inform(
-                    "Saved the factorial of " 
-                    + input
-                    + " to the current program directory."));
+                    "Saved "
+                    + number
+                    + " raised to the "
+                    + exponent
+                    + " power to the current program directory."));
         }
 
         private void timer_Elapsed()
@@ -121,11 +127,11 @@
         }
 
         private int setupIf1;
-        private readonly FactorialUi ui;
-        private readonly FactorialComputer computer;
+        private readonly BigPowUi ui;
+        private readonly BigPow bigPow;
         private readonly AccessController accessController;
         private readonly xofz.Framework.Timer timer;
-        private readonly FactorialSaver saver;
+        private readonly BigPowSaver saver;
         private readonly Messenger messenger;
     }
 }
