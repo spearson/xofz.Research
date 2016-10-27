@@ -1,12 +1,14 @@
 ﻿namespace xofz.Research.Start
 {
     using System.Windows.Forms;
+    using Commands;
     using Presentation;
     using UI.Forms;
     using xofz.Framework;
     using xofz.Framework.Materialization;
     using xofz.Presentation;
     using xofz.Start;
+    using xofz.Start.Commands;
     using xofz.UI.Forms;
 
     public class FormsBootstrapper
@@ -76,8 +78,8 @@
                     ac))
                 .Execute(new SetupShutdownCommand(
                     s,
-                    () => { },
-                    n));
+                    n,
+                    () => { }));
             
             this.navigator.Present<HomePresenter>();
             this.navigator.PresentFluidly<HomeNavPresenter>();

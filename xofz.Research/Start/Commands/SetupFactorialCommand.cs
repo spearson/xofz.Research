@@ -1,6 +1,5 @@
-﻿namespace xofz.Research.Start
+﻿namespace xofz.Research.Start.Commands
 {
-    using System.Runtime.CompilerServices;
     using Framework;
     using Presentation;
     using UI;
@@ -10,11 +9,11 @@
     using xofz.Start;
     using xofz.UI;
 
-    public class SetupPrimesCommand : Command
+    public class SetupFactorialCommand : Command
     {
-        public SetupPrimesCommand(
-            PrimesNavUi navUi,
-            PrimesUi ui,
+        public SetupFactorialCommand(
+            FactorialNavUi navUi,
+            FactorialUi ui,
             ShellUi navShell,
             ShellUi mainShell,
             Navigator navigator,
@@ -33,25 +32,27 @@
         public override void Execute()
         {
             var n = this.navigator;
-            new PrimesNavPresenter(
+            var ac = this.accessController;
+            new FactorialNavPresenter(
                 this.navUi,
                 this.navShell,
                 n,
-                this.accessController,
+                ac,
                 new xofz.Framework.Timer())
                 .Setup();
-
-            new PrimesPresenter(
+            new FactorialPresenter(
                 this.ui,
                 this.mainShell,
-                ll => ll == null ? new PrimeGenerator() : new PrimeGenerator(ll),
-                new PrimeManager(),
+                new FactorialComputer(),
+                ac,
+                new xofz.Framework.Timer(),
+                new FactorialSaver(),
                 this.messenger)
                 .Setup(n);
         }
 
-        private readonly PrimesNavUi navUi;
-        private readonly PrimesUi ui;
+        private readonly FactorialNavUi navUi;
+        private readonly FactorialUi ui;
         private readonly ShellUi navShell;
         private readonly ShellUi mainShell;
         private readonly Navigator navigator;

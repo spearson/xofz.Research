@@ -1,17 +1,19 @@
-﻿namespace xofz.Research.Start
+﻿namespace xofz.Research.Start.Commands
 {
+    using System;
     using Presentation;
     using UI;
     using xofz.Framework;
+    using xofz.Framework.Transformation;
     using xofz.Presentation;
     using xofz.Start;
     using xofz.UI;
 
-    public class SetupHomeCommand : Command
+    public class SetupRotationCommand : Command
     {
-        public SetupHomeCommand(
-            HomeNavUi navUi,
-            HomeUi ui,
+        public SetupRotationCommand(
+            RotationNavUi navUi,
+            RotationUi ui,
             ShellUi navShell,
             ShellUi mainShell,
             Navigator navigator,
@@ -28,7 +30,7 @@
         public override void Execute()
         {
             var n = this.navigator;
-            new HomeNavPresenter(
+            new RotationNavPresenter(
                 this.navUi,
                 this.navShell,
                 n,
@@ -36,14 +38,16 @@
                 new xofz.Framework.Timer())
                 .Setup();
 
-            new HomePresenter(
-                this.ui, 
-                this.mainShell)
+            new RotationPresenter(
+                this.ui,
+                this.mainShell,
+                new Random(),
+                new EnumerableRotator())
                 .Setup(n);
         }
 
-        private readonly HomeNavUi navUi;
-        private readonly HomeUi ui;
+        private readonly RotationNavUi navUi;
+        private readonly RotationUi ui;
         private readonly ShellUi navShell;
         private readonly ShellUi mainShell;
         private readonly Navigator navigator;

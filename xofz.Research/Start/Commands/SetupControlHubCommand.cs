@@ -1,4 +1,4 @@
-﻿namespace xofz.Research.Start
+﻿namespace xofz.Research.Start.Commands
 {
     using Presentation;
     using UI;
