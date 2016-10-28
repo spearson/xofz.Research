@@ -58,11 +58,11 @@
         {
             UiHelpers.Write(this.ui, () =>
             {
-                var sw3 = Stopwatch.StartNew();
+                var sw = Stopwatch.StartNew();
                 this.ui.Factorial = this.currentFactorial;
-                sw3.Stop();
+                sw.Stop();
                 this.ui.DurationInfo += Environment.NewLine +
-                                        "Setting TextBox Text property took " + sw3.Elapsed;
+                                        "Setting TextBox Text property took " + sw.Elapsed;
                 this.ui.DisplayKeyVisible = false;
             });
         }

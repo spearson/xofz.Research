@@ -1,6 +1,7 @@
 ﻿namespace xofz.Research.Presentation
 {
     using System;
+    using System.CodeDom;
     using System.Diagnostics;
     using System.Numerics;
     using System.Threading;
@@ -59,7 +60,11 @@
         {
             UiHelpers.Write(this.ui, () =>
             {
+                var sw = Stopwatch.StartNew();
                 this.ui.Power = this.currentPower;
+                sw.Stop();
+                this.ui.DurationInfo += Environment.NewLine +
+                                        "Setting TextBox Text property took " + sw.Elapsed;
                 this.ui.DisplayKeyVisible = false;
             });
         }
