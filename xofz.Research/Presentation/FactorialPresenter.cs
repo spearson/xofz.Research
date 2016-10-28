@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Numerics;
     using System.Threading;
     using Framework;
     using UI;
@@ -39,16 +40,31 @@
 
             this.ui.ComputeKeyTapped += this.ui_ComputeKeyTapped;
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
+            this.ui.DisplayKeyTapped += this.ui_DisplayKeyTapped;
             this.timer.Elapsed += this.timer_Elapsed;
 
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.Input = 1000;
                 this.ui.SaveKeyVisible = false;
+                this.ui.DisplayKeyVisible = false;
             });
             navigator.RegisterPresenter(this);
             this.timer_Elapsed();
             this.timer.Start(1000);
+        }
+
+        private void ui_DisplayKeyTapped()
+        {
+            UiHelpers.Write(this.ui, () =>
+            {
+                var sw3 = Stopwatch.StartNew();
+                this.ui.Factorial = this.currentFactorial;
+                sw3.Stop();
+                this.ui.DurationInfo += Environment.NewLine +
+                                        "Setting TextBox Text property took " + sw3.Elapsed;
+                this.ui.DisplayKeyVisible = false;
+            });
         }
 
         private void ui_ComputeKeyTapped()
@@ -60,9 +76,10 @@
             });
             this.ui.WriteFinished.WaitOne();
 
+            var input = UiHelpers.Read(this.ui, () => this.ui.Input);
+            BigInteger factorial;
             var sw = Stopwatch.StartNew();
-            var factorial = this.computer.Compute(
-                UiHelpers.Read(this.ui, () => this.ui.Input));
+            factorial = this.computer.Compute(input);
             sw.Stop();
 
             UiHelpers.Write(this.ui, () =>
@@ -72,24 +89,38 @@
             });
             this.ui.WriteFinished.WaitOne();
 
+            string s;
             var sw2 = Stopwatch.StartNew();
-            var s = factorial.ToString();
+            s = factorial.ToString();
             sw2.Stop();
 
-            UiHelpers.Write(this.ui, () =>
-                this.ui.DurationInfo += Environment.NewLine +
-                                        "ToString() took " + sw2.Elapsed);
-            this.ui.WriteFinished.WaitOne();
-
-            var sw3 = Stopwatch.StartNew();
-
+            this.setCurrentFactorial(s);
             UiHelpers.Write(this.ui, () =>
             {
-                this.ui.Factorial = s;
-                sw3.Stop();
+                this.ui.Factorial = string.Empty;
                 this.ui.DurationInfo += Environment.NewLine +
-                                        "Setting TextBox Text property took " + sw3.Elapsed;
+                                        "ToString() took " + sw2.Elapsed;
             });
+            this.ui.WriteFinished.WaitOne();
+
+            if (input < 10001)
+            {
+                UiHelpers.Write(this.ui, () =>
+                {
+                    var sw3 = Stopwatch.StartNew();
+                    this.ui.Factorial = this.currentFactorial;
+                    sw3.Stop();
+                    this.ui.DurationInfo += Environment.NewLine +
+                                            "Setting TextBox Text property took " + sw3.Elapsed;
+                });
+            }
+            else
+            {
+                UiHelpers.Write(this.ui, () =>
+                {
+                    this.ui.DisplayKeyVisible = true;
+                });
+            }
             this.ui.WriteFinished.WaitOne();
 
             UiHelpers.Write(this.ui, () =>
@@ -120,7 +151,13 @@
             UiHelpers.Write(this.ui, () => this.ui.DurationInfoVisible = visible);
         }
 
+        private void setCurrentFactorial(string currentFactorial)
+        {
+            this.currentFactorial = currentFactorial;
+        }
+
         private int setupIf1;
+        private string currentFactorial;
         private readonly FactorialUi ui;
         private readonly FactorialComputer computer;
         private readonly AccessController accessController;

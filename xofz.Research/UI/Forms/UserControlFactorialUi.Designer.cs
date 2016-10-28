@@ -36,6 +36,7 @@
             this.computeKey = new System.Windows.Forms.Button();
             this.durationLabel = new System.Windows.Forms.Label();
             this.saveKey = new System.Windows.Forms.Button();
+            this.displayKey = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // titleLabel
@@ -52,7 +53,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 71);
+            this.label1.Location = new System.Drawing.Point(4, 62);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(81, 13);
             this.label1.TabIndex = 4;
@@ -61,7 +62,7 @@
             // inputTextBox
             // 
             this.inputTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inputTextBox.Location = new System.Drawing.Point(91, 60);
+            this.inputTextBox.Location = new System.Drawing.Point(91, 51);
             this.inputTextBox.Name = "inputTextBox";
             this.inputTextBox.Size = new System.Drawing.Size(142, 29);
             this.inputTextBox.TabIndex = 5;
@@ -96,7 +97,7 @@
             this.computeKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.computeKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.computeKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.computeKey.Location = new System.Drawing.Point(239, 60);
+            this.computeKey.Location = new System.Drawing.Point(239, 51);
             this.computeKey.Name = "computeKey";
             this.computeKey.Size = new System.Drawing.Size(93, 32);
             this.computeKey.TabIndex = 8;
@@ -109,7 +110,7 @@
             this.durationLabel.AutoSize = true;
             this.durationLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.durationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.durationLabel.Location = new System.Drawing.Point(506, 60);
+            this.durationLabel.Location = new System.Drawing.Point(511, 51);
             this.durationLabel.Name = "durationLabel";
             this.durationLabel.Size = new System.Drawing.Size(2, 18);
             this.durationLabel.TabIndex = 9;
@@ -122,7 +123,7 @@
             this.saveKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.saveKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveKey.Location = new System.Drawing.Point(385, 60);
+            this.saveKey.Location = new System.Drawing.Point(390, 51);
             this.saveKey.Name = "saveKey";
             this.saveKey.Size = new System.Drawing.Size(61, 32);
             this.saveKey.TabIndex = 10;
@@ -130,9 +131,26 @@
             this.saveKey.UseVisualStyleBackColor = true;
             this.saveKey.Click += new System.EventHandler(this.saveKey_Click);
             // 
+            // displayKey
+            // 
+            this.displayKey.AutoSize = true;
+            this.displayKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.displayKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.displayKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.displayKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.displayKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.displayKey.Location = new System.Drawing.Point(239, 89);
+            this.displayKey.Name = "displayKey";
+            this.displayKey.Size = new System.Drawing.Size(79, 32);
+            this.displayKey.TabIndex = 22;
+            this.displayKey.Text = "Display";
+            this.displayKey.UseVisualStyleBackColor = true;
+            this.displayKey.Click += new System.EventHandler(this.displayKey_Click);
+            // 
             // UserControlFactorialUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.displayKey);
             this.Controls.Add(this.saveKey);
             this.Controls.Add(this.durationLabel);
             this.Controls.Add(this.computeKey);
@@ -159,5 +177,6 @@
         private System.Windows.Forms.Button computeKey;
         private System.Windows.Forms.Label durationLabel;
         private System.Windows.Forms.Button saveKey;
+        private System.Windows.Forms.Button displayKey;
     }
 }

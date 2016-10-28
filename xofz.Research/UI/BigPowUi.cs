@@ -8,6 +8,8 @@
     {
         event Action ComputeKeyTapped;
 
+        event Action DisplayKeyTapped;
+
         event Action SaveKeyTapped;
 
         BigInteger NumberInput { get; set; }
@@ -19,6 +21,8 @@
         string DurationInfo { get; set; }
 
         bool DurationInfoVisible { get; set; }
+
+        bool DisplayKeyVisible { get; set; }
 
         bool Computing { get; set; }
 

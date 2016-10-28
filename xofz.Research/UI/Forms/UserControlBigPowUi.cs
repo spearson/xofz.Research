@@ -16,6 +16,8 @@
 
         public event Action ComputeKeyTapped;
 
+        public event Action DisplayKeyTapped;
+
         public event Action SaveKeyTapped;
 
         BigInteger BigPowUi.NumberInput
@@ -57,6 +59,13 @@
             set { this.durationLabel.Visible = value; }
         }
 
+        bool BigPowUi.DisplayKeyVisible
+        {
+            get { return this.displayKey.Visible; }
+
+            set { this.displayKey.Visible = value; }
+        }
+
         bool BigPowUi.Computing
         {
             get { return this.computeKey.Text == @"Computing..."; }
@@ -83,6 +92,11 @@
         private void saveKey_Click(object sender, EventArgs e)
         {
             new Thread(() => this.SaveKeyTapped?.Invoke()).Start();
+        }
+
+        private void displayKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.DisplayKeyTapped?.Invoke()).Start();
         }
     }
 }

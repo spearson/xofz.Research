@@ -38,6 +38,7 @@
             this.titleLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.exponentInputTextBox = new System.Windows.Forms.TextBox();
+            this.displayKey = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // saveKey
@@ -74,7 +75,7 @@
             this.computeKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.computeKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.computeKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.computeKey.Location = new System.Drawing.Point(239, 60);
+            this.computeKey.Location = new System.Drawing.Point(239, 40);
             this.computeKey.Name = "computeKey";
             this.computeKey.Size = new System.Drawing.Size(93, 32);
             this.computeKey.TabIndex = 16;
@@ -135,7 +136,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(30, 86);
+            this.label3.Location = new System.Drawing.Point(30, 89);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(55, 13);
             this.label3.TabIndex = 19;
@@ -144,14 +145,31 @@
             // exponentInputTextBox
             // 
             this.exponentInputTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exponentInputTextBox.Location = new System.Drawing.Point(91, 75);
+            this.exponentInputTextBox.Location = new System.Drawing.Point(91, 78);
             this.exponentInputTextBox.Name = "exponentInputTextBox";
             this.exponentInputTextBox.Size = new System.Drawing.Size(142, 29);
             this.exponentInputTextBox.TabIndex = 20;
             // 
+            // displayKey
+            // 
+            this.displayKey.AutoSize = true;
+            this.displayKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.displayKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.displayKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.displayKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.displayKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.displayKey.Location = new System.Drawing.Point(239, 78);
+            this.displayKey.Name = "displayKey";
+            this.displayKey.Size = new System.Drawing.Size(79, 32);
+            this.displayKey.TabIndex = 21;
+            this.displayKey.Text = "Display";
+            this.displayKey.UseVisualStyleBackColor = true;
+            this.displayKey.Click += new System.EventHandler(this.displayKey_Click);
+            // 
             // UserControlBigPowUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.displayKey);
             this.Controls.Add(this.exponentInputTextBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.saveKey);
@@ -182,5 +200,6 @@
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox exponentInputTextBox;
+        private System.Windows.Forms.Button displayKey;
     }
 }
