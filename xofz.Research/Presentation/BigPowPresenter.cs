@@ -76,19 +76,35 @@
                 this.ui.Computing = true;
                 this.ui.SaveKeyVisible = false;
                 this.ui.DurationInfo = null;
+                this.ui.Power = null;
             });
             this.ui.WriteFinished.WaitOne();
 
             var number = UiHelpers.Read(this.ui, () => this.ui.NumberInput);
             var exponent = UiHelpers.Read(this.ui, () => this.ui.ExponentInput);
             BigInteger power;
+            DateTime computationStartTime, computationCompletionTime;
+
             var sw = Stopwatch.StartNew();
+            computationStartTime = DateTime.Now;
+            UiHelpers.Write(this.ui, () =>
+            {
+                this.ui.DurationInfo =
+                    "Computation began at approximately "
+                    + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
+            });
             power = this.bigPow.Compute(number, exponent);
+            computationCompletionTime = DateTime.Now;
             sw.Stop();
 
             UiHelpers.Write(this.ui, () =>
             {
-                this.ui.DurationInfo = "Computation took " + sw.Elapsed;
+                this.ui.DurationInfo += 
+                Environment.NewLine
+                + "Computation took " 
+                + sw.Elapsed
+                + " and completed at "
+                + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
                 this.ui.Power = "Computed, now waiting for ToString()...";
             });
             this.ui.WriteFinished.WaitOne();

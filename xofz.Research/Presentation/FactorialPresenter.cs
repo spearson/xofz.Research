@@ -74,18 +74,34 @@
                 this.ui.Computing = true;
                 this.ui.SaveKeyVisible = false;
                 this.ui.DurationInfo = null;
+                this.ui.Factorial = null;
             });
             this.ui.WriteFinished.WaitOne();
 
             var input = UiHelpers.Read(this.ui, () => this.ui.Input);
             BigInteger factorial;
+            DateTime computationStartTime, computationCompletionTime;
+
             var sw = Stopwatch.StartNew();
+            computationStartTime = DateTime.Now;
+            UiHelpers.Write(this.ui, () =>
+            {
+                this.ui.DurationInfo =
+                    "Computation began at approximately "
+                    + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
+            });
             factorial = this.computer.Compute(input);
+            computationCompletionTime = DateTime.Now;
             sw.Stop();
 
             UiHelpers.Write(this.ui, () =>
             {
-                this.ui.DurationInfo = "Computation took " + sw.Elapsed;
+                this.ui.DurationInfo +=
+                Environment.NewLine 
+                + "Computation took " 
+                + sw.Elapsed
+                + " and completed at "
+                + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
                 this.ui.Factorial = "Computed, now waiting for ToString()...";
             });
             this.ui.WriteFinished.WaitOne();

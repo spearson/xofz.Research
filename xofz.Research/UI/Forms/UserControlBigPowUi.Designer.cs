@@ -62,7 +62,7 @@
             this.durationLabel.AutoSize = true;
             this.durationLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.durationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.durationLabel.Location = new System.Drawing.Point(506, 60);
+            this.durationLabel.Location = new System.Drawing.Point(505, 19);
             this.durationLabel.Name = "durationLabel";
             this.durationLabel.Size = new System.Drawing.Size(2, 18);
             this.durationLabel.TabIndex = 17;

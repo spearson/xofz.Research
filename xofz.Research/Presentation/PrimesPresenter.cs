@@ -81,6 +81,7 @@
                 this.ui.StopKeyVisible = true;
                 this.ui.RestartKeyVisible = false;
                 this.ui.Generating = true;
+                this.ui.Stopping = false;
             });
 
             var numberToGenerate = UiHelpers.Read(this.ui, () => this.ui.NumberToGenerate);
