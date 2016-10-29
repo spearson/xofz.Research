@@ -72,6 +72,7 @@
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.Computing = true;
+                this.ui.SaveKeyVisible = false;
                 this.ui.DurationInfo = null;
             });
             this.ui.WriteFinished.WaitOne();
@@ -136,7 +137,7 @@
             var input = UiHelpers.Read(this.ui, () => this.ui.Input);
             this.saver.Save(
                 input,
-                UiHelpers.Read(this.ui, () => this.ui.Factorial));
+                this.currentFactorial);
             UiHelpers.Write(
                 this.messenger.Subscriber, 
                 () => this.messenger.Inform(

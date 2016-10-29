@@ -74,6 +74,7 @@
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.Computing = true;
+                this.ui.SaveKeyVisible = false;
                 this.ui.DurationInfo = null;
             });
             this.ui.WriteFinished.WaitOne();
@@ -142,7 +143,7 @@
             this.saver.Save(
                 number,
                 exponent,
-                UiHelpers.Read(this.ui, () => this.ui.Power));
+                this.currentPower);
             UiHelpers.Write(
                 this.messenger.Subscriber,
                 () => this.messenger.Inform(
