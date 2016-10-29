@@ -65,7 +65,7 @@
             this.inputTextBox.Location = new System.Drawing.Point(91, 51);
             this.inputTextBox.Name = "inputTextBox";
             this.inputTextBox.Size = new System.Drawing.Size(142, 29);
-            this.inputTextBox.TabIndex = 5;
+            this.inputTextBox.TabIndex = 0;
             // 
             // factorialTextBox
             // 
@@ -100,7 +100,7 @@
             this.computeKey.Location = new System.Drawing.Point(239, 51);
             this.computeKey.Name = "computeKey";
             this.computeKey.Size = new System.Drawing.Size(93, 32);
-            this.computeKey.TabIndex = 8;
+            this.computeKey.TabIndex = 1;
             this.computeKey.Text = "Compute";
             this.computeKey.UseVisualStyleBackColor = true;
             this.computeKey.Click += new System.EventHandler(this.computeKey_Click);
@@ -126,7 +126,7 @@
             this.saveKey.Location = new System.Drawing.Point(390, 51);
             this.saveKey.Name = "saveKey";
             this.saveKey.Size = new System.Drawing.Size(61, 32);
-            this.saveKey.TabIndex = 10;
+            this.saveKey.TabIndex = 3;
             this.saveKey.Text = "Save";
             this.saveKey.UseVisualStyleBackColor = true;
             this.saveKey.Click += new System.EventHandler(this.saveKey_Click);
@@ -142,7 +142,7 @@
             this.displayKey.Location = new System.Drawing.Point(239, 89);
             this.displayKey.Name = "displayKey";
             this.displayKey.Size = new System.Drawing.Size(79, 32);
-            this.displayKey.TabIndex = 22;
+            this.displayKey.TabIndex = 2;
             this.displayKey.Text = "Display";
             this.displayKey.UseVisualStyleBackColor = true;
             this.displayKey.Click += new System.EventHandler(this.displayKey_Click);

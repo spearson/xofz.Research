@@ -52,7 +52,7 @@
             this.saveKey.Location = new System.Drawing.Point(385, 60);
             this.saveKey.Name = "saveKey";
             this.saveKey.Size = new System.Drawing.Size(61, 32);
-            this.saveKey.TabIndex = 18;
+            this.saveKey.TabIndex = 4;
             this.saveKey.Text = "Save";
             this.saveKey.UseVisualStyleBackColor = true;
             this.saveKey.Click += new System.EventHandler(this.saveKey_Click);
@@ -78,7 +78,7 @@
             this.computeKey.Location = new System.Drawing.Point(239, 40);
             this.computeKey.Name = "computeKey";
             this.computeKey.Size = new System.Drawing.Size(93, 32);
-            this.computeKey.TabIndex = 16;
+            this.computeKey.TabIndex = 2;
             this.computeKey.Text = "Compute";
             this.computeKey.UseVisualStyleBackColor = true;
             this.computeKey.Click += new System.EventHandler(this.computeKey_Click);
@@ -111,7 +111,7 @@
             this.numberInputTextBox.Location = new System.Drawing.Point(91, 40);
             this.numberInputTextBox.Name = "numberInputTextBox";
             this.numberInputTextBox.Size = new System.Drawing.Size(142, 29);
-            this.numberInputTextBox.TabIndex = 13;
+            this.numberInputTextBox.TabIndex = 0;
             // 
             // label1
             // 
@@ -148,7 +148,7 @@
             this.exponentInputTextBox.Location = new System.Drawing.Point(91, 78);
             this.exponentInputTextBox.Name = "exponentInputTextBox";
             this.exponentInputTextBox.Size = new System.Drawing.Size(142, 29);
-            this.exponentInputTextBox.TabIndex = 20;
+            this.exponentInputTextBox.TabIndex = 1;
             // 
             // displayKey
             // 
@@ -161,7 +161,7 @@
             this.displayKey.Location = new System.Drawing.Point(239, 78);
             this.displayKey.Name = "displayKey";
             this.displayKey.Size = new System.Drawing.Size(79, 32);
-            this.displayKey.TabIndex = 21;
+            this.displayKey.TabIndex = 3;
             this.displayKey.Text = "Display";
             this.displayKey.UseVisualStyleBackColor = true;
             this.displayKey.Click += new System.EventHandler(this.displayKey_Click);

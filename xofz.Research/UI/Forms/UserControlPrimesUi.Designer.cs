@@ -65,7 +65,7 @@
             this.generateKey.Location = new System.Drawing.Point(7, 85);
             this.generateKey.Name = "generateKey";
             this.generateKey.Size = new System.Drawing.Size(97, 32);
-            this.generateKey.TabIndex = 3;
+            this.generateKey.TabIndex = 1;
             this.generateKey.Text = "Generate";
             this.generateKey.UseVisualStyleBackColor = true;
             this.generateKey.Click += new System.EventHandler(this.generateKey_Click);
@@ -76,7 +76,7 @@
             this.numberToGenerateTextBox.Location = new System.Drawing.Point(7, 53);
             this.numberToGenerateTextBox.Name = "numberToGenerateTextBox";
             this.numberToGenerateTextBox.Size = new System.Drawing.Size(137, 26);
-            this.numberToGenerateTextBox.TabIndex = 4;
+            this.numberToGenerateTextBox.TabIndex = 0;
             this.numberToGenerateTextBox.Text = "1";
             this.numberToGenerateTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -172,7 +172,7 @@
             this.stopKey.Location = new System.Drawing.Point(186, 85);
             this.stopKey.Name = "stopKey";
             this.stopKey.Size = new System.Drawing.Size(59, 32);
-            this.stopKey.TabIndex = 12;
+            this.stopKey.TabIndex = 2;
             this.stopKey.Text = "Stop";
             this.stopKey.UseVisualStyleBackColor = true;
             this.stopKey.Visible = false;

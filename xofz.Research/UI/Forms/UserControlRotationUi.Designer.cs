@@ -103,7 +103,7 @@
             this.maxValueTextBox.Location = new System.Drawing.Point(107, 41);
             this.maxValueTextBox.Name = "maxValueTextBox";
             this.maxValueTextBox.Size = new System.Drawing.Size(100, 29);
-            this.maxValueTextBox.TabIndex = 4;
+            this.maxValueTextBox.TabIndex = 0;
             // 
             // rotationsTextBox
             // 
@@ -111,7 +111,7 @@
             this.rotationsTextBox.Location = new System.Drawing.Point(418, 41);
             this.rotationsTextBox.Name = "rotationsTextBox";
             this.rotationsTextBox.Size = new System.Drawing.Size(64, 29);
-            this.rotationsTextBox.TabIndex = 5;
+            this.rotationsTextBox.TabIndex = 1;
             // 
             // generateKey
             // 
@@ -124,7 +124,7 @@
             this.generateKey.Location = new System.Drawing.Point(107, 76);
             this.generateKey.Name = "generateKey";
             this.generateKey.Size = new System.Drawing.Size(173, 32);
-            this.generateKey.TabIndex = 6;
+            this.generateKey.TabIndex = 3;
             this.generateKey.Text = "Generate Numbers";
             this.generateKey.UseVisualStyleBackColor = true;
             this.generateKey.Click += new System.EventHandler(this.generateKey_Click);
@@ -140,7 +140,7 @@
             this.rotateRightKey.Location = new System.Drawing.Point(537, 76);
             this.rotateRightKey.Name = "rotateRightKey";
             this.rotateRightKey.Size = new System.Drawing.Size(124, 32);
-            this.rotateRightKey.TabIndex = 7;
+            this.rotateRightKey.TabIndex = 5;
             this.rotateRightKey.Text = "Rotate Right";
             this.rotateRightKey.UseVisualStyleBackColor = true;
             this.rotateRightKey.Click += new System.EventHandler(this.rotateRightKey_Click);
@@ -466,7 +466,7 @@
             this.randomizeCheckBox.Location = new System.Drawing.Point(488, 51);
             this.randomizeCheckBox.Name = "randomizeCheckBox";
             this.randomizeCheckBox.Size = new System.Drawing.Size(103, 17);
-            this.randomizeCheckBox.TabIndex = 37;
+            this.randomizeCheckBox.TabIndex = 2;
             this.randomizeCheckBox.Text = "Randomize (1-5)";
             this.randomizeCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -481,7 +481,7 @@
             this.rotateLeftKey.Location = new System.Drawing.Point(418, 76);
             this.rotateLeftKey.Name = "rotateLeftKey";
             this.rotateLeftKey.Size = new System.Drawing.Size(113, 32);
-            this.rotateLeftKey.TabIndex = 38;
+            this.rotateLeftKey.TabIndex = 4;
             this.rotateLeftKey.Text = "Rotate Left";
             this.rotateLeftKey.UseVisualStyleBackColor = true;
             this.rotateLeftKey.Click += new System.EventHandler(this.rotateLeftKey_Click);
