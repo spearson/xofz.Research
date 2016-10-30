@@ -1,7 +1,6 @@
 ﻿namespace xofz.Research.Presentation
 {
     using System;
-    using System.CodeDom;
     using System.Diagnostics;
     using System.Numerics;
     using System.Threading;
@@ -77,6 +76,7 @@
                 this.ui.SaveKeyVisible = false;
                 this.ui.DurationInfo = null;
                 this.ui.Power = null;
+                this.ui.DisplayKeyVisible = false;
             });
             this.ui.WriteFinished.WaitOne();
 
@@ -120,7 +120,6 @@
                 this.ui.Power = string.Empty;
                 this.ui.DurationInfo += Environment.NewLine +
                                         "ToString() took " + sw2.Elapsed;
-                ;
             });
             this.ui.WriteFinished.WaitOne();
 
