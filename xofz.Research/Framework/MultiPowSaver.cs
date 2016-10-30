@@ -14,13 +14,13 @@
 
             foreach (var power in powers.Skip(1))
             {
-                fileNameBuilder.Append("to the " + power);
+                fileNameBuilder.Append(" to the " + power);
             }
             fileNameBuilder.Append(".txt");
 
             File.WriteAllText(
-                multiPow,
-                fileNameBuilder.ToString());
+                fileNameBuilder.ToString(),
+                multiPow);
         }
     }
 }
