@@ -73,6 +73,12 @@
                     n,
                     ac,
                     fm))
+                .Execute(new SetupMultiPowCommand(
+                    new UserControlMultiPowUi(),
+                    s,
+                    n,
+                    fm,
+                    ac))
                 .Execute(new SetupControlHubCommand(
                     new UserControlControlHubNavUi(),
                     new UserControlControlHubUi(),

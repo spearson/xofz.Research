@@ -1,13 +1,12 @@
 ﻿namespace xofz.Research.UI.Forms
 {
     using System;
-    using System.Numerics;
     using System.Threading;
     using xofz.UI.Forms;
 
-    public partial class UserControlBigPowUi : UserControlUi, BigPowUi
+    public partial class UserControlMultiPowUi : UserControlUi, MultiPowUi
     {
-        public UserControlBigPowUi()
+        public UserControlMultiPowUi()
         {
             this.InitializeComponent();
 
@@ -20,30 +19,23 @@
 
         public event Action SaveKeyTapped;
 
-        public event Action MultiPowKeyTapped;
+        public event Action BigPowKeyTapped;
 
-        BigInteger BigPowUi.NumberInput
+        string MultiPowUi.PowersInput
         {
-            get { return BigInteger.Parse(this.numberInputTextBox.Text); }
+            get { return this.powersInputTextBox.Text; }
 
-            set { this.numberInputTextBox.Text = value.ToString(); }
+            set { this.powersInputTextBox.Text = value; }
         }
 
-        BigInteger BigPowUi.ExponentInput
+        string MultiPowUi.MultiPower
         {
-            get { return BigInteger.Parse(this.exponentInputTextBox.Text); }
+            get { return this.multiPowerTextBox.Text; }
 
-            set { this.exponentInputTextBox.Text = value.ToString(); }
+            set { this.multiPowerTextBox.Text = value; }
         }
 
-        string BigPowUi.Power
-        {
-            get { return this.powerTextBox.Text; }
-
-            set { this.powerTextBox.Text = value; }
-        }
-
-        string BigPowUi.DurationInfo
+        string MultiPowUi.DurationInfo
         {
             get { return this.durationLabel.Text; }
 
@@ -54,21 +46,21 @@
             }
         }
 
-        bool BigPowUi.DurationInfoVisible
+        bool MultiPowUi.DurationInfoVisible
         {
             get { return this.durationLabel.Visible; }
 
             set { this.durationLabel.Visible = value; }
         }
 
-        bool BigPowUi.DisplayKeyVisible
+        bool MultiPowUi.DisplayKeyVisible
         {
             get { return this.displayKey.Visible; }
 
             set { this.displayKey.Visible = value; }
         }
 
-        bool BigPowUi.Computing
+        bool MultiPowUi.Computing
         {
             get { return this.computeKey.Text == @"Computing..."; }
 
@@ -79,7 +71,7 @@
             }
         }
 
-        bool BigPowUi.SaveKeyVisible
+        bool MultiPowUi.SaveKeyVisible
         {
             get { return this.saveKey.Visible; }
 
@@ -91,9 +83,9 @@
             new Thread(() => this.ComputeKeyTapped?.Invoke()).Start();
         }
 
-        private void saveKey_Click(object sender, EventArgs e)
+        private void bigPowKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.SaveKeyTapped?.Invoke()).Start();
+            new Thread(() => this.BigPowKeyTapped?.Invoke()).Start();
         }
 
         private void displayKey_Click(object sender, EventArgs e)
@@ -101,9 +93,9 @@
             new Thread(() => this.DisplayKeyTapped?.Invoke()).Start();
         }
 
-        private void multiPowKey_Click(object sender, EventArgs e)
+        private void saveKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.MultiPowKeyTapped?.Invoke()).Start();
+            new Thread(() => this.SaveKeyTapped?.Invoke()).Start();
         }
     }
 }

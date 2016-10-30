@@ -20,7 +20,8 @@
             AccessController accessController,
             xofz.Framework.Timer timer,
             BigPowSaver saver,
-            Messenger messenger)
+            Messenger messenger,
+            Navigator navigator)
             : base(ui, shell)
         {
             this.ui = ui;
@@ -29,9 +30,10 @@
             this.timer = timer;
             this.saver = saver;
             this.messenger = messenger;
+            this.navigator = navigator;
         }
 
-        public void Setup(Navigator navigator)
+        public void Setup()
         {
             if (Interlocked.CompareExchange(ref this.setupIf1, 1, 0) == 1)
             {
@@ -41,6 +43,7 @@
             this.ui.ComputeKeyTapped += this.ui_ComputeKeyTapped;
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
             this.ui.DisplayKeyTapped += this.ui_DisplayKeyTapped;
+            this.ui.MultiPowKeyTapped += this.ui_MultiPowKeyTapped;
             this.timer.Elapsed += this.timer_Elapsed;
 
             UiHelpers.Write(this.ui, () =>
@@ -50,7 +53,7 @@
                 this.ui.SaveKeyVisible = false;
                 this.ui.DisplayKeyVisible = false;
             });
-            navigator.RegisterPresenter(this);
+            this.navigator.RegisterPresenter(this);
             this.timer_Elapsed();
             this.timer.Start(1000);
         }
@@ -169,6 +172,11 @@
                     + " power to the current program directory."));
         }
 
+        private void ui_MultiPowKeyTapped()
+        {
+            this.navigator.Present<MultiPowPresenter>();
+        }
+
         private void timer_Elapsed()
         {
             var visible = this.accessController.CurrentAccessLevel > AccessLevel.None;
@@ -188,5 +196,6 @@
         private readonly xofz.Framework.Timer timer;
         private readonly BigPowSaver saver;
         private readonly Messenger messenger;
+        private readonly Navigator navigator;
     }
 }

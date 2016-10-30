@@ -1,10 +1,9 @@
 ﻿namespace xofz.Research.UI
 {
     using System;
-    using System.Numerics;
     using xofz.UI;
 
-    public interface BigPowUi : Ui
+    public interface MultiPowUi : Ui
     {
         event Action ComputeKeyTapped;
 
@@ -12,13 +11,11 @@
 
         event Action SaveKeyTapped;
 
-        event Action MultiPowKeyTapped;
+        event Action BigPowKeyTapped;
 
-        BigInteger NumberInput { get; set; }
+        string PowersInput { get; set; }
 
-        BigInteger ExponentInput { get; set; }
-
-        string Power { get; set; }
+        string MultiPower { get; set; }
 
         string DurationInfo { get; set; }
 

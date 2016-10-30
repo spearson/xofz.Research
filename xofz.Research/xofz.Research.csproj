@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Framework\BigPowSaver.cs" />
     <Compile Include="Framework\FactorialSaver.cs" />
+    <Compile Include="Framework\MultiPowSaver.cs" />
     <Compile Include="Framework\PrimeManager.cs" />
     <Compile Include="Presentation\BigPowNavPresenter.cs" />
     <Compile Include="Presentation\BigPowPresenter.cs" />
@@ -58,11 +59,13 @@
     <Compile Include="Presentation\FactorialPresenter.cs" />
     <Compile Include="Presentation\HomeNavPresenter.cs" />
     <Compile Include="Presentation\HomePresenter.cs" />
+    <Compile Include="Presentation\MultiPowPresenter.cs" />
     <Compile Include="Presentation\RotationNavPresenter.cs" />
     <Compile Include="Presentation\RotationPresenter.cs" />
     <Compile Include="Presentation\PrimesNavPresenter.cs" />
     <Compile Include="Presentation\PrimesPresenter.cs" />
     <Compile Include="Start\Commands\SetupBigPowCommand.cs" />
+    <Compile Include="Start\Commands\SetupMultiPowCommand.cs" />
     <Compile Include="Start\FormsBootstrapper.cs" />
     <Compile Include="Start\Commands\SetupControlHubCommand.cs" />
     <Compile Include="Start\Commands\SetupFactorialCommand.cs" />
@@ -131,6 +134,12 @@
     <Compile Include="UI\Forms\UserControlHomeUi.Designer.cs">
       <DependentUpon>UserControlHomeUi.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\UserControlMultiPowUi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlMultiPowUi.Designer.cs">
+      <DependentUpon>UserControlMultiPowUi.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\UserControlRotationNavUi.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -163,6 +172,7 @@
     </Compile>
     <Compile Include="UI\HomeNavUi.cs" />
     <Compile Include="UI\HomeUi.cs" />
+    <Compile Include="UI\MultiPowUi.cs" />
     <Compile Include="UI\RotationNavUi.cs" />
     <Compile Include="UI\RotationUi.cs" />
     <Compile Include="UI\PrimesNavUi.cs" />
@@ -203,6 +213,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UserControlHomeUi.resx">
       <DependentUpon>UserControlHomeUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UserControlMultiPowUi.resx">
+      <DependentUpon>UserControlMultiPowUi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UserControlRotationNavUi.resx">
       <DependentUpon>UserControlRotationNavUi.cs</DependentUpon>

@@ -2,36 +2,40 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Linq;
     using System.Numerics;
     using System.Threading;
-    using Framework;
-    using UI;
     using xofz.Framework;
     using xofz.Framework.Computation;
+    using xofz.Framework.Materialization;
     using xofz.Presentation;
+    using xofz.Research.Framework;
+    using xofz.Research.UI;
     using xofz.UI;
 
-    public sealed class FactorialPresenter : Presenter
+    public sealed class MultiPowPresenter : Presenter
     {
-        public FactorialPresenter(
-            FactorialUi ui, 
+        public MultiPowPresenter(
+            MultiPowUi ui, 
             ShellUi shell,
-            FactorialComputer computer,
-            AccessController accessController,
+            MultiPow multiPow,
+            Navigator navigator,
             xofz.Framework.Timer timer,
-            FactorialSaver saver,
-            Messenger messenger) 
+            MultiPowSaver saver,
+            Messenger messenger,
+            AccessController accessController) 
             : base(ui, shell)
         {
             this.ui = ui;
-            this.computer = computer;
-            this.accessController = accessController;
+            this.multiPow = multiPow;
+            this.navigator = navigator;
             this.timer = timer;
             this.saver = saver;
             this.messenger = messenger;
+            this.accessController = accessController;
         }
 
-        public void Setup(Navigator navigator)
+        public void Setup()
         {
             if (Interlocked.CompareExchange(ref this.setupIf1, 1, 0) == 1)
             {
@@ -41,30 +45,18 @@
             this.ui.ComputeKeyTapped += this.ui_ComputeKeyTapped;
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
             this.ui.DisplayKeyTapped += this.ui_DisplayKeyTapped;
+            this.ui.BigPowKeyTapped += this.ui_BigPowKeyTapped;
             this.timer.Elapsed += this.timer_Elapsed;
 
             UiHelpers.Write(this.ui, () =>
             {
-                this.ui.Input = 1000;
+                this.ui.PowersInput = "3, 3, 3";
                 this.ui.SaveKeyVisible = false;
                 this.ui.DisplayKeyVisible = false;
             });
-            navigator.RegisterPresenter(this);
+            this.navigator.RegisterPresenter(this);
             this.timer_Elapsed();
             this.timer.Start(1000);
-        }
-
-        private void ui_DisplayKeyTapped()
-        {
-            UiHelpers.Write(this.ui, () =>
-            {
-                var sw = Stopwatch.StartNew();
-                this.ui.Factorial = this.currentFactorial;
-                sw.Stop();
-                this.ui.DurationInfo += Environment.NewLine +
-                                        "Setting TextBox Text property took " + sw.Elapsed;
-                this.ui.DisplayKeyVisible = false;
-            });
         }
 
         private void ui_ComputeKeyTapped()
@@ -74,13 +66,13 @@
                 this.ui.Computing = true;
                 this.ui.SaveKeyVisible = false;
                 this.ui.DurationInfo = null;
-                this.ui.Factorial = null;
+                this.ui.MultiPower = null;
                 this.ui.DisplayKeyVisible = false;
             });
             this.ui.WriteFinished.WaitOne();
 
-            var input = UiHelpers.Read(this.ui, () => this.ui.Input);
-            BigInteger factorial;
+            var powers = this.readPowers();
+            BigInteger multiPower;
             DateTime computationStartTime, computationCompletionTime;
 
             var sw = Stopwatch.StartNew();
@@ -91,76 +83,80 @@
                     "Computation began at approximately "
                     + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
             });
-            factorial = this.computer.Compute(input);
+            multiPower = this.multiPow.Compute(powers);
             computationCompletionTime = DateTime.Now;
             sw.Stop();
 
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.DurationInfo +=
-                Environment.NewLine 
-                + "Computation took " 
+                Environment.NewLine
+                + "Computation took "
                 + sw.Elapsed
                 + " and completed at "
                 + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
-                this.ui.Factorial = "Computed, now waiting for ToString()...";
+                this.ui.MultiPower = "Computed, now waiting for ToString()...";
             });
             this.ui.WriteFinished.WaitOne();
 
             string s;
             var sw2 = Stopwatch.StartNew();
-            s = factorial.ToString();
+            s = multiPower.ToString();
             sw2.Stop();
 
-            this.setCurrentFactorial(s);
+            this.setCurrentMultiPow(s);
             UiHelpers.Write(this.ui, () =>
             {
-                this.ui.Factorial = string.Empty;
+                this.ui.MultiPower = string.Empty;
                 this.ui.DurationInfo += Environment.NewLine +
                                         "ToString() took " + sw2.Elapsed;
-            });
-            this.ui.WriteFinished.WaitOne();
-
-            if (input < 10001)
-            {
-                UiHelpers.Write(this.ui, () =>
-                {
-                    var sw3 = Stopwatch.StartNew();
-                    this.ui.Factorial = this.currentFactorial;
-                    sw3.Stop();
-                    this.ui.DurationInfo += Environment.NewLine +
-                                            "Setting TextBox Text property took " + sw3.Elapsed;
-                });
-            }
-            else
-            {
-                UiHelpers.Write(this.ui, () =>
-                {
-                    this.ui.DisplayKeyVisible = true;
-                });
-            }
-            this.ui.WriteFinished.WaitOne();
-
-            UiHelpers.Write(this.ui, () =>
-            {
                 this.ui.Computing = false;
                 this.ui.SaveKeyVisible = true;
+                this.ui.DisplayKeyVisible = true;
             });
             this.ui.WriteFinished.WaitOne();
         }
 
         private void ui_SaveKeyTapped()
         {
-            var input = UiHelpers.Read(this.ui, () => this.ui.Input);
+            var powers = this.readPowers();
             this.saver.Save(
-                input,
-                this.currentFactorial);
+                powers, 
+                this.currentMultiPow);
+
             UiHelpers.Write(
-                this.messenger.Subscriber, 
+                this.messenger.Subscriber,
                 () => this.messenger.Inform(
-                    "Saved the factorial of " 
-                    + input
-                    + " to the current program directory."));
+                    "Saved this multi-pow to the "
+                    + "current program directory."));
+        }
+
+        private void ui_DisplayKeyTapped()
+        {
+            UiHelpers.Write(this.ui, () =>
+            {
+                var sw = Stopwatch.StartNew();
+                this.ui.MultiPower = this.currentMultiPow;
+                sw.Stop();
+                this.ui.DurationInfo += Environment.NewLine +
+                                        "Setting TextBox Text property took " + sw.Elapsed;
+                this.ui.DisplayKeyVisible = false;
+            });
+        }
+
+        private MaterializedEnumerable<BigInteger> readPowers()
+        {
+            var input = UiHelpers.Read(this.ui, () => this.ui.PowersInput);
+            return new LinkedListMaterializedEnumerable<BigInteger>(
+                input
+                    .Split(',')
+                    .Select(s => s.Trim())
+                    .Select(BigInteger.Parse));
+        }
+
+        private void ui_BigPowKeyTapped()
+        {
+            this.navigator.Present<BigPowPresenter>();
         }
 
         private void timer_Elapsed()
@@ -169,18 +165,19 @@
             UiHelpers.Write(this.ui, () => this.ui.DurationInfoVisible = visible);
         }
 
-        private void setCurrentFactorial(string currentFactorial)
+        private void setCurrentMultiPow(string currentMultiPow)
         {
-            this.currentFactorial = currentFactorial;
+            this.currentMultiPow = currentMultiPow;
         }
 
         private int setupIf1;
-        private string currentFactorial;
-        private readonly FactorialUi ui;
-        private readonly FactorialComputer computer;
-        private readonly AccessController accessController;
+        private string currentMultiPow;
+        private readonly MultiPowUi ui;
+        private readonly MultiPow multiPow;
+        private readonly Navigator navigator;
         private readonly xofz.Framework.Timer timer;
-        private readonly FactorialSaver saver;
+        private readonly MultiPowSaver saver;
         private readonly Messenger messenger;
+        private readonly AccessController accessController;
     }
 }

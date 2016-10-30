@@ -47,8 +47,9 @@
                 ac,
                 new xofz.Framework.Timer(),
                 new BigPowSaver(),
-                this.messenger)
-                .Setup(n);
+                this.messenger,
+                n)
+                .Setup();
         }
 
         private readonly BigPowNavUi navUi;

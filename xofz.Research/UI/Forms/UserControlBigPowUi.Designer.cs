@@ -39,6 +39,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.exponentInputTextBox = new System.Windows.Forms.TextBox();
             this.displayKey = new System.Windows.Forms.Button();
+            this.multiPowKey = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // saveKey
@@ -49,7 +50,7 @@
             this.saveKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.saveKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveKey.Location = new System.Drawing.Point(385, 60);
+            this.saveKey.Location = new System.Drawing.Point(352, 78);
             this.saveKey.Name = "saveKey";
             this.saveKey.Size = new System.Drawing.Size(61, 32);
             this.saveKey.TabIndex = 4;
@@ -166,9 +167,26 @@
             this.displayKey.UseVisualStyleBackColor = true;
             this.displayKey.Click += new System.EventHandler(this.displayKey_Click);
             // 
+            // multiPowKey
+            // 
+            this.multiPowKey.AutoSize = true;
+            this.multiPowKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.multiPowKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.multiPowKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.multiPowKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.multiPowKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.multiPowKey.Location = new System.Drawing.Point(395, 40);
+            this.multiPowKey.Name = "multiPowKey";
+            this.multiPowKey.Size = new System.Drawing.Size(98, 32);
+            this.multiPowKey.TabIndex = 20;
+            this.multiPowKey.Text = "Multi-Pow";
+            this.multiPowKey.UseVisualStyleBackColor = true;
+            this.multiPowKey.Click += new System.EventHandler(this.multiPowKey_Click);
+            // 
             // UserControlBigPowUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.multiPowKey);
             this.Controls.Add(this.displayKey);
             this.Controls.Add(this.exponentInputTextBox);
             this.Controls.Add(this.label3);
@@ -201,5 +219,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox exponentInputTextBox;
         private System.Windows.Forms.Button displayKey;
+        private System.Windows.Forms.Button multiPowKey;
     }
 }
