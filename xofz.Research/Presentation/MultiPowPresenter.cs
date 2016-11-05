@@ -124,7 +124,7 @@
                 {
                     "The multi-power of "
                     + string.Join(",", powers.Select(p => p.ToString()))
-                    + " was computed"
+                    + " was computed."
                 });
         }
 
