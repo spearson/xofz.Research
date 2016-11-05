@@ -31,6 +31,7 @@
             this.welcomeLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.logKey = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // welcomeLabel
@@ -63,9 +64,26 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "(The login password for Level 1 access is 1111)";
             // 
+            // logKey
+            // 
+            this.logKey.AutoSize = true;
+            this.logKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.logKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.logKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.logKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.logKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logKey.Location = new System.Drawing.Point(516, 175);
+            this.logKey.Name = "logKey";
+            this.logKey.Size = new System.Drawing.Size(57, 36);
+            this.logKey.TabIndex = 4;
+            this.logKey.Text = "Log";
+            this.logKey.UseVisualStyleBackColor = true;
+            this.logKey.Click += new System.EventHandler(this.logKey_Click);
+            // 
             // UserControlHomeUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.logKey);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.welcomeLabel);
@@ -82,5 +100,6 @@
         private System.Windows.Forms.Label welcomeLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button logKey;
     }
 }

@@ -37,9 +37,10 @@
                 .Setup();
 
             new HomePresenter(
-                this.ui, 
-                this.mainShell)
-                .Setup(n);
+                this.ui,
+                this.mainShell,
+                n)
+                .Setup();
         }
 
         private readonly HomeNavUi navUi;

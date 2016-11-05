@@ -10,7 +10,7 @@
     {
         public FormMainUi()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             var h = this.Handle;
         }
 
@@ -22,6 +22,10 @@
         {
             var control = newUi as Control;
             control.SafeReplace(this.screenPanel);
+            if (newUi is UserControlLogUi)
+            {
+                control.Dock = DockStyle.Fill;
+            }
         }
 
         private void this_FormClosing(object sender, FormClosingEventArgs e)

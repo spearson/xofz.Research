@@ -23,7 +23,8 @@
             xofz.Framework.Timer timer,
             MultiPowSaver saver,
             Messenger messenger,
-            AccessController accessController) 
+            AccessController accessController,
+            LogEditor logEditor) 
             : base(ui, shell)
         {
             this.ui = ui;
@@ -33,6 +34,7 @@
             this.saver = saver;
             this.messenger = messenger;
             this.accessController = accessController;
+            this.logEditor = logEditor;
         }
 
         public void Setup()
@@ -115,6 +117,15 @@
                 this.ui.DisplayKeyVisible = true;
             });
             this.ui.WriteFinished.WaitOne();
+
+            this.logEditor.AddEntry(
+                "Information",
+                new[]
+                {
+                    "The multi-power of "
+                    + string.Join(",", powers.Select(p => p.ToString()))
+                    + " was computed"
+                });
         }
 
         private void ui_SaveKeyTapped()
@@ -179,5 +190,6 @@
         private readonly MultiPowSaver saver;
         private readonly Messenger messenger;
         private readonly AccessController accessController;
+        private readonly LogEditor logEditor;
     }
 }

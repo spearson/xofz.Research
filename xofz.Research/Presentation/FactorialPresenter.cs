@@ -20,7 +20,8 @@
             AccessController accessController,
             xofz.Framework.Timer timer,
             FactorialSaver saver,
-            Messenger messenger) 
+            Messenger messenger,
+            LogEditor logEditor) 
             : base(ui, shell)
         {
             this.ui = ui;
@@ -29,6 +30,7 @@
             this.timer = timer;
             this.saver = saver;
             this.messenger = messenger;
+            this.logEditor = logEditor;
         }
 
         public void Setup(Navigator navigator)
@@ -147,6 +149,10 @@
                 this.ui.SaveKeyVisible = true;
             });
             this.ui.WriteFinished.WaitOne();
+
+            this.logEditor.AddEntry(
+                "Information",
+                new[] { "The factorial of " + input + " was computed." });
         }
 
         private void ui_SaveKeyTapped()
@@ -182,5 +188,6 @@
         private readonly xofz.Framework.Timer timer;
         private readonly FactorialSaver saver;
         private readonly Messenger messenger;
+        private readonly LogEditor logEditor;
     }
 }

@@ -28,11 +28,17 @@
             var s = this.shell;
             var fm = new FormsMessenger { Subscriber = this.shell };
             var ac = new AccessController(new[] { "1111", "2222" });
-
-            this.executor
+            var e = this.executor;
+            e
                 .Execute(new SetupMainCommand(
                     s,
                     n))
+                .Execute(new SetupLogCommand(
+                    new UserControlLogUi(),
+                    s,
+                    ac,
+                    n,
+                    new FormLogEditorUi()))
                 .Execute(new SetupHomeCommand(
                     new UserControlHomeNavUi(),
                     new UserControlHomeUi(),
@@ -47,15 +53,18 @@
                     s,
                     n,
                     ac,
-                    fm))
-                .Execute(new SetupFactorialCommand(
-                    new UserControlFactorialNavUi(),
-                    new UserControlFactorialUi(),
-                    s.NavUi,
-                    s,
-                    n,
-                    ac,
-                    fm))
+                    fm));
+
+            var le = e.Get<SetupLogCommand>().Editor;
+            e.Execute(new SetupFactorialCommand(
+                new UserControlFactorialNavUi(),
+                new UserControlFactorialUi(),
+                s.NavUi,
+                s,
+                n,
+                ac,
+                fm,
+                le))
                 .Execute(new SetupRotationCommand(
                     new UserControlRotationNavUi(),
                     new UserControlRotationUi(
@@ -72,13 +81,15 @@
                     s,
                     n,
                     ac,
-                    fm))
+                    fm,
+                    le))
                 .Execute(new SetupMultiPowCommand(
                     new UserControlMultiPowUi(),
                     s,
                     n,
                     fm,
-                    ac))
+                    ac,
+                    le))
                 .Execute(new SetupControlHubCommand(
                     new UserControlControlHubNavUi(),
                     new UserControlControlHubUi(),
@@ -94,7 +105,7 @@
                     s,
                     n,
                     () => { }));
-            
+
             this.navigator.Present<HomePresenter>();
             this.navigator.PresentFluidly<HomeNavPresenter>();
         }

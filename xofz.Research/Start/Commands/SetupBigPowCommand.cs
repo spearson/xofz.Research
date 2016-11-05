@@ -18,7 +18,8 @@
             ShellUi mainShell,
             Navigator navigator,
             AccessController accessController,
-            Messenger messenger)
+            Messenger messenger,
+            LogEditor logEditor)
         {
             this.navUi = navUi;
             this.ui = ui;
@@ -27,6 +28,7 @@
             this.navigator = navigator;
             this.accessController = accessController;
             this.messenger = messenger;
+            this.logEditor = logEditor;
         }
 
         public override void Execute()
@@ -48,7 +50,8 @@
                 new xofz.Framework.Timer(),
                 new BigPowSaver(),
                 this.messenger,
-                n)
+                n,
+                this.logEditor)
                 .Setup();
         }
 
@@ -59,5 +62,6 @@
         private readonly Navigator navigator;
         private readonly AccessController accessController;
         private readonly Messenger messenger;
+        private readonly LogEditor logEditor;
     }
 }

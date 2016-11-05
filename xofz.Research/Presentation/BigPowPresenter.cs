@@ -21,7 +21,8 @@
             xofz.Framework.Timer timer,
             BigPowSaver saver,
             Messenger messenger,
-            Navigator navigator)
+            Navigator navigator,
+            LogEditor logEditor)
             : base(ui, shell)
         {
             this.ui = ui;
@@ -31,6 +32,7 @@
             this.saver = saver;
             this.messenger = messenger;
             this.navigator = navigator;
+            this.logEditor = logEditor;
         }
 
         public void Setup()
@@ -152,6 +154,14 @@
                 this.ui.SaveKeyVisible = true;
             });
             this.ui.WriteFinished.WaitOne();
+
+            this.logEditor.AddEntry(
+                "Information",
+                new[]
+                {
+                    number + " raised to the "
+                    + exponent + " power was computed."
+                });
         }
 
         private void ui_SaveKeyTapped()
@@ -197,5 +207,6 @@
         private readonly BigPowSaver saver;
         private readonly Messenger messenger;
         private readonly Navigator navigator;
+        private readonly LogEditor logEditor;
     }
 }
