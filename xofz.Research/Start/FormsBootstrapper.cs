@@ -38,7 +38,8 @@
                     s,
                     ac,
                     n,
-                    new FormLogEditorUi()))
+                    new FormLogEditorUi(
+                        s)))
                 .Execute(new SetupHomeCommand(
                     new UserControlHomeNavUi(),
                     new UserControlHomeUi(),
