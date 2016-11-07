@@ -8,7 +8,7 @@
     {
         public UserControlPrimesUi()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             var h = this.Handle;
         }
