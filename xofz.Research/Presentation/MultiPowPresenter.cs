@@ -83,7 +83,7 @@
             {
                 this.ui.DurationInfo =
                     "Computation began at approximately "
-                    + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
+                    + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
             });
             multiPower = this.multiPow.Compute(powers);
             computationCompletionTime = DateTime.Now;
@@ -96,7 +96,7 @@
                 + "Computation took "
                 + sw.Elapsed
                 + " and completed at "
-                + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
+                + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
                 this.ui.MultiPower = "Computed, now waiting for ToString()...";
             });
             this.ui.WriteFinished.WaitOne();

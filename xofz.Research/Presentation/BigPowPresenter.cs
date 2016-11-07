@@ -96,7 +96,7 @@
             {
                 this.ui.DurationInfo =
                     "Computation began at approximately "
-                    + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
+                    + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
             });
             power = this.bigPow.Compute(number, exponent);
             computationCompletionTime = DateTime.Now;
@@ -109,7 +109,7 @@
                 + "Computation took " 
                 + sw.Elapsed
                 + " and completed at "
-                + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
+                + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
                 this.ui.Power = "Computed, now waiting for ToString()...";
             });
             this.ui.WriteFinished.WaitOne();

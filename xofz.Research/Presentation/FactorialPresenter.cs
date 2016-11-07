@@ -91,7 +91,7 @@
             {
                 this.ui.DurationInfo =
                     "Computation began at approximately "
-                    + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
+                    + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
             });
             factorial = this.computer.Compute(input);
             computationCompletionTime = DateTime.Now;
@@ -104,7 +104,7 @@
                 + "Computation took " 
                 + sw.Elapsed
                 + " and completed at "
-                + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff");
+                + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
                 this.ui.Factorial = "Computed, now waiting for ToString()...";
             });
             this.ui.WriteFinished.WaitOne();
