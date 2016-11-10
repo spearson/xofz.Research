@@ -4,6 +4,8 @@
     using xofz.UI;
     public interface HomeNavUi : Ui
     {
+        event Action HomeKeyTapped;
+
         event Action PrimesKeyTapped;
 
         event Action FactorialKeyTapped;

@@ -29,6 +29,7 @@
                 return;
             }
 
+            this.ui.HomeKeyTapped += this.ui_HomeKeyTapped;
             this.ui.PrimesKeyTapped += this.ui_PrimesKeyTapped;
             this.ui.FactorialKeyTapped += this.ui_FactorialKeyTapped;
             this.ui.RotationKeyTapped += this.ui_RotationKeyTapped;
@@ -59,6 +60,13 @@
             UiHelpers.Write(
                 this.ui,
                 () => this.ui.ControlHubKeyVisible = level2);
+        }
+
+        private void ui_HomeKeyTapped()
+        {
+            var n = this.navigator;
+            n.Present<HomePresenter>();
+            n.PresentFluidly<HomeNavPresenter>();
         }
 
         private void ui_PrimesKeyTapped()

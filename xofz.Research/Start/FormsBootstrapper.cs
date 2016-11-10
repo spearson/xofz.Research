@@ -57,15 +57,16 @@
                     fm));
 
             var le = e.Get<SetupLogCommand>().Editor;
-            e.Execute(new SetupFactorialCommand(
-                new UserControlFactorialNavUi(),
-                new UserControlFactorialUi(),
-                s.NavUi,
-                s,
-                n,
-                ac,
-                fm,
-                le))
+            e
+                .Execute(new SetupFactorialCommand(
+                    new UserControlFactorialNavUi(),
+                    new UserControlFactorialUi(),
+                    s.NavUi,
+                    s,
+                    n,
+                    ac,
+                    fm,
+                    le))
                 .Execute(new SetupRotationCommand(
                     new UserControlRotationNavUi(),
                     new UserControlRotationUi(
@@ -91,6 +92,11 @@
                     fm,
                     ac,
                     le))
+                .Execute(new SetupBinaryVisualizerCommand(
+                    new UserControlBinaryVisualizerUi(),
+                    s,
+                    le,
+                    n))
                 .Execute(new SetupControlHubCommand(
                     new UserControlControlHubNavUi(),
                     new UserControlControlHubUi(),

@@ -6,5 +6,7 @@
     public interface HomeUi : Ui
     {
         event Action LogKeyTapped;
+
+        event Action BinaryVisualizerKeyTapped;
     }
 }

@@ -25,12 +25,18 @@
             }
 
             this.ui.LogKeyTapped += this.ui_LogKeyTapped;
+            this.ui.BinaryVisualizerKeyTapped += this.ui_BinaryVisualizerKeyTapped;
             this.navigator.RegisterPresenter(this);
         }
 
         private void ui_LogKeyTapped()
         {
             this.navigator.Present<LogPresenter>();
+        }
+
+        private void ui_BinaryVisualizerKeyTapped()
+        {
+            this.navigator.Present<BinaryVisualizerPresenter>();
         }
 
         private int setupIf1;

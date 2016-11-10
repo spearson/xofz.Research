@@ -13,6 +13,8 @@
             var h = this.Handle;
         }
 
+        public event Action HomeKeyTapped;
+
         public event Action PrimesKeyTapped;
 
         public event Action FactorialKeyTapped;
@@ -32,6 +34,11 @@
             get { return this.controlHubKey.Visible; }
 
             set { this.controlHubKey.Visible = value; }
+        }
+
+        private void homeKey_Click(object sender, EventArgs e)
+        {
+            new Thread(() => this.HomeKeyTapped?.Invoke()).Start();
         }
 
         private void primesKey_Click(object sender, EventArgs e)

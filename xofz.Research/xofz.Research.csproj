@@ -53,6 +53,7 @@
     <Compile Include="Framework\PrimeManager.cs" />
     <Compile Include="Presentation\BigPowNavPresenter.cs" />
     <Compile Include="Presentation\BigPowPresenter.cs" />
+    <Compile Include="Presentation\BinaryVisualizerPresenter.cs" />
     <Compile Include="Presentation\ControlHubNavPresenter.cs" />
     <Compile Include="Presentation\ControlHubPresenter.cs" />
     <Compile Include="Presentation\FactorialNavPresenter.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Presentation\PrimesNavPresenter.cs" />
     <Compile Include="Presentation\PrimesPresenter.cs" />
     <Compile Include="Start\Commands\SetupBigPowCommand.cs" />
+    <Compile Include="Start\Commands\SetupBinaryVisualizerCommand.cs" />
     <Compile Include="Start\Commands\SetupMultiPowCommand.cs" />
     <Compile Include="Start\FormsBootstrapper.cs" />
     <Compile Include="Start\Commands\SetupControlHubCommand.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Start\Commands\SetupRotationCommand.cs" />
     <Compile Include="UI\BigPowNavUi.cs" />
     <Compile Include="UI\BigPowUi.cs" />
+    <Compile Include="UI\BinaryVisualizerUi.cs" />
     <Compile Include="UI\ControlHubNavUi.cs" />
     <Compile Include="UI\FactorialNavUi.cs" />
     <Compile Include="UI\FactorialUi.cs" />
@@ -97,6 +100,12 @@
     </Compile>
     <Compile Include="UI\Forms\UserControlBigPowUi.Designer.cs">
       <DependentUpon>UserControlBigPowUi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlBinaryVisualizerUi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UserControlBinaryVisualizerUi.Designer.cs">
+      <DependentUpon>UserControlBinaryVisualizerUi.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\UserControlControlHubNavUi.cs">
       <SubType>UserControl</SubType>
@@ -195,6 +204,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UserControlBigPowUi.resx">
       <DependentUpon>UserControlBigPowUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UserControlBinaryVisualizerUi.resx">
+      <DependentUpon>UserControlBinaryVisualizerUi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UserControlControlHubNavUi.resx">
       <DependentUpon>UserControlControlHubNavUi.cs</DependentUpon>

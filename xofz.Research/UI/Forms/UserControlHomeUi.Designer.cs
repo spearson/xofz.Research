@@ -32,6 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.logKey = new System.Windows.Forms.Button();
+            this.binaryVisualizerKey = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // welcomeLabel
@@ -72,7 +73,7 @@
             this.logKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.logKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.logKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.logKey.Location = new System.Drawing.Point(516, 175);
+            this.logKey.Location = new System.Drawing.Point(497, 179);
             this.logKey.Name = "logKey";
             this.logKey.Size = new System.Drawing.Size(57, 36);
             this.logKey.TabIndex = 4;
@@ -80,9 +81,26 @@
             this.logKey.UseVisualStyleBackColor = true;
             this.logKey.Click += new System.EventHandler(this.logKey_Click);
             // 
+            // binaryVisualizerKey
+            // 
+            this.binaryVisualizerKey.AutoSize = true;
+            this.binaryVisualizerKey.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.binaryVisualizerKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime;
+            this.binaryVisualizerKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.binaryVisualizerKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.binaryVisualizerKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.binaryVisualizerKey.Location = new System.Drawing.Point(560, 179);
+            this.binaryVisualizerKey.Name = "binaryVisualizerKey";
+            this.binaryVisualizerKey.Size = new System.Drawing.Size(177, 36);
+            this.binaryVisualizerKey.TabIndex = 5;
+            this.binaryVisualizerKey.Text = "Binary Visualizer";
+            this.binaryVisualizerKey.UseVisualStyleBackColor = true;
+            this.binaryVisualizerKey.Click += new System.EventHandler(this.binaryVisualizerKey_Click);
+            // 
             // UserControlHomeUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.binaryVisualizerKey);
             this.Controls.Add(this.logKey);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -101,5 +119,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button logKey;
+        private System.Windows.Forms.Button binaryVisualizerKey;
     }
 }
