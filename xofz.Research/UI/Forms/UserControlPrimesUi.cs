@@ -73,6 +73,13 @@
             set { this.loadKey.Visible = value; }
         }
 
+        bool PrimesUi.SaveKeyVisible
+        {
+            get { return this.saveKey.Visible; }
+
+            set { this.saveKey.Visible = value; }
+        }
+
         int PrimesUi.NumberToGenerate
         {
             get { return int.Parse(this.numberToGenerateTextBox.Text); }

@@ -26,6 +26,8 @@
 
         bool LoadKeyVisible { get; set; }
 
+        bool SaveKeyVisible { get; set; }
+
         int NumberToGenerate { get; set; }
 
         long? CurrentPrime { get; set; }

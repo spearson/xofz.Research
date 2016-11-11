@@ -168,6 +168,8 @@
         {
             var number = UiHelpers.Read(this.ui, () => this.ui.NumberInput);
             var exponent = UiHelpers.Read(this.ui, () => this.ui.ExponentInput);
+            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
+            this.ui.WriteFinished.WaitOne();
             this.saver.Save(
                 number,
                 exponent,
@@ -180,6 +182,8 @@
                     + " raised to the "
                     + exponent
                     + " power to the current program directory."));
+            this.messenger.Subscriber.WriteFinished.WaitOne();
+            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
         }
 
         private void ui_MultiPowKeyTapped()

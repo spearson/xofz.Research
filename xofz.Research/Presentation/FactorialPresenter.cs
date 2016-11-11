@@ -158,15 +158,19 @@
         private void ui_SaveKeyTapped()
         {
             var input = UiHelpers.Read(this.ui, () => this.ui.Input);
+            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
+            this.ui.WriteFinished.WaitOne();
             this.saver.Save(
                 input,
                 this.currentFactorial);
             UiHelpers.Write(
-                this.messenger.Subscriber, 
+                this.messenger.Subscriber,
                 () => this.messenger.Inform(
-                    "Saved the factorial of " 
+                    "Saved the factorial of "
                     + input
                     + " to the current program directory."));
+            this.messenger.Subscriber.WriteFinished.WaitOne();
+            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
         }
 
         private void timer_Elapsed()

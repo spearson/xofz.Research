@@ -139,6 +139,8 @@
         private void ui_SaveKeyTapped()
         {
             const string location = "Primes - Current Set.txt";
+            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
+            this.ui.WriteFinished.WaitOne();
             this.manager.Save(new List<long>(this.generator.CurrentSet), location);
             UiHelpers.Write(this.messenger.Subscriber as Ui, () =>
             {
@@ -147,6 +149,8 @@
                     + Environment.NewLine
                     + location);
             });
+            this.messenger.Subscriber.WriteFinished.WaitOne();
+            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
         }
 
         private void setCurrentPrimeIndex(int currentPrimeIndex)

@@ -131,6 +131,8 @@
         private void ui_SaveKeyTapped()
         {
             var powers = this.readPowers();
+            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
+            this.ui.WriteFinished.WaitOne();
             this.saver.Save(
                 powers, 
                 this.currentMultiPow);
@@ -140,6 +142,8 @@
                 () => this.messenger.Inform(
                     "Saved this multi-pow to the "
                     + "current program directory."));
+            this.messenger.Subscriber.WriteFinished.WaitOne();
+            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
         }
 
         private void ui_DisplayKeyTapped()
