@@ -3,6 +3,7 @@
     using System;
     using System.Numerics;
     using xofz.UI;
+
     public interface BinaryVisualizerUi : Ui
     {
         event Action TranslateKeyTapped;

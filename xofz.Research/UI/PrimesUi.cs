@@ -2,6 +2,7 @@
 {
     using System;
     using xofz.UI;
+
     public interface PrimesUi : Ui
     {
         event Action GenerateKeyTapped;

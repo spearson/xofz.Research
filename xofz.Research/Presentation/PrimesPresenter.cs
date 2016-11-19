@@ -142,7 +142,7 @@
             UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
             this.ui.WriteFinished.WaitOne();
             this.manager.Save(new List<long>(this.generator.CurrentSet), location);
-            UiHelpers.Write(this.messenger.Subscriber as Ui, () =>
+            UiHelpers.Write(this.messenger.Subscriber, () =>
             {
                 this.messenger.Inform(
                     "Saved current set of primes to"
