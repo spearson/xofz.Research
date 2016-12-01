@@ -1,23 +1,24 @@
-﻿namespace xofz.Research.Start.Commands
+﻿namespace xofz.Research.Root.Commands
 {
-    using System;
-    using Presentation;
-    using UI;
     using xofz.Framework;
-    using xofz.Framework.Transformation;
+    using xofz.Framework.Computation;
     using xofz.Presentation;
-    using xofz.Start;
+    using xofz.Research.Framework;
+    using xofz.Research.Presentation;
+    using xofz.Research.UI;
+    using xofz.Root;
     using xofz.UI;
 
-    public class SetupRotationCommand : Command
+    public class SetupPrimesCommand : Command
     {
-        public SetupRotationCommand(
-            RotationNavUi navUi,
-            RotationUi ui,
+        public SetupPrimesCommand(
+            PrimesNavUi navUi,
+            PrimesUi ui,
             ShellUi navShell,
             ShellUi mainShell,
             Navigator navigator,
-            AccessController accessController)
+            AccessController accessController,
+            Messenger messenger)
         {
             this.navUi = navUi;
             this.ui = ui;
@@ -25,12 +26,13 @@
             this.mainShell = mainShell;
             this.navigator = navigator;
             this.accessController = accessController;
+            this.messenger = messenger;
         }
 
         public override void Execute()
         {
             var n = this.navigator;
-            new RotationNavPresenter(
+            new PrimesNavPresenter(
                 this.navUi,
                 this.navShell,
                 n,
@@ -38,19 +40,21 @@
                 new xofz.Framework.Timer())
                 .Setup();
 
-            new RotationPresenter(
+            new PrimesPresenter(
                 this.ui,
                 this.mainShell,
-                new Random(),
-                new EnumerableRotator())
+                ll => ll == null ? new PrimeGenerator() : new PrimeGenerator(ll),
+                new PrimeManager(),
+                this.messenger)
                 .Setup(n);
         }
 
-        private readonly RotationNavUi navUi;
-        private readonly RotationUi ui;
+        private readonly PrimesNavUi navUi;
+        private readonly PrimesUi ui;
         private readonly ShellUi navShell;
         private readonly ShellUi mainShell;
         private readonly Navigator navigator;
         private readonly AccessController accessController;
+        private readonly Messenger messenger;
     }
 }

@@ -1,12 +1,12 @@
-﻿namespace xofz.Research.Start.Commands
+﻿namespace xofz.Research.Root.Commands
 {
-    using Framework;
-    using Presentation;
-    using UI;
     using xofz.Framework;
     using xofz.Framework.Computation;
     using xofz.Presentation;
-    using xofz.Start;
+    using xofz.Research.Framework;
+    using xofz.Research.Presentation;
+    using xofz.Research.UI;
+    using xofz.Root;
     using xofz.UI;
 
     public class SetupFactorialCommand : Command

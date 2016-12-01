@@ -8,7 +8,7 @@
     {
         public UserControlNavUi()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         void ShellUi.SwitchUi(Ui newUi)

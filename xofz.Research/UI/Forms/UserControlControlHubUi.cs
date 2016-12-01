@@ -8,7 +8,7 @@
     {
         public UserControlControlHubUi()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             var h = this.Handle;
         }

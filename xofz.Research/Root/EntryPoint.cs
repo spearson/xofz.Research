@@ -1,9 +1,9 @@
-﻿namespace xofz.Research.Start
+﻿namespace xofz.Research.Root
 {
     using System;
     using System.Windows.Forms;
     using xofz.Presentation;
-    using xofz.Start;
+    using xofz.Root;
 
     internal static class EntryPoint
     {

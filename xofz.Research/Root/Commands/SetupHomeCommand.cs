@@ -1,17 +1,17 @@
-﻿namespace xofz.Research.Start.Commands
+﻿namespace xofz.Research.Root.Commands
 {
-    using Presentation;
-    using UI;
     using xofz.Framework;
     using xofz.Presentation;
-    using xofz.Start;
+    using xofz.Research.Presentation;
+    using xofz.Research.UI;
+    using xofz.Root;
     using xofz.UI;
 
-    public class SetupControlHubCommand : Command
+    public class SetupHomeCommand : Command
     {
-        public SetupControlHubCommand(
-            ControlHubNavUi navUi,
-            ControlHubUi ui,
+        public SetupHomeCommand(
+            HomeNavUi navUi,
+            HomeUi ui,
             ShellUi navShell,
             ShellUi mainShell,
             Navigator navigator,
@@ -28,23 +28,23 @@
         public override void Execute()
         {
             var n = this.navigator;
-            new ControlHubNavPresenter(
+            new HomeNavPresenter(
                 this.navUi,
                 this.navShell,
                 n,
                 this.accessController,
                 new xofz.Framework.Timer())
                 .Setup();
-            new ControlHubPresenter(
+
+            new HomePresenter(
                 this.ui,
                 this.mainShell,
-                n,
-                new EventRaiser())
+                n)
                 .Setup();
         }
 
-        private readonly ControlHubNavUi navUi;
-        private readonly ControlHubUi ui;
+        private readonly HomeNavUi navUi;
+        private readonly HomeUi ui;
         private readonly ShellUi navShell;
         private readonly ShellUi mainShell;
         private readonly Navigator navigator;

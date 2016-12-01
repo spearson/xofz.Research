@@ -1,24 +1,21 @@
-﻿namespace xofz.Research.Start.Commands
+﻿namespace xofz.Research.Root.Commands
 {
-    using Framework;
-    using Presentation;
-    using UI;
     using xofz.Framework;
-    using xofz.Framework.Computation;
     using xofz.Presentation;
-    using xofz.Start;
+    using xofz.Research.Presentation;
+    using xofz.Research.UI;
+    using xofz.Root;
     using xofz.UI;
 
-    public class SetupPrimesCommand : Command
+    public class SetupControlHubCommand : Command
     {
-        public SetupPrimesCommand(
-            PrimesNavUi navUi,
-            PrimesUi ui,
+        public SetupControlHubCommand(
+            ControlHubNavUi navUi,
+            ControlHubUi ui,
             ShellUi navShell,
             ShellUi mainShell,
             Navigator navigator,
-            AccessController accessController,
-            Messenger messenger)
+            AccessController accessController)
         {
             this.navUi = navUi;
             this.ui = ui;
@@ -26,35 +23,31 @@
             this.mainShell = mainShell;
             this.navigator = navigator;
             this.accessController = accessController;
-            this.messenger = messenger;
         }
 
         public override void Execute()
         {
             var n = this.navigator;
-            new PrimesNavPresenter(
+            new ControlHubNavPresenter(
                 this.navUi,
                 this.navShell,
                 n,
                 this.accessController,
                 new xofz.Framework.Timer())
                 .Setup();
-
-            new PrimesPresenter(
+            new ControlHubPresenter(
                 this.ui,
                 this.mainShell,
-                ll => ll == null ? new PrimeGenerator() : new PrimeGenerator(ll),
-                new PrimeManager(),
-                this.messenger)
-                .Setup(n);
+                n,
+                new EventRaiser())
+                .Setup();
         }
 
-        private readonly PrimesNavUi navUi;
-        private readonly PrimesUi ui;
+        private readonly ControlHubNavUi navUi;
+        private readonly ControlHubUi ui;
         private readonly ShellUi navShell;
         private readonly ShellUi mainShell;
         private readonly Navigator navigator;
         private readonly AccessController accessController;
-        private readonly Messenger messenger;
     }
 }

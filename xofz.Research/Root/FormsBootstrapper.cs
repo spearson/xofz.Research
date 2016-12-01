@@ -1,14 +1,14 @@
-﻿namespace xofz.Research.Start
+﻿namespace xofz.Research.Root
 {
     using System.Windows.Forms;
-    using Commands;
-    using Presentation;
-    using UI.Forms;
     using xofz.Framework;
     using xofz.Framework.Materialization;
     using xofz.Presentation;
-    using xofz.Start;
-    using xofz.Start.Commands;
+    using xofz.Research.Presentation;
+    using xofz.Research.Root.Commands;
+    using xofz.Research.UI.Forms;
+    using xofz.Root;
+    using xofz.Root.Commands;
     using xofz.UI.Forms;
 
     public class FormsBootstrapper

@@ -65,15 +65,15 @@
     <Compile Include="Presentation\RotationPresenter.cs" />
     <Compile Include="Presentation\PrimesNavPresenter.cs" />
     <Compile Include="Presentation\PrimesPresenter.cs" />
-    <Compile Include="Start\Commands\SetupBigPowCommand.cs" />
-    <Compile Include="Start\Commands\SetupBinaryVisualizerCommand.cs" />
-    <Compile Include="Start\Commands\SetupMultiPowCommand.cs" />
-    <Compile Include="Start\FormsBootstrapper.cs" />
-    <Compile Include="Start\Commands\SetupControlHubCommand.cs" />
-    <Compile Include="Start\Commands\SetupFactorialCommand.cs" />
-    <Compile Include="Start\Commands\SetupHomeCommand.cs" />
-    <Compile Include="Start\Commands\SetupPrimesCommand.cs" />
-    <Compile Include="Start\Commands\SetupRotationCommand.cs" />
+    <Compile Include="Root\Commands\SetupBigPowCommand.cs" />
+    <Compile Include="Root\Commands\SetupBinaryVisualizerCommand.cs" />
+    <Compile Include="Root\Commands\SetupMultiPowCommand.cs" />
+    <Compile Include="Root\FormsBootstrapper.cs" />
+    <Compile Include="Root\Commands\SetupControlHubCommand.cs" />
+    <Compile Include="Root\Commands\SetupFactorialCommand.cs" />
+    <Compile Include="Root\Commands\SetupHomeCommand.cs" />
+    <Compile Include="Root\Commands\SetupPrimesCommand.cs" />
+    <Compile Include="Root\Commands\SetupRotationCommand.cs" />
     <Compile Include="UI\BigPowNavUi.cs" />
     <Compile Include="UI\BigPowUi.cs" />
     <Compile Include="UI\BinaryVisualizerUi.cs" />
@@ -87,7 +87,7 @@
     <Compile Include="UI\Forms\FormMainUi.Designer.cs">
       <DependentUpon>FormMainUi.cs</DependentUpon>
     </Compile>
-    <Compile Include="Start\EntryPoint.cs" />
+    <Compile Include="Root\EntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Forms\UserControlBigPowNavUi.cs">
       <SubType>UserControl</SubType>
