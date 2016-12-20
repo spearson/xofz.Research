@@ -1,9 +1,7 @@
 ﻿namespace xofz.Research.Root.Commands
 {
     using xofz.Framework;
-    using xofz.Framework.Computation;
     using xofz.Presentation;
-    using xofz.Research.Framework;
     using xofz.Research.Presentation;
     using xofz.Research.UI;
     using xofz.Root;
@@ -17,41 +15,31 @@
             ShellUi navShell,
             ShellUi mainShell,
             Navigator navigator,
-            AccessController accessController,
-            Messenger messenger,
-            LogEditor logEditor)
+            MethodWeb web)
         {
             this.navUi = navUi;
             this.ui = ui;
             this.navShell = navShell;
             this.mainShell = mainShell;
             this.navigator = navigator;
-            this.accessController = accessController;
-            this.messenger = messenger;
-            this.logEditor = logEditor;
+            this.web = web;
         }
 
         public override void Execute()
         {
             var n = this.navigator;
-            var ac = this.accessController;
+            var w = this.web;
             new BigPowNavPresenter(
-                this.navUi,
-                this.navShell,
-                n,
-                ac,
-                new xofz.Framework.Timer())
+                    this.navUi,
+                    this.navShell,
+                    n,
+                    w)
                 .Setup();
             new BigPowPresenter(
-                this.ui,
-                this.mainShell,
-                new BigPow(),
-                ac,
-                new xofz.Framework.Timer(),
-                new BigPowSaver(),
-                this.messenger,
-                n,
-                this.logEditor)
+                    this.ui,
+                    this.mainShell,
+                    n,
+                    w)
                 .Setup();
         }
 
@@ -60,8 +48,6 @@
         private readonly ShellUi navShell;
         private readonly ShellUi mainShell;
         private readonly Navigator navigator;
-        private readonly AccessController accessController;
-        private readonly Messenger messenger;
-        private readonly LogEditor logEditor;
+        private readonly MethodWeb web;
     }
 }

@@ -29,6 +29,7 @@
             w.RegisterDependency(this.accessController);
             this.registerFactorialDependencies();
             this.registerPrimesDependencies();
+            this.registerBigPowDependencies();
         }
 
         private void registerFactorialDependencies()
@@ -54,6 +55,21 @@
             w.RegisterDependency(
                 new xofz.Framework.Timer(),
                 "PrimesNavTimer");
+        }
+
+        private void registerBigPowDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new BigPow());
+            w.RegisterDependency(
+                new BigPowSaver());
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "BigPowTimer");
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "BigPowNavTimer");
         }
 
         private void setWeb(MethodWeb web)

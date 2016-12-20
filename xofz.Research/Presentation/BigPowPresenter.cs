@@ -16,23 +16,13 @@
         public BigPowPresenter(
             BigPowUi ui,
             ShellUi shell,
-            BigPow bigPow,
-            AccessController accessController,
-            xofz.Framework.Timer timer,
-            BigPowSaver saver,
-            Messenger messenger,
             Navigator navigator,
-            LogEditor logEditor)
+            MethodWeb web)
             : base(ui, shell)
         {
             this.ui = ui;
-            this.bigPow = bigPow;
-            this.accessController = accessController;
-            this.timer = timer;
-            this.saver = saver;
-            this.messenger = messenger;
             this.navigator = navigator;
-            this.logEditor = logEditor;
+            this.web = web;
         }
 
         public void Setup()
@@ -46,7 +36,10 @@
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
             this.ui.DisplayKeyTapped += this.ui_DisplayKeyTapped;
             this.ui.MultiPowKeyTapped += this.ui_MultiPowKeyTapped;
-            this.timer.Elapsed += this.timer_Elapsed;
+            this.web.Subscribe<xofz.Framework.Timer>(
+                "Elapsed", 
+                this.timer_Elapsed, 
+                "BigPowTimer");
 
             UiHelpers.Write(this.ui, () =>
             {
@@ -57,7 +50,9 @@
             });
             this.navigator.RegisterPresenter(this);
             this.timer_Elapsed();
-            this.timer.Start(1000);
+            this.web.Run<xofz.Framework.Timer>(
+                t => t.Start(1000),
+                "BigPowTimer");
         }
 
         private void ui_DisplayKeyTapped()
@@ -89,6 +84,7 @@
             var exponent = UiHelpers.Read(this.ui, () => this.ui.ExponentInput);
             BigInteger power;
             DateTime computationStartTime, computationCompletionTime;
+            var w = this.web;
 
             var sw = Stopwatch.StartNew();
             computationStartTime = DateTime.Now;
@@ -98,7 +94,7 @@
                     "Computation began at approximately "
                     + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
             });
-            power = this.bigPow.Compute(number, exponent);
+            power = w.Run<BigPow, BigInteger>(bp => bp.Compute(number, exponent));
             computationCompletionTime = DateTime.Now;
             sw.Stop();
 
@@ -155,13 +151,13 @@
             });
             this.ui.WriteFinished.WaitOne();
 
-            this.logEditor.AddEntry(
+            w.Run<LogEditor>(le => le.AddEntry(
                 "Information",
                 new[]
                 {
                     number + " raised to the "
                     + exponent + " power was computed."
-                });
+                }));
         }
 
         private void ui_SaveKeyTapped()
@@ -170,19 +166,24 @@
             var exponent = UiHelpers.Read(this.ui, () => this.ui.ExponentInput);
             UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
             this.ui.WriteFinished.WaitOne();
-            this.saver.Save(
+            var w = this.web;
+            w.Run<BigPowSaver>(bps => bps.Save(
                 number,
                 exponent,
-                this.currentPower);
-            UiHelpers.Write(
-                this.messenger.Subscriber,
-                () => this.messenger.Inform(
-                    "Saved "
-                    + number
-                    + " raised to the "
-                    + exponent
-                    + " power to the current program directory."));
-            this.messenger.Subscriber.WriteFinished.WaitOne();
+                this.currentPower));
+            w.Run<Messenger>(m =>
+            {
+                UiHelpers.Write(
+                    m.Subscriber,
+                    () => m.Inform(
+                        "Saved "
+                        + number
+                        + " raised to the "
+                        + exponent
+                        + " power to the current program directory."));
+                m.Subscriber.WriteFinished.WaitOne();
+            });
+            
             UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
         }
 
@@ -193,7 +194,8 @@
 
         private void timer_Elapsed()
         {
-            var visible = this.accessController.CurrentAccessLevel > AccessLevel.None;
+            var cal = this.web.Run<AccessController, AccessLevel>(ac => ac.CurrentAccessLevel);
+            var visible = cal > AccessLevel.None;
             UiHelpers.Write(this.ui, () => this.ui.DurationInfoVisible = visible);
         }
 
@@ -205,12 +207,7 @@
         private int setupIf1;
         private string currentPower;
         private readonly BigPowUi ui;
-        private readonly BigPow bigPow;
-        private readonly AccessController accessController;
-        private readonly xofz.Framework.Timer timer;
-        private readonly BigPowSaver saver;
-        private readonly Messenger messenger;
         private readonly Navigator navigator;
-        private readonly LogEditor logEditor;
+        private readonly MethodWeb web;
     }
 }

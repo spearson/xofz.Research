@@ -86,9 +86,7 @@
                     s.NavUi,
                     s,
                     n,
-                    ac,
-                    fm,
-                    le))
+                    w))
                 .Execute(new SetupMultiPowCommand(
                     new UserControlMultiPowUi(),
                     s,
