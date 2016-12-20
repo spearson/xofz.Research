@@ -67,6 +67,7 @@
     <Compile Include="Presentation\PrimesPresenter.cs" />
     <Compile Include="Root\Commands\SetupBigPowCommand.cs" />
     <Compile Include="Root\Commands\SetupBinaryVisualizerCommand.cs" />
+    <Compile Include="Root\Commands\SetupMethodWebCommand.cs" />
     <Compile Include="Root\Commands\SetupMultiPowCommand.cs" />
     <Compile Include="Root\FormsBootstrapper.cs" />
     <Compile Include="Root\Commands\SetupControlHubCommand.cs" />

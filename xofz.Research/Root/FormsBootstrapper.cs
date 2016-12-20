@@ -58,15 +58,20 @@
 
             var le = e.Get<SetupLogCommand>().Editor;
             e
+                .Execute(new SetupMethodWebCommand(
+                    le,
+                    fm,
+                    ac));
+            var w = e.Get<SetupMethodWebCommand>().Web;
+
+            e
                 .Execute(new SetupFactorialCommand(
                     new UserControlFactorialNavUi(),
                     new UserControlFactorialUi(),
                     s.NavUi,
                     s,
                     n,
-                    ac,
-                    fm,
-                    le))
+                    w))
                 .Execute(new SetupRotationCommand(
                     new UserControlRotationNavUi(),
                     new UserControlRotationUi(

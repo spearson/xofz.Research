@@ -14,23 +14,13 @@
     public sealed class FactorialPresenter : Presenter
     {
         public FactorialPresenter(
-            FactorialUi ui, 
+            FactorialUi ui,
             ShellUi shell,
-            FactorialComputer computer,
-            AccessController accessController,
-            xofz.Framework.Timer timer,
-            FactorialSaver saver,
-            Messenger messenger,
-            LogEditor logEditor) 
+            MethodWeb web)
             : base(ui, shell)
         {
             this.ui = ui;
-            this.computer = computer;
-            this.accessController = accessController;
-            this.timer = timer;
-            this.saver = saver;
-            this.messenger = messenger;
-            this.logEditor = logEditor;
+            this.web = web;
         }
 
         public void Setup(Navigator navigator)
@@ -43,7 +33,10 @@
             this.ui.ComputeKeyTapped += this.ui_ComputeKeyTapped;
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
             this.ui.DisplayKeyTapped += this.ui_DisplayKeyTapped;
-            this.timer.Elapsed += this.timer_Elapsed;
+            this.web.Subscribe<xofz.Framework.Timer>(
+                "Elapsed",
+                this.timer_Elapsed,
+                "FactorialTimer");
 
             UiHelpers.Write(this.ui, () =>
             {
@@ -53,7 +46,8 @@
             });
             navigator.RegisterPresenter(this);
             this.timer_Elapsed();
-            this.timer.Start(1000);
+            this.web.Run<xofz.Framework.Timer>(
+                timer => timer.Start(1000), "FactorialTimer");
         }
 
         private void ui_DisplayKeyTapped()
@@ -93,7 +87,9 @@
                     "Computation began at approximately "
                     + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
             });
-            factorial = this.computer.Compute(input);
+            var w = this.web;
+            factorial = w.Run<FactorialComputer, BigInteger>(
+                computer => computer.Compute(input));
             computationCompletionTime = DateTime.Now;
             sw.Stop();
 
@@ -150,9 +146,9 @@
             });
             this.ui.WriteFinished.WaitOne();
 
-            this.logEditor.AddEntry(
+            w.Run<LogEditor>(le => le.AddEntry(
                 "Information",
-                new[] { "The factorial of " + input + " was computed." });
+                new[] { "The factorial of " + input + " was computed." }));
         }
 
         private void ui_SaveKeyTapped()
@@ -160,23 +156,31 @@
             var input = UiHelpers.Read(this.ui, () => this.ui.Input);
             UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
             this.ui.WriteFinished.WaitOne();
-            this.saver.Save(
-                input,
-                this.currentFactorial);
-            UiHelpers.Write(
-                this.messenger.Subscriber,
-                () => this.messenger.Inform(
-                    "Saved the factorial of "
-                    + input
-                    + " to the current program directory."));
-            this.messenger.Subscriber.WriteFinished.WaitOne();
+
+            var w = this.web;
+            w.Run<FactorialSaver>(s => s.Save(input,
+                this.currentFactorial));
+            w.Run<Messenger>(m =>
+            {
+                UiHelpers.Write(
+                    m.Subscriber,
+                    () => m.Inform(
+                        "Saved the factorial of "
+                        + input
+                        + " to the current program directory."));
+                m.Subscriber.WriteFinished.WaitOne();
+            });
             UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
         }
 
         private void timer_Elapsed()
         {
-            var visible = this.accessController.CurrentAccessLevel > AccessLevel.None;
-            UiHelpers.Write(this.ui, () => this.ui.DurationInfoVisible = visible);
+            var cal = this.web.Run<AccessController, AccessLevel>(
+                ac => ac.CurrentAccessLevel);
+            var visible = cal > AccessLevel.None;
+            UiHelpers.Write(
+                this.ui,
+                () => this.ui.DurationInfoVisible = visible);
         }
 
         private void setCurrentFactorial(string currentFactorial)
@@ -187,11 +191,6 @@
         private int setupIf1;
         private string currentFactorial;
         private readonly FactorialUi ui;
-        private readonly FactorialComputer computer;
-        private readonly AccessController accessController;
-        private readonly xofz.Framework.Timer timer;
-        private readonly FactorialSaver saver;
-        private readonly Messenger messenger;
-        private readonly LogEditor logEditor;
+        private readonly MethodWeb web;
     }
 }

@@ -17,40 +17,30 @@
             ShellUi navShell,
             ShellUi mainShell,
             Navigator navigator,
-            AccessController accessController,
-            Messenger messenger,
-            LogEditor logEditor)
+            MethodWeb web)
         {
             this.navUi = navUi;
             this.ui = ui;
             this.navShell = navShell;
             this.mainShell = mainShell;
             this.navigator = navigator;
-            this.accessController = accessController;
-            this.messenger = messenger;
-            this.logEditor = logEditor;
+            this.web = web;
         }
 
         public override void Execute()
         {
             var n = this.navigator;
-            var ac = this.accessController;
+            var w = this.web;
             new FactorialNavPresenter(
-                this.navUi,
-                this.navShell,
-                n,
-                ac,
-                new xofz.Framework.Timer())
+                    this.navUi,
+                    this.navShell,
+                    n,
+                    w)
                 .Setup();
             new FactorialPresenter(
-                this.ui,
-                this.mainShell,
-                new FactorialComputer(),
-                ac,
-                new xofz.Framework.Timer(),
-                new FactorialSaver(),
-                this.messenger,
-                this.logEditor)
+                    this.ui,
+                    this.mainShell,
+                    w)
                 .Setup(n);
         }
 
@@ -59,8 +49,6 @@
         private readonly ShellUi navShell;
         private readonly ShellUi mainShell;
         private readonly Navigator navigator;
-        private readonly AccessController accessController;
-        private readonly Messenger messenger;
-        private readonly LogEditor logEditor;
+        private readonly MethodWeb web;
     }
 }
