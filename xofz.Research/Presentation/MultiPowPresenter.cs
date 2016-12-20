@@ -18,23 +18,13 @@
         public MultiPowPresenter(
             MultiPowUi ui, 
             ShellUi shell,
-            MultiPow multiPow,
             Navigator navigator,
-            xofz.Framework.Timer timer,
-            MultiPowSaver saver,
-            Messenger messenger,
-            AccessController accessController,
-            LogEditor logEditor) 
+            MethodWeb web) 
             : base(ui, shell)
         {
             this.ui = ui;
-            this.multiPow = multiPow;
             this.navigator = navigator;
-            this.timer = timer;
-            this.saver = saver;
-            this.messenger = messenger;
-            this.accessController = accessController;
-            this.logEditor = logEditor;
+            this.web = web;
         }
 
         public void Setup()
@@ -48,7 +38,10 @@
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
             this.ui.DisplayKeyTapped += this.ui_DisplayKeyTapped;
             this.ui.BigPowKeyTapped += this.ui_BigPowKeyTapped;
-            this.timer.Elapsed += this.timer_Elapsed;
+            this.web.Subscribe<xofz.Framework.Timer>(
+                "Elapsed",
+                this.timer_Elapsed,
+                "MultiPowTimer");
 
             UiHelpers.Write(this.ui, () =>
             {
@@ -58,7 +51,9 @@
             });
             this.navigator.RegisterPresenter(this);
             this.timer_Elapsed();
-            this.timer.Start(1000);
+            this.web.Run<xofz.Framework.Timer>(
+                t => t.Start(1000),
+                "MultiPowTimer");
         }
 
         private void ui_ComputeKeyTapped()
@@ -76,6 +71,7 @@
             var powers = this.readPowers();
             BigInteger multiPower;
             DateTime computationStartTime, computationCompletionTime;
+            var w = this.web;
 
             var sw = Stopwatch.StartNew();
             computationStartTime = DateTime.Now;
@@ -85,7 +81,7 @@
                     "Computation began at approximately "
                     + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
             });
-            multiPower = this.multiPow.Compute(powers);
+            multiPower = w.Run<MultiPow, BigInteger>(mp => mp.Compute(powers));
             computationCompletionTime = DateTime.Now;
             sw.Stop();
 
@@ -118,14 +114,14 @@
             });
             this.ui.WriteFinished.WaitOne();
 
-            this.logEditor.AddEntry(
+            w.Run<LogEditor>(le => le.AddEntry(
                 "Information",
                 new[]
                 {
                     "The multi-power of "
                     + string.Join(",", powers.Select(p => p.ToString()))
                     + " was computed."
-                });
+                }));
         }
 
         private void ui_SaveKeyTapped()
@@ -133,16 +129,17 @@
             var powers = this.readPowers();
             UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
             this.ui.WriteFinished.WaitOne();
-            this.saver.Save(
-                powers, 
-                this.currentMultiPow);
-
-            UiHelpers.Write(
-                this.messenger.Subscriber,
-                () => this.messenger.Inform(
-                    "Saved this multi-pow to the "
-                    + "current program directory."));
-            this.messenger.Subscriber.WriteFinished.WaitOne();
+            var w = this.web;
+            w.Run<MultiPowSaver>(s => s.Save(powers, this.currentMultiPow));
+            w.Run<Messenger>(m =>
+            {
+                UiHelpers.Write(
+                    m.Subscriber,
+                    () => m.Inform(
+                        "Saved this multi-pow to the "
+                        + "current program directory."));
+                m.Subscriber.WriteFinished.WaitOne();
+            });
             UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
         }
 
@@ -176,7 +173,8 @@
 
         private void timer_Elapsed()
         {
-            var visible = this.accessController.CurrentAccessLevel > AccessLevel.None;
+            var cal = this.web.Run<AccessController, AccessLevel>(ac => ac.CurrentAccessLevel);
+            var visible = cal > AccessLevel.None;
             UiHelpers.Write(this.ui, () => this.ui.DurationInfoVisible = visible);
         }
 
@@ -188,12 +186,7 @@
         private int setupIf1;
         private string currentMultiPow;
         private readonly MultiPowUi ui;
-        private readonly MultiPow multiPow;
         private readonly Navigator navigator;
-        private readonly xofz.Framework.Timer timer;
-        private readonly MultiPowSaver saver;
-        private readonly Messenger messenger;
-        private readonly AccessController accessController;
-        private readonly LogEditor logEditor;
+        private readonly MethodWeb web;
     }
 }

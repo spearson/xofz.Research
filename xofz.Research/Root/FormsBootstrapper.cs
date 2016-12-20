@@ -91,9 +91,7 @@
                     new UserControlMultiPowUi(),
                     s,
                     n,
-                    fm,
-                    ac,
-                    le))
+                    w))
                 .Execute(new SetupBinaryVisualizerCommand(
                     new UserControlBinaryVisualizerUi(),
                     s,

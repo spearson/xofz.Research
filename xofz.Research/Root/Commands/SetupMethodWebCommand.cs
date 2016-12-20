@@ -30,6 +30,7 @@
             this.registerFactorialDependencies();
             this.registerPrimesDependencies();
             this.registerBigPowDependencies();
+            this.registerMultiPowDependencies();
         }
 
         private void registerFactorialDependencies()
@@ -70,6 +71,19 @@
             w.RegisterDependency(
                 new xofz.Framework.Timer(),
                 "BigPowNavTimer");
+        }
+
+        private void registerMultiPowDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new MultiPow(
+                    new BigPow()));
+            w.RegisterDependency(
+                new MultiPowSaver());
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "MultiPowTimer");
         }
 
         private void setWeb(MethodWeb web)
