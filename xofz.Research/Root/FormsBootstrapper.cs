@@ -46,15 +46,7 @@
                     s.NavUi,
                     s,
                     n,
-                    ac))
-                .Execute(new SetupPrimesCommand(
-                    new UserControlPrimesNavUi(),
-                    new UserControlPrimesUi(),
-                    s.NavUi,
-                    s,
-                    n,
-                    ac,
-                    fm));
+                    ac));
 
             var le = e.Get<SetupLogCommand>().Editor;
             e
@@ -65,6 +57,13 @@
             var w = e.Get<SetupMethodWebCommand>().Web;
 
             e
+                .Execute(new SetupPrimesCommand(
+                    new UserControlPrimesNavUi(),
+                    new UserControlPrimesUi(),
+                    s.NavUi,
+                    s,
+                    n,
+                    w))
                 .Execute(new SetupFactorialCommand(
                     new UserControlFactorialNavUi(),
                     new UserControlFactorialUi(),

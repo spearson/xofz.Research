@@ -5,6 +5,7 @@
     using System.Threading;
     using Framework;
     using UI;
+    using xofz.Framework;
     using xofz.Framework.Computation;
     using xofz.Presentation;
     using xofz.UI;
@@ -14,15 +15,11 @@
         public PrimesPresenter(
             PrimesUi ui, 
             ShellUi shell,
-            Func<LinkedList<long>, PrimeGenerator> createGenerator,
-            PrimeManager manager,
-            Messenger messenger) 
+            MethodWeb web) 
             : base(ui, shell)
         {
             this.ui = ui;
-            this.createGenerator = createGenerator;
-            this.manager = manager;
-            this.messenger = messenger;
+            this.web = web;
         }
 
         public void Setup(Navigator navigator)
@@ -52,8 +49,8 @@
             }
 
             this.setGenerator(
-                this.createGenerator(
-                    this.manager.LoadSet(location)));
+                this.web.Run<PrimeManager, PrimeGenerator>(
+                    pm => new PrimeGenerator(pm.LoadSet(location))));
             var g = this.generator;
             var e = g.Generate().GetEnumerator();
             var pi = 0;
@@ -119,7 +116,9 @@
 
         private void ui_RestartKeyTapped()
         {
-            this.setGenerator(this.createGenerator(null));
+            this.setGenerator(
+                this.web.Run<PrimeManager, PrimeGenerator>(
+                    pm => new PrimeGenerator()));
             this.setEnumerator(this.generator.Generate().GetEnumerator());
             this.setCurrentPrimeIndex(0);
             UiHelpers.Write(this.ui, () => this.ui.CurrentPrime = null);
@@ -141,15 +140,22 @@
             const string location = "Primes - Current Set.txt";
             UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
             this.ui.WriteFinished.WaitOne();
-            this.manager.Save(new List<long>(this.generator.CurrentSet), location);
-            UiHelpers.Write(this.messenger.Subscriber, () =>
+
+            var w = this.web;
+            w.Run<PrimeManager>(pm => pm.Save(
+                this.generator.CurrentSet, location));
+            w.Run<Messenger>(m =>
             {
-                this.messenger.Inform(
-                    "Saved current set of primes to"
-                    + Environment.NewLine
-                    + location);
+                UiHelpers.Write(m.Subscriber, () =>
+                {
+                    m.Inform(
+                        "Saved current set of primes to"
+                        + Environment.NewLine
+                        + location);
+                });
+                m.Subscriber.WriteFinished.WaitOne();
             });
-            this.messenger.Subscriber.WriteFinished.WaitOne();
+            
             UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
         }
 
@@ -165,8 +171,6 @@
         private PrimeGenerator generator;
         private IEnumerator<long> enumerator;
         private readonly PrimesUi ui;
-        private readonly Func<LinkedList<long>, PrimeGenerator> createGenerator;
-        private readonly PrimeManager manager;
-        private readonly Messenger messenger;
+        private readonly MethodWeb web;
     }
 }

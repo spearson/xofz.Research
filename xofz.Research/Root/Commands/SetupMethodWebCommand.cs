@@ -28,10 +28,11 @@
             w.RegisterDependency(this.messenger);
             w.RegisterDependency(this.accessController);
             this.registerFactorialDependencies();
+            this.registerPrimesDependencies();
         }
 
         private void registerFactorialDependencies()
-        {
+        { 
             var w = this.web;
             w.RegisterDependency(
                 new xofz.Framework.Timer(),
@@ -43,6 +44,16 @@
                 new FactorialComputer());
             w.RegisterDependency(
                 new FactorialSaver());
+        }
+
+        private void registerPrimesDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new PrimeManager());
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "PrimesNavTimer");
         }
 
         private void setWeb(MethodWeb web)
