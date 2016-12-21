@@ -39,24 +39,24 @@
                     ac,
                     n,
                     new FormLogEditorUi(
-                        s)))
-                .Execute(new SetupHomeCommand(
-                    new UserControlHomeNavUi(),
-                    new UserControlHomeUi(),
-                    s.NavUi,
-                    s,
-                    n,
-                    ac));
+                        s)));
+
 
             var le = e.Get<SetupLogCommand>().Editor;
-            e
-                .Execute(new SetupMethodWebCommand(
+            e.Execute(new SetupMethodWebCommand(
                     le,
                     fm,
                     ac));
             var w = e.Get<SetupMethodWebCommand>().Web;
 
             e
+                .Execute(new SetupHomeCommand(
+                    new UserControlHomeNavUi(),
+                    new UserControlHomeUi(),
+                    s.NavUi,
+                    s,
+                    n,
+                    w))
                 .Execute(new SetupPrimesCommand(
                     new UserControlPrimesNavUi(),
                     new UserControlPrimesUi(),

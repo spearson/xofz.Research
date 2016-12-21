@@ -27,10 +27,19 @@
             w.RegisterDependency(this.logEditor);
             w.RegisterDependency(this.messenger);
             w.RegisterDependency(this.accessController);
+            this.registerHomeDependencies();
             this.registerFactorialDependencies();
             this.registerPrimesDependencies();
             this.registerBigPowDependencies();
             this.registerMultiPowDependencies();
+        }
+
+        private void registerHomeDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "HomeNavTimer");
         }
 
         private void registerFactorialDependencies()

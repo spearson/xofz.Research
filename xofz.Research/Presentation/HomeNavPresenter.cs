@@ -12,14 +12,12 @@
             HomeNavUi ui, 
             ShellUi shell,
             Navigator navigator,
-            AccessController accessController,
-            xofz.Framework.Timer timer) 
+            MethodWeb web) 
             : base(ui, shell)
         {
             this.ui = ui;
             this.navigator = navigator;
-            this.accessController = accessController;
-            this.timer = timer;
+            this.web = web;
         }
 
         public void Setup()
@@ -37,7 +35,12 @@
             this.ui.ControlHubKeyTapped += this.ui_ControlHubKeyTapped;
             this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
             this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
-            this.timer.Elapsed += this.timer_Elapsed;
+
+            this.web.Subscribe<xofz.Framework.Timer>(
+                "Elapsed",
+                this.timer_Elapsed,
+                "HomeNavTimer");
+
             this.navigator.RegisterPresenter(this);
         }
 
@@ -46,17 +49,22 @@
             this.timer_Elapsed();
             base.Start();
 
-            this.timer.Start(1000);
+            this.web.Run<xofz.Framework.Timer>(
+                t => t.Start(1000), 
+                "HomeNavTimer");
         }
 
         public override void Stop()
         {
-            this.timer.Stop();
+            this.web.Run<xofz.Framework.Timer>(
+                t => t.Stop(),
+                "HomeNavTimer");
         }
 
         private void timer_Elapsed()
         {
-            var level2 = this.accessController.CurrentAccessLevel > AccessLevel.Level1;
+            var cal = this.web.Run<AccessController, AccessLevel>(ac => ac.CurrentAccessLevel);
+            var level2 = cal > AccessLevel.Level1;
             UiHelpers.Write(
                 this.ui,
                 () => this.ui.ControlHubKeyVisible = level2);
@@ -117,7 +125,6 @@
         private int setupIf1;
         private readonly HomeNavUi ui;
         private readonly Navigator navigator;
-        private readonly AccessController accessController;
-        private readonly xofz.Framework.Timer timer;
+        private readonly MethodWeb web;
     }
 }
