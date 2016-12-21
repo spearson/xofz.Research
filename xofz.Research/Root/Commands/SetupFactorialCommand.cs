@@ -29,6 +29,8 @@
 
         public override void Execute()
         {
+            this.registerDependencies();
+
             var n = this.navigator;
             var w = this.web;
             new FactorialNavPresenter(
@@ -42,6 +44,21 @@
                     this.mainShell,
                     w)
                 .Setup(n);
+        }
+
+        private void registerDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "FactorialTimer");
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "FactorialNavTimer");
+            w.RegisterDependency(
+                new FactorialComputer());
+            w.RegisterDependency(
+                new FactorialSaver());
         }
 
         private readonly FactorialNavUi navUi;

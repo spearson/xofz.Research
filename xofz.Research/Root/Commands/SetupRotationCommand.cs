@@ -29,6 +29,8 @@
 
         public override void Execute()
         {
+            this.registerDependencies();
+
             var n = this.navigator;
             new RotationNavPresenter(
                 this.navUi,
@@ -36,13 +38,24 @@
                 n,
                 this.web)
                 .Setup();
-
             new RotationPresenter(
                 this.ui,
                 this.mainShell,
                 new Random(),
                 new EnumerableRotator())
                 .Setup(n);
+        }
+
+        private void registerDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new Random());
+            w.RegisterDependency(
+                new EnumerableRotator());
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "RotationNavTimer");
         }
 
         private readonly RotationNavUi navUi;

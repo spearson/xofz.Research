@@ -13,7 +13,9 @@
 
     public class FormsBootstrapper
     {
-        public FormsBootstrapper(Navigator navigator, CommandExecutor executor)
+        public FormsBootstrapper(
+            Navigator navigator,
+            CommandExecutor executor)
         {
             this.navigator = navigator;
             this.executor = executor;

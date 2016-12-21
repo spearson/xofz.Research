@@ -27,6 +27,8 @@
 
         public override void Execute()
         {
+            this.registerDependencies();
+
             var n = this.navigator;
             var w = this.web;
             new ControlHubNavPresenter(
@@ -41,6 +43,16 @@
                 n,
                 w)
                 .Setup();
+        }
+
+        private void registerDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new EventRaiser());
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "ControlHubNavTimer");
         }
 
         private readonly ControlHubNavUi navUi;

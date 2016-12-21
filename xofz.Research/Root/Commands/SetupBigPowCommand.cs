@@ -1,7 +1,9 @@
 ﻿namespace xofz.Research.Root.Commands
 {
     using xofz.Framework;
+    using xofz.Framework.Computation;
     using xofz.Presentation;
+    using xofz.Research.Framework;
     using xofz.Research.Presentation;
     using xofz.Research.UI;
     using xofz.Root;
@@ -27,6 +29,8 @@
 
         public override void Execute()
         {
+            this.registerDependencies();
+
             var n = this.navigator;
             var w = this.web;
             new BigPowNavPresenter(
@@ -41,6 +45,21 @@
                     n,
                     w)
                 .Setup();
+        }
+
+        private void registerDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new BigPow());
+            w.RegisterDependency(
+                new BigPowSaver());
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "BigPowTimer");
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "BigPowNavTimer");
         }
 
         private readonly BigPowNavUi navUi;

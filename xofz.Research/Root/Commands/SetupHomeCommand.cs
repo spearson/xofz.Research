@@ -27,6 +27,8 @@
 
         public override void Execute()
         {
+            this.registerDependencies();
+
             var n = this.navigator;
             new HomeNavPresenter(
                 this.navUi,
@@ -40,6 +42,14 @@
                 this.mainShell,
                 n)
                 .Setup();
+        }
+
+        private void registerDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "HomeNavTimer");
         }
 
         private readonly HomeNavUi navUi;

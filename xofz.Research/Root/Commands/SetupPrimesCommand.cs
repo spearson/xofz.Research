@@ -29,6 +29,8 @@
 
         public override void Execute()
         {
+            this.registerDependencies();
+
             var n = this.navigator;
             var w = this.web;
             new PrimesNavPresenter(
@@ -37,12 +39,21 @@
                 n,
                 w)
                 .Setup();
-
             new PrimesPresenter(
                 this.ui,
                 this.mainShell,
                 w)
                 .Setup(n);
+        }
+
+        private void registerDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new PrimeManager());
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "PrimesNavTimer");
         }
 
         private readonly PrimesNavUi navUi;
