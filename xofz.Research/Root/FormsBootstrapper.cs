@@ -103,7 +103,7 @@
                     s.NavUi,
                     s,
                     n,
-                    ac))
+                    w))
                 .Execute(new SetupLoginCommand(
                     new FormLoginUi(s),
                     ac,

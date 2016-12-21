@@ -2,6 +2,7 @@
 {
     using System.Threading;
     using UI;
+    using xofz.Framework;
     using xofz.Presentation;
     using xofz.UI;
 
@@ -11,11 +12,12 @@
             ControlHubUi ui, 
             ShellUi shell,
             Navigator navigator,
-            EventRaiser eventRaiser) : base(ui, shell)
+            MethodWeb web) 
+            : base(ui, shell)
         {
             this.ui = ui;
             this.navigator = navigator;
-            this.eventRaiser = eventRaiser;
+            this.web = web;
         }
 
         public void Setup()
@@ -32,12 +34,13 @@
         private void ui_StopPrimesKeyTapped()
         {
             var primesUi = this.navigator.GetUi<PrimesPresenter, PrimesUi>();
-            this.eventRaiser.Raise(primesUi, "StopKeyTapped");
+            this.web.Run<EventRaiser>(
+                er => er.Raise(primesUi, "StopKeyTapped"));
         }
 
         private int setupIf1;
         private readonly ControlHubUi ui;
         private readonly Navigator navigator;
-        private readonly EventRaiser eventRaiser;
+        private readonly MethodWeb web;
     }
 }

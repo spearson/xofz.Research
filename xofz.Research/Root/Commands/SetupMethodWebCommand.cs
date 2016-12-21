@@ -4,6 +4,7 @@
     using xofz.Framework;
     using xofz.Framework.Computation;
     using xofz.Framework.Transformation;
+    using xofz.Presentation;
     using xofz.Research.Framework;
     using xofz.Root;
     using xofz.UI;
@@ -35,6 +36,7 @@
             this.registerBigPowDependencies();
             this.registerMultiPowDependencies();
             this.registerRotationDependencies();
+            this.registerControlHubDependencies();
         }
 
         private void registerHomeDependencies()
@@ -108,6 +110,16 @@
             w.RegisterDependency(
                 new xofz.Framework.Timer(),
                 "RotationNavTimer");
+        }
+
+        private void registerControlHubDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new EventRaiser());
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "ControlHubNavTimer");
         }
 
         private void setWeb(MethodWeb web)

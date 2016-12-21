@@ -15,31 +15,31 @@
             ShellUi navShell,
             ShellUi mainShell,
             Navigator navigator,
-            AccessController accessController)
+            MethodWeb web)
         {
             this.navUi = navUi;
             this.ui = ui;
             this.navShell = navShell;
             this.mainShell = mainShell;
             this.navigator = navigator;
-            this.accessController = accessController;
+            this.web = web;
         }
 
         public override void Execute()
         {
             var n = this.navigator;
+            var w = this.web;
             new ControlHubNavPresenter(
                 this.navUi,
                 this.navShell,
                 n,
-                this.accessController,
-                new xofz.Framework.Timer())
+                w)
                 .Setup();
             new ControlHubPresenter(
                 this.ui,
                 this.mainShell,
                 n,
-                new EventRaiser())
+                w)
                 .Setup();
         }
 
@@ -48,6 +48,6 @@
         private readonly ShellUi navShell;
         private readonly ShellUi mainShell;
         private readonly Navigator navigator;
-        private readonly AccessController accessController;
+        private readonly MethodWeb web;
     }
 }
