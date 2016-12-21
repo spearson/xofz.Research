@@ -79,7 +79,7 @@
                     s.NavUi,
                     s,
                     n,
-                    ac))
+                    w))
                 .Execute(new SetupBigPowCommand(
                     new UserControlBigPowNavUi(),
                     new UserControlBigPowUi(),

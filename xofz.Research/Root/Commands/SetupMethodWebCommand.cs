@@ -1,7 +1,9 @@
 ﻿namespace xofz.Research.Root.Commands
 {
+    using System;
     using xofz.Framework;
     using xofz.Framework.Computation;
+    using xofz.Framework.Transformation;
     using xofz.Research.Framework;
     using xofz.Root;
     using xofz.UI;
@@ -32,6 +34,7 @@
             this.registerPrimesDependencies();
             this.registerBigPowDependencies();
             this.registerMultiPowDependencies();
+            this.registerRotationDependencies();
         }
 
         private void registerHomeDependencies()
@@ -93,6 +96,18 @@
             w.RegisterDependency(
                 new xofz.Framework.Timer(),
                 "MultiPowTimer");
+        }
+
+        private void registerRotationDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new Random());
+            w.RegisterDependency(
+                new EnumerableRotator());
+            w.RegisterDependency(
+                new xofz.Framework.Timer(),
+                "RotationNavTimer");
         }
 
         private void setWeb(MethodWeb web)
