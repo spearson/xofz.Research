@@ -14,10 +14,8 @@
     public class FormsBootstrapper
     {
         public FormsBootstrapper(
-            Navigator navigator,
             CommandExecutor executor)
         {
-            this.navigator = navigator;
             this.executor = executor;
         }
 
@@ -98,8 +96,8 @@
                     s,
                     w));
 
-            this.navigator.Present<HomePresenter>();
-            this.navigator.PresentFluidly<HomeNavPresenter>();
+            w.Run<Navigator>(n => n.Present<HomePresenter>());
+            w.Run<Navigator>(n => n.PresentFluidly<HomeNavPresenter>());
         }
 
         private void setShell(FormMainUi shell)
@@ -108,7 +106,6 @@
         }
 
         private FormMainUi shell;
-        private readonly Navigator navigator;
         private readonly CommandExecutor executor;
     }
 }
