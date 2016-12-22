@@ -11,12 +11,10 @@
         public ControlHubPresenter(
             ControlHubUi ui, 
             ShellUi shell,
-            Navigator navigator,
             MethodWeb web) 
             : base(ui, shell)
         {
             this.ui = ui;
-            this.navigator = navigator;
             this.web = web;
         }
 
@@ -28,19 +26,19 @@
             }
 
             this.ui.StopPrimesKeyTapped += this.ui_StopPrimesKeyTapped;
-            this.navigator.RegisterPresenter(this);
+            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_StopPrimesKeyTapped()
         {
-            var primesUi = this.navigator.GetUi<PrimesPresenter, PrimesUi>();
+            var primesUi = this.web.Run<Navigator, PrimesUi>(
+                n => n.GetUi<PrimesPresenter, PrimesUi>());
             this.web.Run<EventRaiser>(
                 er => er.Raise(primesUi, "StopKeyTapped"));
         }
 
         private int setupIf1;
         private readonly ControlHubUi ui;
-        private readonly Navigator navigator;
         private readonly MethodWeb web;
     }
 }

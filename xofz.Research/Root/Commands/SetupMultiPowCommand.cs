@@ -14,12 +14,10 @@
         public SetupMultiPowCommand(
             MultiPowUi ui,
             ShellUi mainShell,
-            Navigator navigator,
             MethodWeb web)
         {
             this.ui = ui;
             this.mainShell = mainShell;
-            this.navigator = navigator;
             this.web = web;
         }
 
@@ -30,7 +28,6 @@
             new MultiPowPresenter(
                     this.ui,
                     this.mainShell,
-                    this.navigator,
                     this.web)
                 .Setup();
         }
@@ -50,7 +47,6 @@
 
         private readonly MultiPowUi ui;
         private readonly ShellUi mainShell;
-        private readonly Navigator navigator;
         private readonly MethodWeb web;
     }
 }

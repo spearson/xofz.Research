@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Threading;
     using UI;
+    using xofz.Framework;
     using xofz.Framework.Materialization;
     using xofz.Framework.Transformation;
     using xofz.Presentation;
@@ -14,16 +15,14 @@
         public RotationPresenter(
             RotationUi ui,
             ShellUi shell,
-            Random rng,
-            EnumerableRotator rotator)
+            MethodWeb web)
             : base(ui, shell)
         {
             this.ui = ui;
-            this.rng = rng;
-            this.rotator = rotator;
+            this.web = web;
         }
 
-        public void Setup(Navigator navigator)
+        public void Setup()
         {
             if (Interlocked.CompareExchange(ref this.setupIf1, 1, 0) == 1)
             {
@@ -36,18 +35,20 @@
             this.ui.RotateRightKeyTapped += this.ui_RotateRightKeyTapped;
             this.ui.RotateLeftKeyTapped += this.ui_RotateLeftKeyTapped;
             this.ui_GenerateKeyTapped();
-            navigator.RegisterPresenter(this);
+
+            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_GenerateKeyTapped()
         {
             var numbers = new LinkedList<int>();
+            var w = this.web;
             for (var i = 0; i < 15; ++i)
             {
                 numbers.AddLast(
-                    this.rng.Next(
+                    w.Run<Random, int>(rng => rng.Next(
                         0, UiHelpers.Read(
-                            this.ui, () => this.ui.MaxValue)));
+                            this.ui, () => this.ui.MaxValue))));
             }
 
             UiHelpers.Write(this.ui, () =>
@@ -67,23 +68,26 @@
 
         private void rotateKeyTapped(bool goRight)
         {
+            var w = this.web;
             var numbers = UiHelpers.Read(this.ui, () => this.ui.Numbers);
             MaterializedEnumerable<int> rotatedNumbers;
             if (UiHelpers.Read(this.ui, () => this.ui.RandomizeRotations))
             {
-                var rotations = this.rng.Next(1, 6);
-                rotatedNumbers = this.rotator.Rotate(
-                    numbers,
-                    rotations,
-                    goRight);
+                var rotations = w.Run<Random, int>(rng => rng.Next(1, 6));
+                rotatedNumbers = w.Run<EnumerableRotator, MaterializedEnumerable<int>>(
+                    r => r.Rotate(
+                        numbers,
+                        rotations,
+                        goRight));
                 UiHelpers.Write(this.ui, () => this.ui.NumberOfRotations = rotations);
             }
             else
             {
-                rotatedNumbers = this.rotator.Rotate(
-                    numbers,
-                    UiHelpers.Read(this.ui, () => this.ui.NumberOfRotations),
-                    goRight);
+                rotatedNumbers = w.Run<EnumerableRotator, MaterializedEnumerable<int>>(
+                    r => r.Rotate(
+                        numbers,
+                        UiHelpers.Read(this.ui, () => this.ui.NumberOfRotations),
+                        goRight));
             }
 
             UiHelpers.Write(this.ui, () => this.ui.Numbers = rotatedNumbers);
@@ -91,7 +95,6 @@
 
         private int setupIf1;
         private readonly RotationUi ui;
-        private readonly Random rng;
-        private readonly EnumerableRotator rotator;
+        private readonly MethodWeb web;
     }
 }

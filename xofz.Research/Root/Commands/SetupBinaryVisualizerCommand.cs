@@ -13,29 +13,32 @@
         public SetupBinaryVisualizerCommand(
             BinaryVisualizerUi ui,
             ShellUi shell,
-            LogEditor logEditor,
-            Navigator navigator)
+            MethodWeb web)
         {
             this.ui = ui;
             this.shell = shell;
-            this.logEditor = logEditor;
-            this.navigator = navigator;
+            this.web = web;
         }
 
         public override void Execute()
         {
+            this.registerDependencies();
             new BinaryVisualizerPresenter(
                 this.ui,
                 this.shell,
-                new BinaryTranslator(),
-                this.logEditor)
-                .Setup(
-                    this.navigator);
+                this.web)
+                .Setup();
+        }
+
+        private void registerDependencies()
+        {
+            var w = this.web;
+            w.RegisterDependency(
+                new BinaryTranslator());
         }
 
         private readonly BinaryVisualizerUi ui;
         private readonly ShellUi shell;
-        private readonly LogEditor logEditor;
-        private readonly Navigator navigator;
+        private readonly MethodWeb web;
     }
 }

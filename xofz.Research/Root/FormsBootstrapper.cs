@@ -26,30 +26,23 @@
         public virtual void Bootstrap()
         {
             this.setShell(new FormMainUi());
-            var n = this.navigator;
             var s = this.shell;
             var fm = new FormsMessenger { Subscriber = this.shell };
             var ac = new AccessController(new[] { "1111", "2222" });
             var e = this.executor;
+            e.Execute(new SetupMethodWebCommand(
+                    fm));
+            var w = e.Get<SetupMethodWebCommand>().Web;
             e
                 .Execute(new SetupMainCommand(
                     s,
-                    n))
+                    w))
                 .Execute(new SetupLogCommand(
                     new UserControlLogUi(),
                     s,
-                    ac,
-                    n,
-                    new FormLogEditorUi(
-                        s)));
+                    new FormLogEditorUi(s),
+                    w));
 
-
-            var le = e.Get<SetupLogCommand>().Editor;
-            e.Execute(new SetupMethodWebCommand(
-                    le,
-                    fm,
-                    ac));
-            var w = e.Get<SetupMethodWebCommand>().Web;
 
             e
                 .Execute(new SetupHomeCommand(
@@ -57,21 +50,18 @@
                     new UserControlHomeUi(),
                     s.NavUi,
                     s,
-                    n,
                     w))
                 .Execute(new SetupPrimesCommand(
                     new UserControlPrimesNavUi(),
                     new UserControlPrimesUi(),
                     s.NavUi,
                     s,
-                    n,
                     w))
                 .Execute(new SetupFactorialCommand(
                     new UserControlFactorialNavUi(),
                     new UserControlFactorialUi(),
                     s.NavUi,
                     s,
-                    n,
                     w))
                 .Execute(new SetupRotationCommand(
                     new UserControlRotationNavUi(),
@@ -80,40 +70,33 @@
                         ll => new LinkedListMaterializedEnumerable<int>(ll)),
                     s.NavUi,
                     s,
-                    n,
                     w))
                 .Execute(new SetupBigPowCommand(
                     new UserControlBigPowNavUi(),
                     new UserControlBigPowUi(),
                     s.NavUi,
                     s,
-                    n,
                     w))
                 .Execute(new SetupMultiPowCommand(
                     new UserControlMultiPowUi(),
                     s,
-                    n,
                     w))
                 .Execute(new SetupBinaryVisualizerCommand(
                     new UserControlBinaryVisualizerUi(),
                     s,
-                    le,
-                    n))
+                    w))
                 .Execute(new SetupControlHubCommand(
                     new UserControlControlHubNavUi(),
                     new UserControlControlHubUi(),
                     s.NavUi,
                     s,
-                    n,
                     w))
                 .Execute(new SetupLoginCommand(
                     new FormLoginUi(s),
-                    ac,
-                    n))
+                    w))
                 .Execute(new SetupShutdownCommand(
                     s,
-                    n,
-                    () => { }));
+                    w));
 
             this.navigator.Present<HomePresenter>();
             this.navigator.PresentFluidly<HomeNavPresenter>();

@@ -11,12 +11,10 @@
         public ControlHubNavPresenter(
             ControlHubNavUi ui, 
             ShellUi shell,
-            Navigator navigator,
             MethodWeb web) 
             : base(ui, shell)
         {
             this.ui = ui;
-            this.navigator = navigator;
             this.web = web;
         }
 
@@ -40,7 +38,7 @@
                 this.timer_Elapsed,
                 "ControlHubNavTimer");
 
-            this.navigator.RegisterPresenter(this);
+            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void timer_Elapsed()
@@ -49,8 +47,11 @@
                 ac => ac.CurrentAccessLevel);
             if (cal < AccessLevel.Level2)
             {
-                this.navigator.Present<HomePresenter>();
-                this.navigator.PresentFluidly<HomeNavPresenter>();
+                this.web.Run<Navigator>(n =>
+                {
+                    n.Present<HomePresenter>();
+                    n.PresentFluidly<HomeNavPresenter>();
+                });
             }
         }
 
@@ -73,52 +74,61 @@
 
         private void ui_HomeKeyTapped()
         {
-            var n = this.navigator;
-            n.Present<HomePresenter>();
-            n.PresentFluidly<HomeNavPresenter>();
+            this.web.Run<Navigator>(n =>
+            {
+                n.Present<HomePresenter>();
+                n.PresentFluidly<HomeNavPresenter>();
+            });
         }
 
         private void ui_PrimesKeyTapped()
         {
-            var n = this.navigator;
-            n.Present<PrimesPresenter>();
-            n.PresentFluidly<PrimesNavPresenter>();
+            this.web.Run<Navigator>(n =>
+            {
+                n.Present<PrimesPresenter>();
+                n.PresentFluidly<PrimesNavPresenter>();
+            });
         }
 
         private void ui_FactorialKeyTapped()
         {
-            var n = this.navigator;
-            n.Present<FactorialPresenter>();
-            n.PresentFluidly<FactorialNavPresenter>();
+            this.web.Run<Navigator>(n =>
+            {
+                n.Present<FactorialPresenter>();
+                n.PresentFluidly<FactorialNavPresenter>();
+            });
         }
 
         private void ui_RotationKeyTapped()
         {
-            var n = this.navigator;
-            n.Present<RotationPresenter>();
-            n.PresentFluidly<RotationNavPresenter>();
+            this.web.Run<Navigator>(n =>
+            {
+                n.Present<RotationPresenter>();
+                n.PresentFluidly<RotationNavPresenter>();
+            });
         }
 
         private void ui_BigPowKeyTapped()
         {
-            var n = this.navigator;
-            n.Present<BigPowPresenter>();
-            n.PresentFluidly<BigPowNavPresenter>();
+            this.web.Run<Navigator>(n =>
+            {
+                n.Present<BigPowPresenter>();
+                n.PresentFluidly<BigPowNavPresenter>();
+            });
         }
 
         private void ui_LogInKeyTapped()
         {
-            this.navigator.PresentFluidly<LoginPresenter>();
+            this.web.Run<Navigator>(n => n.PresentFluidly<LoginPresenter>());
         }
 
         private void ui_ShutdownKeyTapped()
         {
-            this.navigator.Present<ShutdownPresenter>();
+            this.web.Run<Navigator>(n => n.Present<ShutdownPresenter>());
         }
 
         private int setupIf1;
         private readonly ControlHubNavUi ui;
-        private readonly Navigator navigator;
         private readonly MethodWeb web;
     }
 }

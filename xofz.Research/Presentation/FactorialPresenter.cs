@@ -23,7 +23,7 @@
             this.web = web;
         }
 
-        public void Setup(Navigator navigator)
+        public void Setup()
         {
             if (Interlocked.CompareExchange(ref this.setupIf1, 1, 0) == 1)
             {
@@ -44,7 +44,7 @@
                 this.ui.SaveKeyVisible = false;
                 this.ui.DisplayKeyVisible = false;
             });
-            navigator.RegisterPresenter(this);
+            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
             this.timer_Elapsed();
             this.web.Run<xofz.Framework.Timer>(
                 timer => timer.Start(1000), "FactorialTimer");

@@ -14,33 +14,30 @@
             HomeUi ui,
             ShellUi navShell,
             ShellUi mainShell,
-            Navigator navigator,
             MethodWeb web)
         {
             this.navUi = navUi;
             this.ui = ui;
             this.navShell = navShell;
             this.mainShell = mainShell;
-            this.navigator = navigator;
             this.web = web;
         }
 
         public override void Execute()
         {
             this.registerDependencies();
+            var w = this.web;
 
-            var n = this.navigator;
             new HomeNavPresenter(
                 this.navUi,
                 this.navShell,
-                n,
-                this.web)
+                w)
                 .Setup();
 
             new HomePresenter(
                 this.ui,
                 this.mainShell,
-                n)
+                w)
                 .Setup();
         }
 
@@ -56,7 +53,6 @@
         private readonly HomeUi ui;
         private readonly ShellUi navShell;
         private readonly ShellUi mainShell;
-        private readonly Navigator navigator;
         private readonly MethodWeb web;
     }
 }

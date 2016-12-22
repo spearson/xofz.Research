@@ -1,5 +1,7 @@
 ﻿namespace xofz.Research.Presentation
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using xofz.Framework;
@@ -13,16 +15,14 @@
         public BinaryVisualizerPresenter(
             BinaryVisualizerUi ui, 
             ShellUi shell,
-            BinaryTranslator translator,
-            LogEditor logEditor) 
+            MethodWeb web) 
             : base(ui, shell)
         {
             this.ui = ui;
-            this.translator = translator;
-            this.logEditor = logEditor;
+            this.web = web;
         }
 
-        public void Setup(Navigator navigator)
+        public void Setup()
         {
             if (Interlocked.CompareExchange(ref this.setupIf1, 1, 0) == 1)
             {
@@ -31,7 +31,8 @@
 
             this.ui.TranslateKeyTapped += this.ui_TranslateKeyTapped;
             UiHelpers.Write(this.ui, () => this.ui.Input = 1000000);
-            navigator.RegisterPresenter(this);
+            
+            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_TranslateKeyTapped()
@@ -43,8 +44,10 @@
             });
             this.ui.WriteFinished.WaitOne();
 
+            var w = this.web;
             var input = UiHelpers.Read(this.ui, () => this.ui.Input);
-            var bits = this.translator.GetBits(input);
+            var bits = w.Run<BinaryTranslator, IEnumerable<bool>>(
+                bt => bt.GetBits(input));
             var binary = new string(
                 bits.Select(b => b ? '1' : '0').ToArray());
             UiHelpers.Write(this.ui, () =>
@@ -54,14 +57,13 @@
             });
             this.ui.WriteFinished.WaitOne();
 
-            this.logEditor.AddEntry(
+            w.Run<LogEditor>(le => le.AddEntry(
                 "Information",
-                new[] { "The binary form of " + input + " was displayed." });
+                new[] { "The binary form of " + input + " was displayed." }));
         }
 
         private int setupIf1;
         private readonly BinaryVisualizerUi ui;
-        private readonly BinaryTranslator translator;
-        private readonly LogEditor logEditor;
+        private readonly MethodWeb web;
     }
 }

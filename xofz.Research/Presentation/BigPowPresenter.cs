@@ -16,12 +16,10 @@
         public BigPowPresenter(
             BigPowUi ui,
             ShellUi shell,
-            Navigator navigator,
             MethodWeb web)
             : base(ui, shell)
         {
             this.ui = ui;
-            this.navigator = navigator;
             this.web = web;
         }
 
@@ -48,7 +46,8 @@
                 this.ui.SaveKeyVisible = false;
                 this.ui.DisplayKeyVisible = false;
             });
-            this.navigator.RegisterPresenter(this);
+
+            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
             this.timer_Elapsed();
             this.web.Run<xofz.Framework.Timer>(
                 t => t.Start(1000),
@@ -189,7 +188,7 @@
 
         private void ui_MultiPowKeyTapped()
         {
-            this.navigator.Present<MultiPowPresenter>();
+            this.web.Run<Navigator>(n => n.Present<MultiPowPresenter>());
         }
 
         private void timer_Elapsed()
@@ -207,7 +206,6 @@
         private int setupIf1;
         private string currentPower;
         private readonly BigPowUi ui;
-        private readonly Navigator navigator;
         private readonly MethodWeb web;
     }
 }

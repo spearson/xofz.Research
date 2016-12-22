@@ -22,7 +22,7 @@
             this.web = web;
         }
 
-        public void Setup(Navigator navigator)
+        public void Setup()
         {
             if (Interlocked.CompareExchange(ref this.setupIf1, 1, 0) == 1)
             {
@@ -34,7 +34,9 @@
             this.ui.RestartKeyTapped += this.ui_RestartKeyTapped;
             this.ui.LoadKeyTapped += this.ui_LoadKeyTapped;
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
-            navigator.RegisterPresenter(this);
+
+            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
+
             this.ui_RestartKeyTapped();
         }
 

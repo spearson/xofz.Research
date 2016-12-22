@@ -3,7 +3,6 @@
     using System;
     using xofz.Framework;
     using xofz.Framework.Transformation;
-    using xofz.Presentation;
     using xofz.Research.Presentation;
     using xofz.Research.UI;
     using xofz.Root;
@@ -16,14 +15,12 @@
             RotationUi ui,
             ShellUi navShell,
             ShellUi mainShell,
-            Navigator navigator,
             MethodWeb web)
         {
             this.navUi = navUi;
             this.ui = ui;
             this.navShell = navShell;
             this.mainShell = mainShell;
-            this.navigator = navigator;
             this.web = web;
         }
 
@@ -31,19 +28,17 @@
         {
             this.registerDependencies();
 
-            var n = this.navigator;
+            var w = this.web;
             new RotationNavPresenter(
                 this.navUi,
                 this.navShell,
-                n,
-                this.web)
+                w)
                 .Setup();
             new RotationPresenter(
                 this.ui,
                 this.mainShell,
-                new Random(),
-                new EnumerableRotator())
-                .Setup(n);
+                w)
+                .Setup();
         }
 
         private void registerDependencies()
@@ -62,7 +57,6 @@
         private readonly RotationUi ui;
         private readonly ShellUi navShell;
         private readonly ShellUi mainShell;
-        private readonly Navigator navigator;
         private readonly MethodWeb web;
     }
 }
