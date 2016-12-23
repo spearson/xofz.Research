@@ -13,6 +13,11 @@
 
     public class FormsBootstrapper
     {
+        public FormsBootstrapper()
+            : this(new CommandExecutor())
+        {
+        }
+
         public FormsBootstrapper(
             CommandExecutor executor)
         {

@@ -40,7 +40,6 @@
     <ItemGroup>
       <FilesToMove Include="$(BuildDir)\xofz.Research.exe" />
       <FilesToMove Include="$(BuildDir)\xofz.Research.exe.config" />
-      <FilesToMove Include="$(BuildDir)\xofz.Core.dll" />
     </ItemGroup>
     <MV SourceFiles="@(FilesToMove)" DestinationFolder="$(DeployFolder)" />
   </Target>
