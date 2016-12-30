@@ -34,8 +34,6 @@
                         this.n14TextBox,
                         this.n15TextBox,
                     });
-
-            var h = this.Handle;
         }
 
         public event Action GenerateKeyTapped;

@@ -3,7 +3,6 @@
     using System;
     using System.Reflection;
     using System.Windows.Forms;
-    using xofz.Root;
 
     internal static class EntryPoint
     {

@@ -31,7 +31,6 @@
             this.setShell(new FormMainUi());
             var s = this.shell;
             var fm = new FormsMessenger { Subscriber = this.shell };
-            var ac = new AccessController(new[] { "1111", "2222" });
             var e = this.executor;
             e.Execute(new SetupMethodWebCommand(
                     fm));

@@ -31,9 +31,10 @@
 
         private void ui_StopPrimesKeyTapped()
         {
-            var primesUi = this.web.Run<Navigator, PrimesUi>(
+            var w = this.web;
+            var primesUi = w.Run<Navigator, PrimesUi>(
                 n => n.GetUi<PrimesPresenter, PrimesUi>());
-            this.web.Run<EventRaiser>(
+            w.Run<EventRaiser>(
                 er => er.Raise(primesUi, "StopKeyTapped"));
         }
 

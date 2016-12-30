@@ -11,7 +11,6 @@
         public FormMainUi()
         {
             this.InitializeComponent();
-            var h = this.Handle;
         }
 
         public event Action ShutdownRequested;

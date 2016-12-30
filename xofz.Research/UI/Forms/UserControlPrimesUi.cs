@@ -9,8 +9,6 @@
         public UserControlPrimesUi()
         {
             this.InitializeComponent();
-
-            var h = this.Handle;
         }
 
         public event Action GenerateKeyTapped;

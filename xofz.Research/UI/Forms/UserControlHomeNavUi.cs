@@ -9,8 +9,6 @@
         public UserControlHomeNavUi()
         {
             this.InitializeComponent();
-
-            var h = this.Handle;
         }
 
         public event Action HomeKeyTapped;

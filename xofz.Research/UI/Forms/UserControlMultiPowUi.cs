@@ -9,8 +9,6 @@
         public UserControlMultiPowUi()
         {
             this.InitializeComponent();
-
-            var h = this.Handle;
         }
 
         public event Action ComputeKeyTapped;
