@@ -40,13 +40,11 @@
                     s,
                     w))
                 .Execute(new SetupLogCommand(
-                    new UserControlLogUi(),
+                    new UserControlLogUi(
+                        new LinkedListMaterializer()),
                     s,
                     new FormLogEditorUi(s),
-                    w));
-
-
-            e
+                    w))
                 .Execute(new SetupHomeCommand(
                     new UserControlHomeNavUi(),
                     new UserControlHomeUi(),
