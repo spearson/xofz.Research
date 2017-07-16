@@ -25,7 +25,7 @@
                 new AccessController(
                     new[] { "1111", "2222" }));
             w.RegisterDependency(
-                new Navigator());
+                new Navigator(w));
         }
 
         private void setWeb(MethodWeb web)

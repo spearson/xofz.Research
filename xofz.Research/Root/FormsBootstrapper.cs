@@ -30,7 +30,7 @@
         {
             this.setShell(new FormMainUi());
             var s = this.shell;
-            var fm = new FormsMessenger { Subscriber = this.shell };
+            var fm = new FormsMessenger { Subscriber = s };
             var e = this.executor;
             e.Execute(new SetupMethodWebCommand(
                     fm));
@@ -43,7 +43,9 @@
                     new UserControlLogUi(
                         new LinkedListMaterializer()),
                     s,
-                    new FormLogEditorUi(s),
+                    new FormLogEditorUi(
+                        s,
+                        new LinkedListMaterializer()),
                     w))
                 .Execute(new SetupHomeCommand(
                     new UserControlHomeNavUi(),
@@ -66,8 +68,7 @@
                 .Execute(new SetupRotationCommand(
                     new UserControlRotationNavUi(),
                     new UserControlRotationUi(
-                        list => new OrderedMaterializedEnumerable<TextBox>(list),
-                        ll => new LinkedListMaterializedEnumerable<int>(ll)),
+                        new LinkedListMaterializer()),
                     s.NavUi,
                     s,
                     w))
@@ -98,8 +99,11 @@
                     s,
                     w));
 
-            w.Run<Navigator>(n => n.Present<HomePresenter>());
-            w.Run<Navigator>(n => n.PresentFluidly<HomeNavPresenter>());
+            w.Run<Navigator>(n =>
+            {
+                n.Present<HomePresenter>();
+                n.PresentFluidly<HomeNavPresenter>();
+            });
         }
 
         private void setShell(FormMainUi shell)

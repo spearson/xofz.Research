@@ -23,14 +23,14 @@
 
         string PrimesUi.LoadLocation
         {
-            get { return this.locator.FileName; }
+            get => this.locator.FileName;
 
-            set { this.locator.FileName = value; }
+            set => this.locator.FileName = value;
         }
 
         bool PrimesUi.Generating
         {
-            get { return this.generateKey.Text == @"Generating..."; }
+            get => this.generateKey.Text == @"Generating...";
 
             set
             {
@@ -41,7 +41,7 @@
 
         bool PrimesUi.Stopping
         {
-            get { return this.stopKey.Text == @"Stopping..."; }
+            get => this.stopKey.Text == @"Stopping...";
 
             set
             {
@@ -52,47 +52,44 @@
 
         bool PrimesUi.RestartKeyVisible
         {
-            get { return this.restartKey.Visible; }
+            get => this.restartKey.Visible;
 
-            set { this.restartKey.Visible = value; }
+            set => this.restartKey.Visible = value;
         }
 
         bool PrimesUi.StopKeyVisible
         {
-            get { return this.stopKey.Visible; }
+            get => this.stopKey.Visible;
 
-            set { this.stopKey.Visible = value; }
+            set => this.stopKey.Visible = value;
         }
 
         bool PrimesUi.LoadKeyVisible
         {
-            get { return this.loadKey.Visible; }
+            get => this.loadKey.Visible;
 
-            set { this.loadKey.Visible = value; }
+            set => this.loadKey.Visible = value;
         }
 
         bool PrimesUi.SaveKeyVisible
         {
-            get { return this.saveKey.Visible; }
+            get => this.saveKey.Visible;
 
-            set { this.saveKey.Visible = value; }
+            set => this.saveKey.Visible = value;
         }
 
         int PrimesUi.NumberToGenerate
         {
-            get { return int.Parse(this.numberToGenerateTextBox.Text); }
+            get => int.Parse(this.numberToGenerateTextBox.Text);
 
-            set { this.numberToGenerateTextBox.Text = value.ToString(); }
+            set => this.numberToGenerateTextBox.Text = value.ToString();
         }
 
         long? PrimesUi.CurrentPrime
         {
-            get
-            {
-                return long.Parse(this.currentPrimeLabel.Text);
-            }
+            get => long.Parse(this.currentPrimeLabel.Text);
 
-            set { this.currentPrimeLabel.Text = value.ToString(); }
+            set => this.currentPrimeLabel.Text = value.ToString();
         }
 
         int? PrimesUi.CurrentPrimeIndex
@@ -107,7 +104,7 @@
                 return int.Parse(this.currentPrimeIndexLabel.Text);
             }
 
-            set { this.currentPrimeIndexLabel.Text = value.ToString(); }
+            set => this.currentPrimeIndexLabel.Text = value.ToString();
         }
 
         void PrimesUi.DisplayLoadLocator()

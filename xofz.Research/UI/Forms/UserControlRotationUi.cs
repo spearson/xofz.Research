@@ -8,14 +8,12 @@
 
     public partial class UserControlRotationUi : UserControlUi, RotationUi
     {
-        public UserControlRotationUi(
-            Func<List<TextBox>, MaterializedEnumerable<TextBox>> materializeTextBoxes,
-            Func<LinkedList<int>, MaterializedEnumerable<int>> materializeNumbers)
+        public UserControlRotationUi(Materializer materializer)
         {
-            this.materializeNumbers = materializeNumbers;
-            InitializeComponent();
+            this.materializer = materializer;
+            this.InitializeComponent();
             this.numbersTextBoxes =
-                materializeTextBoxes(
+                this.materializer.Materialize(
                     new List<TextBox>(15)
                     {
                         this.n1TextBox,
@@ -44,23 +42,23 @@
 
         bool RotationUi.RandomizeRotations
         {
-            get { return this.randomizeCheckBox.Checked; }
+            get => this.randomizeCheckBox.Checked;
 
-            set { this.randomizeCheckBox.Checked = value; }
+            set => this.randomizeCheckBox.Checked = value;
         }
 
         int RotationUi.MaxValue
         {
-            get { return int.Parse(this.maxValueTextBox.Text); }
+            get => int.Parse(this.maxValueTextBox.Text);
 
-            set { this.maxValueTextBox.Text = value.ToString(); }
+            set => this.maxValueTextBox.Text = value.ToString();
         }
 
         int RotationUi.NumberOfRotations
         {
-            get { return int.Parse(this.rotationsTextBox.Text); }
+            get => int.Parse(this.rotationsTextBox.Text);
 
-            set { this.rotationsTextBox.Text = value.ToString(); }
+            set => this.rotationsTextBox.Text = value.ToString();
         }
 
         public MaterializedEnumerable<int> Numbers
@@ -73,7 +71,7 @@
                     ll.AddLast(int.Parse(tb.Text));
                 }
 
-                return this.materializeNumbers(ll);
+                return this.materializer.Materialize(ll);
             }
 
             set
@@ -84,6 +82,8 @@
                     enumerator.MoveNext();
                     enumerator.Current.Text = number.ToString();
                 }
+
+                enumerator.Dispose();
             }
         }
 
@@ -102,7 +102,7 @@
             new Thread(() => this.RotateLeftKeyTapped?.Invoke()).Start();
         }
 
+        private readonly Materializer materializer;
         private readonly MaterializedEnumerable<TextBox> numbersTextBoxes;
-        private readonly Func<LinkedList<int>, MaterializedEnumerable<int>> materializeNumbers;
     }
 }

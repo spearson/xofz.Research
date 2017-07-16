@@ -20,7 +20,7 @@
         string DurationInfo { get; set; }
 
         bool DurationInfoVisible { get; set; }
-
+        
         bool DisplayKeyVisible { get; set; }
 
         bool Computing { get; set; }
