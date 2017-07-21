@@ -1,6 +1,7 @@
 ﻿namespace xofz.Research.Root.Commands
 {
     using xofz.Framework;
+    using xofz.Framework.Implementation;
     using xofz.Presentation;
     using xofz.Root;
     using xofz.UI;
@@ -26,6 +27,9 @@
                     new[] { "1111", "2222" }));
             w.RegisterDependency(
                 new Navigator(w));
+            w.RegisterDependency(
+                new TextFileLog("Exceptions.log"),
+                "Exceptions");
         }
 
         private void setWeb(MethodWeb web)

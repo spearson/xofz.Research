@@ -1,5 +1,6 @@
 ﻿namespace xofz.Research.Root
 {
+    using System;
     using System.Windows.Forms;
     using xofz.Framework;
     using xofz.Framework.Materialization;
@@ -34,6 +35,7 @@
             var e = this.executor;
             e.Execute(new SetupMethodWebCommand(
                     fm));
+            AppDomain.CurrentDomain.UnhandledException += this.logUnhandledException;
             var w = e.Get<SetupMethodWebCommand>().Web;
             e
                 .Execute(new SetupMainCommand(
@@ -109,6 +111,31 @@
         private void setShell(FormMainUi shell)
         {
             this.shell = shell;
+        }
+
+        private void logUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            var web = this.executor.Get<SetupMethodWebCommand>().Web;
+
+            var ex = e.ExceptionObject as Exception;
+            if (ex == null)
+            {
+                web.Run<LogEditor>(editor => editor.AddEntry(
+                        "Error",
+                        new[]
+                        {
+                            "An unhandled exception occurred, but the exception "
+                            + "did not derive from System.Exception.",
+                            "Here is the exception's type: "
+                            + e.ExceptionObject.GetType()
+                        }),
+                    "Exceptions");
+                return;
+            }
+
+            web.Run<LogEditor>(
+                editor => LogHelpers.AddEntry(editor, ex),
+                "Exceptions");
         }
 
         private FormMainUi shell;

@@ -20,6 +20,7 @@
             : base(ui, shell)
         {
             this.ui = ui;
+            this.ui?.AssertStability();
             this.web = web;
         }
 
