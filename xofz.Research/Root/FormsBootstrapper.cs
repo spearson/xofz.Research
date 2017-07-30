@@ -48,7 +48,12 @@
                     new FormLogEditorUi(
                         s,
                         new LinkedListMaterializer()),
-                    w))
+                    new FormLogStatisticsUi(
+                        s),
+                    w,
+                    @"Log.log",
+                    AccessLevel.None,
+                    true))
                 .Execute(new SetupHomeCommand(
                     new UserControlHomeNavUi(),
                     new UserControlHomeUi(),
