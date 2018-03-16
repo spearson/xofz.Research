@@ -24,28 +24,28 @@
 
         BigInteger BigPowUi.NumberInput
         {
-            get { return BigInteger.Parse(this.numberInputTextBox.Text); }
+            get => BigInteger.Parse(this.numberInputTextBox.Text);
 
-            set { this.numberInputTextBox.Text = value.ToString(); }
+            set => this.numberInputTextBox.Text = value.ToString();
         }
 
         BigInteger BigPowUi.ExponentInput
         {
-            get { return BigInteger.Parse(this.exponentInputTextBox.Text); }
+            get => BigInteger.Parse(this.exponentInputTextBox.Text);
 
-            set { this.exponentInputTextBox.Text = value.ToString(); }
+            set => this.exponentInputTextBox.Text = value.ToString();
         }
 
         string BigPowUi.Power
         {
-            get { return this.powerTextBox.Text; }
+            get => this.powerTextBox.Text;
 
-            set { this.powerTextBox.Text = value; }
+            set => this.powerTextBox.Text = value;
         }
 
         string BigPowUi.DurationInfo
         {
-            get { return this.durationLabel.Text; }
+            get => this.durationLabel.Text;
 
             set
             {
@@ -56,21 +56,21 @@
 
         bool BigPowUi.DurationInfoVisible
         {
-            get { return this.durationLabel.Visible; }
+            get => this.durationLabel.Visible;
 
-            set { this.durationLabel.Visible = value; }
+            set => this.durationLabel.Visible = value;
         }
 
         bool BigPowUi.DisplayKeyVisible
         {
-            get { return this.displayKey.Visible; }
+            get => this.displayKey.Visible;
 
-            set { this.displayKey.Visible = value; }
+            set => this.displayKey.Visible = value;
         }
 
         bool BigPowUi.Computing
         {
-            get { return this.computeKey.Text == @"Computing..."; }
+            get => this.computeKey.Text == @"Computing...";
 
             set
             {
@@ -81,9 +81,9 @@
 
         bool BigPowUi.SaveKeyVisible
         {
-            get { return this.saveKey.Visible; }
+            get => this.saveKey.Visible;
 
-            set { this.saveKey.Visible = value; }
+            set => this.saveKey.Visible = value;
         }
 
         private void computeKey_Click(object sender, EventArgs e)

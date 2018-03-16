@@ -45,9 +45,6 @@
             var w = this.web;
             w.RegisterDependency(
                 new PrimeManager());
-            w.RegisterDependency(
-                new xofz.Framework.Timer(),
-                "PrimesNavTimer");
         }
 
         private readonly PrimesNavUi navUi;

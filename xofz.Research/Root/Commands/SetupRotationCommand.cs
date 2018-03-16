@@ -48,9 +48,6 @@
                 new Random());
             w.RegisterDependency(
                 new EnumerableRotator());
-            w.RegisterDependency(
-                new xofz.Framework.Timer(),
-                "RotationNavTimer");
         }
 
         private readonly RotationNavUi navUi;

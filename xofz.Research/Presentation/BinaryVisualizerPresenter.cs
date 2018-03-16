@@ -4,7 +4,8 @@
     using System.Linq;
     using System.Threading;
     using xofz.Framework;
-    using xofz.Framework.Theory;
+    using xofz.Framework.Logging;
+    using xofz.Misc.Framework.Theory;
     using xofz.Presentation;
     using xofz.Research.UI;
     using xofz.UI;
@@ -44,9 +45,15 @@
             this.ui.WriteFinished.WaitOne();
 
             var w = this.web;
-            var input = UiHelpers.Read(this.ui, () => this.ui.Input);
-            var bits = w.Run<BinaryTranslator, IEnumerable<bool>>(
-                bt => bt.GetBits(input));
+            
+            var bits = Enumerable.Empty<bool>();
+            var input = UiHelpers.Read(
+                this.ui,
+                () => this.ui.Input);
+            w.Run<BinaryTranslator>(bt =>
+            {
+                bits = bt.GetBits(input);
+            });
             var binary = new string(
                 bits.Select(b => b ? '1' : '0').ToArray());
             UiHelpers.Write(this.ui, () =>

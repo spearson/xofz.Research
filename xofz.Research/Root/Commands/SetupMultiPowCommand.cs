@@ -39,9 +39,6 @@
                     new BigPow()));
             w.RegisterDependency(
                 new MultiPowSaver());
-            w.RegisterDependency(
-                new xofz.Framework.Timer(),
-                "MultiPowTimer");
         }
 
         private readonly MultiPowUi ui;

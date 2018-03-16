@@ -45,12 +45,6 @@
         {
             var w = this.web;
             w.RegisterDependency(
-                new xofz.Framework.Timer(),
-                "FactorialTimer");
-            w.RegisterDependency(
-                new xofz.Framework.Timer(),
-                "FactorialNavTimer");
-            w.RegisterDependency(
                 new FactorialComputer());
             w.RegisterDependency(
                 new FactorialSaver());

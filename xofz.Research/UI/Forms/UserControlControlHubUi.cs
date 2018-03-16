@@ -9,6 +9,8 @@
         public UserControlControlHubUi()
         {
             this.InitializeComponent();
+
+            var h = this.Handle;
         }
 
         public event Action StopPrimesKeyTapped;

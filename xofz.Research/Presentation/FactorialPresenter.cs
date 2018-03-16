@@ -3,11 +3,13 @@
     using System;
     using System.Diagnostics;
     using System.Numerics;
+    using System.Runtime.InteropServices;
     using System.Threading;
     using Framework;
     using UI;
     using xofz.Framework;
     using xofz.Framework.Computation;
+    using xofz.Framework.Logging;
     using xofz.Presentation;
     using xofz.UI;
 
@@ -31,37 +33,21 @@
                 return;
             }
 
+            var w = this.web;
             this.ui.ComputeKeyTapped += this.ui_ComputeKeyTapped;
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
             this.ui.DisplayKeyTapped += this.ui_DisplayKeyTapped;
-            this.web.Subscribe<xofz.Framework.Timer>(
-                "Elapsed",
-                this.timer_Elapsed,
-                "FactorialTimer");
-
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.Input = 1000;
                 this.ui.SaveKeyVisible = false;
                 this.ui.DisplayKeyVisible = false;
+                this.ui.DurationInfoVisible = false;
             });
-            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
-            this.timer_Elapsed();
-            this.web.Run<xofz.Framework.Timer>(
-                timer => timer.Start(1000), "FactorialTimer");
-        }
 
-        private void ui_DisplayKeyTapped()
-        {
-            UiHelpers.Write(this.ui, () =>
-            {
-                var sw = Stopwatch.StartNew();
-                this.ui.Factorial = this.currentFactorial;
-                sw.Stop();
-                this.ui.DurationInfo += Environment.NewLine +
-                                        "Setting TextBox Text property took " + sw.Elapsed;
-                this.ui.DisplayKeyVisible = false;
-            });
+            w.Run<AccessController>(ac =>
+                ac.AccessLevelChanged += this.accessLevelChanged);
+            w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_ComputeKeyTapped()
@@ -76,32 +62,50 @@
             });
             this.ui.WriteFinished.WaitOne();
 
-            var input = UiHelpers.Read(this.ui, () => this.ui.Input);
-            BigInteger factorial;
-            DateTime computationStartTime, computationCompletionTime;
-
-            var sw = Stopwatch.StartNew();
-            computationStartTime = DateTime.Now;
-            UiHelpers.Write(this.ui, () =>
-            {
-                this.ui.DurationInfo =
-                    "Computation began at approximately "
-                    + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
-            });
             var w = this.web;
-            factorial = w.Run<FactorialComputer, BigInteger>(
-                computer => computer.Compute(input));
-            computationCompletionTime = DateTime.Now;
-            sw.Stop();
+            BigInteger factorial = 0;
+            var computationCompletionTime = DateTime.MinValue;
+            Stopwatch sw = null;
+            var input = UiHelpers.Read(
+                this.ui,
+                () => this.ui.Input);
+            w.Run<FactorialComputer>(fc =>
+            {
+                sw = Stopwatch.StartNew();
+                var computationStartTime = DateTime.Now;
+                UiHelpers.Write(this.ui,
+                    () =>
+                    {
+                        this.ui.DurationInfo =
+                            "Computation began at approximately "
+                            + computationStartTime.ToString(
+                                "MM/dd/yyyy hh:mm.ss.fff tt");
+                    });
+
+                factorial = fc.Compute(input);
+                computationCompletionTime = DateTime.Now;
+                sw.Stop();
+            });
+
+            if (sw == null)
+            {
+                UiHelpers.Write(
+                    this.ui,
+                    () => this.ui.DurationInfo +=
+                        Environment.NewLine
+                        + "Factorial computer not found.");
+                return;
+            }
 
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.DurationInfo +=
-                Environment.NewLine 
-                + "Computation took " 
-                + sw.Elapsed
-                + " and completed at "
-                + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
+                    Environment.NewLine
+                    + "Computation took "
+                    + sw.Elapsed
+                    + " and completed at "
+                    + computationCompletionTime.ToString(
+                        "MM/dd/yyyy hh:mm.ss.fff tt");
                 this.ui.Factorial = "Computed, now waiting for ToString()...";
             });
             this.ui.WriteFinished.WaitOne();
@@ -174,11 +178,22 @@
             UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
         }
 
-        private void timer_Elapsed()
+        private void ui_DisplayKeyTapped()
         {
-            var cal = this.web.Run<AccessController, AccessLevel>(
-                ac => ac.CurrentAccessLevel);
-            var visible = cal > AccessLevel.None;
+            UiHelpers.Write(this.ui, () =>
+            {
+                var sw = Stopwatch.StartNew();
+                this.ui.Factorial = this.currentFactorial;
+                sw.Stop();
+                this.ui.DurationInfo += Environment.NewLine +
+                                        "Setting TextBox Text property took " + sw.Elapsed;
+                this.ui.DisplayKeyVisible = false;
+            });
+        }
+
+        private void accessLevelChanged(AccessLevel newAccessLevel)
+        {
+            var visible = newAccessLevel >= AccessLevel.Level1;
             UiHelpers.Write(
                 this.ui,
                 () => this.ui.DurationInfoVisible = visible);

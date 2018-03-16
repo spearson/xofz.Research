@@ -42,7 +42,10 @@
 
         private void ui_LoadKeyTapped()
         {
-            UiHelpers.Write(this.ui, () => this.ui.DisplayLoadLocator());
+            var w = this.web;
+            UiHelpers.Write(
+                this.ui,
+                () => this.ui.DisplayLoadLocator());
             this.ui.WriteFinished.WaitOne();
             var location = UiHelpers.Read(this.ui, () => this.ui.LoadLocation);
             if (string.IsNullOrWhiteSpace(location))
@@ -50,9 +53,10 @@
                 return;
             }
 
-            this.setGenerator(
-                this.web.Run<PrimeManager, PrimeGenerator>(
-                    pm => new PrimeGenerator(pm.LoadSet(location))));
+            w.Run<PrimeManager>(pm =>
+                this.setGenerator(
+                    new PrimeGenerator(
+                        pm.LoadSet(location))));
             var g = this.generator;
             var e = g.Generate().GetEnumerator();
             var pi = 0;
@@ -119,11 +123,14 @@
         private void ui_RestartKeyTapped()
         {
             this.setGenerator(
-                this.web.Run<PrimeManager, PrimeGenerator>(
-                    pm => new PrimeGenerator()));
-            this.setEnumerator(this.generator.Generate().GetEnumerator());
+                new PrimeGenerator());
+            this.setEnumerator(
+                this.generator.Generate()
+                    .GetEnumerator());
             this.setCurrentPrimeIndex(0);
-            UiHelpers.Write(this.ui, () => this.ui.CurrentPrime = null);
+            UiHelpers.Write(
+                this.ui,
+                () => this.ui.CurrentPrime = null);
             this.ui.WriteFinished.WaitOne();
         }
 

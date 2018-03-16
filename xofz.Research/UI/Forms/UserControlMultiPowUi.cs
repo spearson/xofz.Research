@@ -23,21 +23,21 @@
 
         string MultiPowUi.PowersInput
         {
-            get { return this.powersInputTextBox.Text; }
+            get => this.powersInputTextBox.Text;
 
-            set { this.powersInputTextBox.Text = value; }
+            set => this.powersInputTextBox.Text = value;
         }
 
         string MultiPowUi.MultiPower
         {
-            get { return this.multiPowerTextBox.Text; }
+            get => this.multiPowerTextBox.Text;
 
-            set { this.multiPowerTextBox.Text = value; }
+            set => this.multiPowerTextBox.Text = value;
         }
 
         string MultiPowUi.DurationInfo
         {
-            get { return this.durationLabel.Text; }
+            get => this.durationLabel.Text;
 
             set
             {
@@ -48,21 +48,21 @@
 
         bool MultiPowUi.DurationInfoVisible
         {
-            get { return this.durationLabel.Visible; }
+            get => this.durationLabel.Visible;
 
-            set { this.durationLabel.Visible = value; }
+            set => this.durationLabel.Visible = value;
         }
 
         bool MultiPowUi.DisplayKeyVisible
         {
-            get { return this.displayKey.Visible; }
+            get => this.displayKey.Visible;
 
-            set { this.displayKey.Visible = value; }
+            set => this.displayKey.Visible = value;
         }
 
         bool MultiPowUi.Computing
         {
-            get { return this.computeKey.Text == @"Computing..."; }
+            get => this.computeKey.Text == @"Computing...";
 
             set
             {
@@ -73,9 +73,9 @@
 
         bool MultiPowUi.SaveKeyVisible
         {
-            get { return this.saveKey.Visible; }
+            get => this.saveKey.Visible;
 
-            set { this.saveKey.Visible = value; }
+            set => this.saveKey.Visible = value;
         }
 
         private void computeKey_Click(object sender, EventArgs e)

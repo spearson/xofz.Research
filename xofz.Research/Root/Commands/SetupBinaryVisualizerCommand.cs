@@ -1,7 +1,7 @@
 ﻿namespace xofz.Research.Root.Commands
 {
     using xofz.Framework;
-    using xofz.Framework.Theory;
+    using xofz.Misc.Framework.Theory;
     using xofz.Presentation;
     using xofz.Research.Presentation;
     using xofz.Research.UI;

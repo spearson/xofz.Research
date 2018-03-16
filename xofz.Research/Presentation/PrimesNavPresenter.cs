@@ -33,36 +33,19 @@
             this.ui.ControlHubKeyTapped += this.ui_ControlHubKeyTapped;
             this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
             this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
+            UiHelpers.Write(
+                this.ui,
+                () => this.ui.ControlHubKeyVisible = false);
 
-            this.web.Subscribe<xofz.Framework.Timer>(
-                "Elapsed",
-                this.timer_Elapsed,
-                "PrimesNavTimer");
+            var w = this.web;
+            w.Run<AccessController>(ac =>
+                ac.AccessLevelChanged += this.accessLevelChanged);
             this.web.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
-        public override void Start()
+        private void accessLevelChanged(AccessLevel newAccessLevel)
         {
-            this.timer_Elapsed();
-            base.Start();
-
-            this.web.Run<xofz.Framework.Timer>(
-                t => t.Start(1000), 
-                "PrimesNavTimer");
-        }
-
-        public override void Stop()
-        {
-            this.web.Run<xofz.Framework.Timer>(
-                t => t.Stop(),
-                "PrimesNavTimer");
-        }
-
-        private void timer_Elapsed()
-        {
-            var cal = this.web.Run<AccessController, AccessLevel>(
-                ac => ac.CurrentAccessLevel);
-            var level2 = cal > AccessLevel.Level1;
+            var level2 = newAccessLevel >= AccessLevel.Level2;
             UiHelpers.Write(
                 this.ui,
                 () => this.ui.ControlHubKeyVisible = level2);
@@ -116,12 +99,14 @@
 
         private void ui_LogInKeyTapped()
         {
-            this.web.Run<Navigator>(n => n.PresentFluidly<LoginPresenter>());
+            this.web.Run<Navigator>(
+                n => n.PresentFluidly<LoginPresenter>());
         }
 
         private void ui_ShutdownKeyTapped()
         {
-            this.web.Run<Navigator>(n => n.Present<ShutdownPresenter>());
+            this.web.Run<Navigator>(
+                n => n.Present<ShutdownPresenter>());
         }
 
         private int setupIf1;

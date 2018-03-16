@@ -32,10 +32,16 @@
         private void ui_StopPrimesKeyTapped()
         {
             var w = this.web;
-            var primesUi = w.Run<Navigator, PrimesUi>(
-                n => n.GetUi<PrimesPresenter, PrimesUi>());
-            w.Run<EventRaiser>(
-                er => er.Raise(primesUi, "StopKeyTapped"));
+            w.Run<Navigator, EventRaiser>((n, er) =>
+            {
+                var primesUi = n.GetUi<PrimesPresenter, PrimesUi>();
+                if (primesUi != null)
+                {
+                    er.Raise(
+                        primesUi,
+                        nameof(primesUi.StopKeyTapped));
+                }
+            });
         }
 
         private int setupIf1;

@@ -25,6 +25,7 @@
                 return;
             }
 
+            var w = this.web;
             this.ui.HomeKeyTapped += this.ui_HomeKeyTapped;
             this.ui.PrimesKeyTapped += this.ui_PrimesKeyTapped;
             this.ui.FactorialKeyTapped += this.ui_FactorialKeyTapped;
@@ -32,30 +33,10 @@
             this.ui.ControlHubKeyTapped += this.ui_ControlHubKeyTapped;
             this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
             this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
-            
-            this.web.Subscribe<xofz.Framework.Timer>(
-                "Elapsed",
-                this.timer_Elapsed,
-                "RotationNavTimer");
+            w.Run<AccessController>(ac =>
+                ac.AccessLevelChanged += this.accessLevelChanged);
 
-            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
-        }
-
-        public override void Start()
-        {
-            this.timer_Elapsed();
-            base.Start();
-
-            this.web.Run<xofz.Framework.Timer>(
-                t => t.Start(1000),
-                "RotationNavTimer");
-        }
-
-        public override void Stop()
-        {
-            this.web.Run<xofz.Framework.Timer>(
-                t => t.Stop(),
-                "RotationNavTimer");
+            w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_HomeKeyTapped()
@@ -115,12 +96,12 @@
             this.web.Run<Navigator>(n => n.Present<ShutdownPresenter>());
         }
 
-        private void timer_Elapsed()
+        private void accessLevelChanged(AccessLevel newAccessLevel)
         {
-            var cal = this.web.Run<AccessController, AccessLevel>(
-                ac => ac.CurrentAccessLevel);
-            var level2 = cal > AccessLevel.Level1;
-            UiHelpers.Write(this.ui, () => this.ui.ControlHubKeyVisible = level2);
+            var level2 = newAccessLevel >= AccessLevel.Level2;
+            UiHelpers.Write(
+                this.ui,
+                () => this.ui.ControlHubKeyVisible = level2);
         }
 
         private int setupIf1;

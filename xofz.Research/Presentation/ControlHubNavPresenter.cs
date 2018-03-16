@@ -33,43 +33,21 @@
             this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
             this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
 
-            this.web.Subscribe<xofz.Framework.Timer>(
-                "Elapsed",
-                this.timer_Elapsed,
-                "ControlHubNavTimer");
-
-            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
-        }
-
-        private void timer_Elapsed()
-        {
-            var cal = this.web.Run<AccessController, AccessLevel>(
-                ac => ac.CurrentAccessLevel);
-            if (cal < AccessLevel.Level2)
-            {
-                this.web.Run<Navigator>(n =>
-                {
-                    n.Present<HomePresenter>();
-                    n.PresentFluidly<HomeNavPresenter>();
-                });
-            }
+            var w = this.web;
+            w.Run<AccessController>(ac => ac.AccessLevelChanged
+                += this.accessLevelChanged);
+            w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         public override void Start()
         {
-            this.timer_Elapsed();
+            Interlocked.CompareExchange(ref this.startedIf1, 1, 0);
             base.Start();
-
-            this.web.Run<xofz.Framework.Timer>(
-                t => t.Start(1000),
-                "ControlHubNavTimer");
         }
 
         public override void Stop()
         {
-            this.web.Run<xofz.Framework.Timer>(
-                t => t.Stop(),
-                "ControlHubNavTimer");
+            Interlocked.CompareExchange(ref this.startedIf1, 0, 1);
         }
 
         private void ui_HomeKeyTapped()
@@ -127,7 +105,26 @@
             this.web.Run<Navigator>(n => n.Present<ShutdownPresenter>());
         }
 
+        private void accessLevelChanged(AccessLevel newAccessLevel)
+        {
+            if (Interlocked.Read(ref this.startedIf1) == 0)
+            {
+                return;
+            }
+
+            var w = this.web;
+            w.Run<Navigator>(n =>
+            {
+                if (newAccessLevel < AccessLevel.Level2)
+                {
+                    n.Present<HomePresenter>();
+                    n.PresentFluidly<HomeNavPresenter>();
+                }
+            });
+        }
+
         private int setupIf1;
+        private long startedIf1;
         private readonly ControlHubNavUi ui;
         private readonly MethodWeb web;
     }

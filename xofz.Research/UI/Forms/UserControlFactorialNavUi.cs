@@ -9,6 +9,8 @@
         public UserControlFactorialNavUi()
         {
             this.InitializeComponent();
+
+            var h = this.Handle;
         }
 
         public event Action HomeKeyTapped;
@@ -27,9 +29,9 @@
 
         bool FactorialNavUi.ControlHubKeyVisible
         {
-            get { return this.controlHubKey.Visible; }
+            get => this.controlHubKey.Visible;
 
-            set { this.controlHubKey.Visible = value; }
+            set => this.controlHubKey.Visible = value;
         }
 
         private void homeKey_Click(object sender, EventArgs e)

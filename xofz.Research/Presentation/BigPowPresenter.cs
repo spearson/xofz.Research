@@ -8,6 +8,7 @@
     using UI;
     using xofz.Framework;
     using xofz.Framework.Computation;
+    using xofz.Framework.Logging;
     using xofz.Presentation;
     using xofz.UI;
 
@@ -31,14 +32,11 @@
                 return;
             }
 
+            var w = this.web;
             this.ui.ComputeKeyTapped += this.ui_ComputeKeyTapped;
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
             this.ui.DisplayKeyTapped += this.ui_DisplayKeyTapped;
             this.ui.MultiPowKeyTapped += this.ui_MultiPowKeyTapped;
-            this.web.Subscribe<xofz.Framework.Timer>(
-                "Elapsed", 
-                this.timer_Elapsed, 
-                "BigPowTimer");
 
             UiHelpers.Write(this.ui, () =>
             {
@@ -46,13 +44,12 @@
                 this.ui.ExponentInput = 1000;
                 this.ui.SaveKeyVisible = false;
                 this.ui.DisplayKeyVisible = false;
+                this.ui.DurationInfoVisible = false;
             });
 
-            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
-            this.timer_Elapsed();
-            this.web.Run<xofz.Framework.Timer>(
-                t => t.Start(1000),
-                "BigPowTimer");
+            w.Run<AccessController>(ac =>
+                ac.AccessLevelChanged += this.accessLevelChanged);
+            w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_DisplayKeyTapped()
@@ -82,7 +79,7 @@
 
             var number = UiHelpers.Read(this.ui, () => this.ui.NumberInput);
             var exponent = UiHelpers.Read(this.ui, () => this.ui.ExponentInput);
-            BigInteger power;
+            var power = default(BigInteger);
             DateTime computationStartTime, computationCompletionTime;
             var w = this.web;
 
@@ -94,7 +91,8 @@
                     "Computation began at approximately "
                     + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
             });
-            power = w.Run<BigPow, BigInteger>(bp => bp.Compute(number, exponent));
+            w.Run<BigPow>(bp =>
+                power = bp.Compute(number, exponent));
             computationCompletionTime = DateTime.Now;
             sw.Stop();
 
@@ -192,11 +190,12 @@
             this.web.Run<Navigator>(n => n.Present<MultiPowPresenter>());
         }
 
-        private void timer_Elapsed()
+        private void accessLevelChanged(AccessLevel newAccessLevel)
         {
-            var cal = this.web.Run<AccessController, AccessLevel>(ac => ac.CurrentAccessLevel);
-            var visible = cal > AccessLevel.None;
-            UiHelpers.Write(this.ui, () => this.ui.DurationInfoVisible = visible);
+            var level1 = newAccessLevel >= AccessLevel.Level1;
+            UiHelpers.Write(
+                this.ui,
+                () => this.ui.DurationInfoVisible = level1);
         }
 
         private void setCurrentPower(string currentPower)

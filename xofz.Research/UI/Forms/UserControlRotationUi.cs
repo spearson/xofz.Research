@@ -32,6 +32,8 @@
                         this.n14TextBox,
                         this.n15TextBox,
                     });
+
+            var h = this.Handle;
         }
 
         public event Action GenerateKeyTapped;
@@ -79,7 +81,11 @@
                 var enumerator = this.numbersTextBoxes.GetEnumerator();
                 foreach (var number in value)
                 {
-                    enumerator.MoveNext();
+                    if (!enumerator.MoveNext())
+                    {
+                        break;
+                    }
+
                     enumerator.Current.Text = number.ToString();
                 }
 

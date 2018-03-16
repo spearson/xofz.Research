@@ -49,12 +49,6 @@
                 new BigPow());
             w.RegisterDependency(
                 new BigPowSaver());
-            w.RegisterDependency(
-                new xofz.Framework.Timer(),
-                "BigPowTimer");
-            w.RegisterDependency(
-                new xofz.Framework.Timer(),
-                "BigPowNavTimer");
         }
 
         private readonly BigPowNavUi navUi;

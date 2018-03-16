@@ -10,27 +10,29 @@
         public UserControlBinaryVisualizerUi()
         {
             this.InitializeComponent();
+
+            var h = this.Handle;
         }
 
         public event Action TranslateKeyTapped;
 
         BigInteger BinaryVisualizerUi.Input
         {
-            get { return BigInteger.Parse(this.inputTextBox.Text); }
+            get => BigInteger.Parse(this.inputTextBox.Text);
 
-            set { this.inputTextBox.Text = value.ToString(); }
+            set => this.inputTextBox.Text = value.ToString();
         }
 
         string BinaryVisualizerUi.Binary
         {
-            get { return this.binaryTextBox.Text; }
+            get => this.binaryTextBox.Text;
 
-            set { this.binaryTextBox.Text = value; }
+            set => this.binaryTextBox.Text = value;
         }
 
         bool BinaryVisualizerUi.Translating
         {
-            get { return this.translateKey.Text == @"Translating..."; }
+            get => this.translateKey.Text == @"Translating...";
 
             set
             {

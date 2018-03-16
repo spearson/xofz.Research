@@ -43,16 +43,22 @@
         {
             var numbers = new LinkedList<int>();
             var w = this.web;
-            for (var i = 0; i < 15; ++i)
+            var max = UiHelpers.Read(
+                this.ui,
+                () => this.ui.MaxValue);
+            w.Run<Random>(rng =>
             {
-                numbers.AddLast(
-                    w.Run<Random, int>(rng => rng.Next(
-                        0, UiHelpers.Read(
-                            this.ui, () => this.ui.MaxValue))));
-            }
+                for (var i = 0; i < 15; ++i)
+                {
+                    numbers.AddLast(rng.Next(0, max));
+                }
+            });
 
-            UiHelpers.Write(this.ui, () =>
-                this.ui.Numbers = new LinkedListMaterializedEnumerable<int>(numbers));
+            var me = new LinkedListMaterializedEnumerable<int>(
+                numbers);
+            UiHelpers.Write(
+                this.ui,
+                () => this.ui.Numbers = me);
 
         }
 
@@ -69,28 +75,42 @@
         private void rotateKeyTapped(bool goRight)
         {
             var w = this.web;
-            var numbers = UiHelpers.Read(this.ui, () => this.ui.Numbers);
+            var numbers = UiHelpers.Read(
+                this.ui,
+                () => this.ui.Numbers);
             MaterializedEnumerable<int> rotatedNumbers;
             if (UiHelpers.Read(this.ui, () => this.ui.RandomizeRotations))
             {
-                var rotations = w.Run<Random, int>(rng => rng.Next(1, 6));
-                rotatedNumbers = w.Run<EnumerableRotator, MaterializedEnumerable<int>>(
-                    r => r.Rotate(
+                w.Run<Random, EnumerableRotator>((rng, rot) =>
+                {
+                    var cycleCount = rng.Next(1, 6);
+                    rotatedNumbers = rot.Rotate(
                         numbers,
-                        rotations,
-                        goRight));
-                UiHelpers.Write(this.ui, () => this.ui.NumberOfRotations = rotations);
-            }
-            else
-            {
-                rotatedNumbers = w.Run<EnumerableRotator, MaterializedEnumerable<int>>(
-                    r => r.Rotate(
-                        numbers,
-                        UiHelpers.Read(this.ui, () => this.ui.NumberOfRotations),
-                        goRight));
+                        cycleCount,
+                        goRight);
+                    UiHelpers.Write(
+                        this.ui,
+                        () =>
+                        {
+                            this.ui.Numbers = rotatedNumbers;
+                            this.ui.NumberOfRotations = cycleCount;
+                        });
+                });
+                return;
             }
 
-            UiHelpers.Write(this.ui, () => this.ui.Numbers = rotatedNumbers);
+            w.Run<EnumerableRotator>(rot =>
+            {
+                rotatedNumbers = rot.Rotate(
+                    numbers,
+                    UiHelpers.Read(
+                        this.ui,
+                        () => this.ui.NumberOfRotations),
+                    goRight);
+                UiHelpers.Write(
+                    this.ui,
+                    () => this.ui.Numbers = rotatedNumbers);
+            });
         }
 
         private int setupIf1;

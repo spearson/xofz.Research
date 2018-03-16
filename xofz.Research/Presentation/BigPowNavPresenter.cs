@@ -25,6 +25,7 @@
                 return;
             }
 
+            var w = this.web;
             this.ui.HomeKeyTapped += this.ui_HomeKeyTapped;
             this.ui.PrimesKeyTapped += this.ui_PrimesKeyTapped;
             this.ui.FactorialKeyTapped += this.ui_FactorialKeyTapped;
@@ -32,36 +33,18 @@
             this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
             this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
             this.ui.ControlHubKeyTapped += this.ui_ControlHubKeyTapped;
-            this.web.Subscribe<xofz.Framework.Timer>(
-                "Elapsed",
-                this.timer_Elapsed,
-                "BigPowNavTimer");
+            UiHelpers.Write(
+                this.ui,
+                () => this.ui.ControlHubKeyVisible = false);
 
-            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
+            w.Run<AccessController>(ac =>
+                ac.AccessLevelChanged += this.accessLevelChanged);
+            w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
-        public override void Start()
+        private void accessLevelChanged(AccessLevel newAccessLevel)
         {
-            this.timer_Elapsed();
-            base.Start();
-
-            this.web.Run<xofz.Framework.Timer>(
-                t => t.Start(1000),
-                "BigPowNavTimer");
-        }
-
-        public override void Stop()
-        {
-            this.web.Run<xofz.Framework.Timer>(
-                t => t.Stop(),
-                "BigPowNavTimer");
-        }
-
-        private void timer_Elapsed()
-        {
-            var cal = this.web.Run<AccessController, AccessLevel>(
-                ac => ac.CurrentAccessLevel);
-            var level2 = cal > AccessLevel.Level1;
+            var level2 = newAccessLevel >= AccessLevel.Level2;
             UiHelpers.Write(
                 this.ui,
                 () => this.ui.ControlHubKeyVisible = level2);

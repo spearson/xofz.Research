@@ -22,21 +22,21 @@
 
         BigInteger FactorialUi.Input
         {
-            get { return BigInteger.Parse(this.inputTextBox.Text); }
+            get => BigInteger.Parse(this.inputTextBox.Text);
 
-            set { this.inputTextBox.Text = value.ToString(); }
+            set => this.inputTextBox.Text = value.ToString();
         }
 
         string FactorialUi.Factorial
         {
-            get { return this.factorialTextBox.Text; }
+            get => this.factorialTextBox.Text;
 
-            set { this.factorialTextBox.Text = value; }
+            set => this.factorialTextBox.Text = value;
         }
 
         string FactorialUi.DurationInfo
         {
-            get { return this.durationLabel.Text; }
+            get => this.durationLabel.Text;
 
             set
             {
@@ -47,21 +47,21 @@
 
         bool FactorialUi.DurationInfoVisible
         {
-            get { return this.durationLabel.Visible; }
+            get => this.durationLabel.Visible;
 
-            set { this.durationLabel.Visible = value; }
+            set => this.durationLabel.Visible = value;
         }
 
         bool FactorialUi.DisplayKeyVisible
         {
-            get { return this.displayKey.Visible; }
+            get => this.displayKey.Visible;
 
-            set { this.displayKey.Visible = value; }
+            set => this.displayKey.Visible = value;
         }
 
         bool FactorialUi.Computing
         {
-            get { return this.computeKey.Text == @"Computing..."; }
+            get => this.computeKey.Text == @"Computing...";
 
             set
             {
@@ -72,9 +72,9 @@
 
         bool FactorialUi.SaveKeyVisible
         {
-            get { return this.saveKey.Visible; }
+            get => this.saveKey.Visible;
 
-            set { this.saveKey.Visible = value; }
+            set => this.saveKey.Visible = value;
         }
 
         private void computeKey_Click(object sender, EventArgs e)

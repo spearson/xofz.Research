@@ -7,6 +7,7 @@
     using System.Threading;
     using xofz.Framework;
     using xofz.Framework.Computation;
+    using xofz.Framework.Logging;
     using xofz.Framework.Materialization;
     using xofz.Presentation;
     using xofz.Research.Framework;
@@ -32,27 +33,23 @@
                 return;
             }
 
+            var w = this.web;
             this.ui.ComputeKeyTapped += this.ui_ComputeKeyTapped;
             this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
             this.ui.DisplayKeyTapped += this.ui_DisplayKeyTapped;
             this.ui.BigPowKeyTapped += this.ui_BigPowKeyTapped;
-            this.web.Subscribe<xofz.Framework.Timer>(
-                "Elapsed",
-                this.timer_Elapsed,
-                "MultiPowTimer");
-
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.PowersInput = "3, 3, 3";
                 this.ui.SaveKeyVisible = false;
                 this.ui.DisplayKeyVisible = false;
+                this.ui.DurationInfoVisible = false;
             });
-            this.web.Run<Navigator>(
+
+            w.Run<AccessController>(ac =>
+                ac.AccessLevelChanged += this.accessLevelChanged);
+            w.Run<Navigator>(
                 n => n.RegisterPresenter(this));
-            this.timer_Elapsed();
-            this.web.Run<xofz.Framework.Timer>(
-                t => t.Start(1000),
-                "MultiPowTimer");
         }
 
         private void ui_ComputeKeyTapped()
@@ -67,31 +64,48 @@
             });
             this.ui.WriteFinished.WaitOne();
 
-            var powers = this.readPowers();
-            BigInteger multiPower;
-            DateTime computationStartTime, computationCompletionTime;
             var w = this.web;
-
-            var sw = Stopwatch.StartNew();
-            computationStartTime = DateTime.Now;
-            UiHelpers.Write(this.ui, () =>
+            BigInteger multiPower = 0;
+            var computationCompletionTime = DateTime.MinValue;
+            Stopwatch sw = null;
+            var input = this.readPowers();
+            w.Run<MultiPow>(mp =>
             {
-                this.ui.DurationInfo =
-                    "Computation began at approximately "
-                    + computationStartTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
+                sw = Stopwatch.StartNew();
+                var computationStartTime = DateTime.Now;
+                UiHelpers.Write(this.ui,
+                    () =>
+                    {
+                        this.ui.DurationInfo =
+                            "Computation began at approximately "
+                            + computationStartTime.ToString(
+                                "MM/dd/yyyy hh:mm.ss.fff tt");
+                    });
+
+                multiPower = mp.Compute(input);
+                computationCompletionTime = DateTime.Now;
+                sw.Stop();
             });
-            multiPower = w.Run<MultiPow, BigInteger>(mp => mp.Compute(powers));
-            computationCompletionTime = DateTime.Now;
-            sw.Stop();
+
+            if (sw == null)
+            {
+                UiHelpers.Write(
+                    this.ui,
+                    () => this.ui.DurationInfo +=
+                        Environment.NewLine
+                        + "MultiPow computer not found.");
+                return;
+            }
 
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.DurationInfo +=
-                Environment.NewLine
-                + "Computation took "
-                + sw.Elapsed
-                + " and completed at "
-                + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
+                    Environment.NewLine
+                    + "Computation took "
+                    + sw.Elapsed
+                    + " and completed at "
+                    + computationCompletionTime.ToString(
+                        "MM/dd/yyyy hh:mm.ss.fff tt");
                 this.ui.MultiPower = "Computed, now waiting for ToString()...";
             });
             this.ui.WriteFinished.WaitOne();
@@ -118,7 +132,7 @@
                 new[]
                 {
                     "The multi-power of "
-                    + string.Join(",", powers.Select(p => p.ToString()))
+                    + string.Join(",", input.Select(p => p.ToString()))
                     + " was computed."
                 }));
         }
@@ -170,11 +184,12 @@
             this.web.Run<Navigator>(n => n.Present<BigPowPresenter>());
         }
 
-        private void timer_Elapsed()
+        private void accessLevelChanged(AccessLevel newAccessLevel)
         {
-            var cal = this.web.Run<AccessController, AccessLevel>(ac => ac.CurrentAccessLevel);
-            var visible = cal > AccessLevel.None;
-            UiHelpers.Write(this.ui, () => this.ui.DurationInfoVisible = visible);
+            var level1 = newAccessLevel >= AccessLevel.Level1;
+            UiHelpers.Write(
+                this.ui,
+                () => this.ui.DurationInfoVisible = level1);
         }
 
         private void setCurrentMultiPow(string currentMultiPow)

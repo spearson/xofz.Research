@@ -2,7 +2,7 @@
 {
     using System;
     using System.Windows.Forms;
-    using xofz.Framework;
+    using xofz.Framework.Logging;
     using xofz.Framework.Materialization;
     using xofz.Presentation;
     using xofz.Research.Presentation;
@@ -53,7 +53,14 @@
                     w,
                     @"Log.log",
                     AccessLevel.None,
-                    true))
+                    AccessLevel.None,
+                    true,
+                    () =>
+                    {
+                        var now = DateTime.Now;
+                        return "Log backup " + now.ToString(
+                                   "yyyy.mm.DD HH-mm-ss.fff");
+                    }))
                 .Execute(new SetupHomeCommand(
                     new UserControlHomeNavUi(),
                     new UserControlHomeUi(),
