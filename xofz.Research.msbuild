@@ -1,46 +1,102 @@
-<Project DefaultTargets="ChangeVersion;Build;Deploy" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project
+  DefaultTargets="ChangeVersion;Build;Zip;Deploy" 
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 
-  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
+  <Import 
+    Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"
+  />
 
 
   <PropertyGroup>
     <Version>$(BUILD_NUMBER)</Version>
-    <BuildDir>xofz.Research\bin\Release</BuildDir>
     <ProjectName>xofz.Research</ProjectName>
-    <DeployFolder>C:\Dropbox\xofz.Apps\Research\xofz.Research-$(Version)</DeployFolder>
+    <BuildDir>$(ProjectName)\bin\Release</BuildDir>
+    <WorkingFolder>$(teamcity_build_workingDir)</WorkingFolder>
+    <ZipFolder>$(ProjectName)-v$(Version)</ZipFolder>
+    <DeployFolder>H:\Dropbox\xofz.Apps\Research</DeployFolder>
   </PropertyGroup>
 
 
-  <Target Name="ChangeVersion">
+  <Target
+    Name="ChangeVersion">
     <AssemblyInfo
       CodeLanguage="CS" 
       OutputFile="$(ProjectName)\Properties\AssemblyInfo.cs"
       AssemblyTitle="$(ProjectName)" 
-      AssemblyDescription="App that shows off the capabilities of the xofz.Core library"
+      AssemblyDescription="App that uses some of the Core98 and Core libraries"
       AssemblyConfiguration=""
-      AssemblyCompany="X of Z"
-      AssemblyProduct="X of Z Research"
-      AssemblyCopyright="Copyright (c) Sam Pearson"
+      AssemblyCompany="x(z)"
+      AssemblyProduct="Research"
+      AssemblyCopyright="Copyright (c) x(z)"
       AssemblyTrademark=""
       ComVisible="false"
-      Guid="2d54ac5c-c76a-4892-8756-a746445024cd"
+      Guid="b86ea375-6c7c-4914-a2af-65b76e0ebe7e"
       AssemblyVersion="$(Version)"
       AssemblyFileVersion="$(Version)" />
   </Target>
-
-
-  <Target Name="Build" DependsOnTargets="ChangeVersion">
-    <RemoveDir Directories="$(BuildDir)" />
-    <MSBuild Projects="$(ProjectName).sln" Targets="Build" Properties="Configuration=Release;Platform=Any CPU" />
+  
+  
+  <Target
+    Name="Build"
+    DependsOnTargets="ChangeVersion">
+    <RemoveDir
+      Directories="$(BuildDir)" />
+    <MSBuild
+      Projects="$(ProjectName).sln"
+      Targets="Build"
+      Properties="Configuration=Release;Platform=Any CPU"
+    />
   </Target>
 
-  <Target Name="Deploy" DependsOnTargets="Build">
-    <MakeDir Directories="$(DeployFolder)" Condition="!Exists('$(DeployFolder)')"/>
+
+  <Target 
+    Name="Zip" 
+    DependsOnTargets="Build">
+    <MakeDir 
+      Directories="$(ZipFolder)" 
+      Condition="!Exists('$(ZipFolder)')"
+    />
     <ItemGroup>
-      <FilesToMove Include="$(BuildDir)\xofz.Research.exe" />
-      <FilesToMove Include="$(BuildDir)\xofz.Research.exe.config" />
+      <FilesToMove
+        Include="$(BuildDir)\$(ProjectName).exe"
+      />
+      <FilesToMove
+        Include="$(BuildDir)\$(ProjectName).exe.config"
+      />
     </ItemGroup>
-    <MV SourceFiles="@(FilesToMove)" DestinationFolder="$(DeployFolder)" />
+    <MV
+      SourceFiles="@(FilesToMove)"
+      DestinationFolder="$(ZipFolder)"
+    />
+    <ItemGroup>
+      <FilesToZip
+        Include="$(ZipFolder)\*.*"
+      />
+    </ItemGroup>
+    <Zip 
+      ZipFileName="$(ProjectName)-v$(Version).zip" 
+      WorkingDirectory="$(WorkingFolder)"
+      Files="@(FilesToZip)"
+    />
+  </Target>
+  
+  
+  <Target
+    Name="Deploy"
+    DependsOnTargets="Zip">
+    <MakeDir
+      Directories="$(DeployFolder)"
+      Condition="!Exists('$(DeployFolder)')"
+    />
+    <ItemGroup>
+      <FilesToDeploy
+        Include="$(ProjectName)-v$(Version).zip"
+      />
+    </ItemGroup>
+    <MV
+      SourceFiles="@(FilesToDeploy)"
+      DestinationFolder="$(DeployFolder)"
+    />
   </Target>
 </Project>

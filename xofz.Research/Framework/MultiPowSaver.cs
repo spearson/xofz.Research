@@ -7,8 +7,18 @@
 
     public class MultiPowSaver
     {
-        public virtual void Save(MaterializedEnumerable<BigInteger> powers, string multiPow)
+        public virtual void Save(Lot<BigInteger> powers, string multiPow)
         {
+            if (powers == null)
+            {
+                return;
+            }
+
+            if (powers.Count < 2)
+            {
+                return;
+            }
+
             var fileNameBuilder = new StringBuilder();
             fileNameBuilder.Append(powers.First());
 

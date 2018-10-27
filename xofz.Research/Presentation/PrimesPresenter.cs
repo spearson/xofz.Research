@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using Framework;
     using UI;
@@ -43,10 +44,9 @@
         private void ui_LoadKeyTapped()
         {
             var w = this.web;
-            UiHelpers.Write(
+            UiHelpers.WriteSync(
                 this.ui,
                 () => this.ui.DisplayLoadLocator());
-            this.ui.WriteFinished.WaitOne();
             var location = UiHelpers.Read(this.ui, () => this.ui.LoadLocation);
             if (string.IsNullOrWhiteSpace(location))
             {
@@ -62,13 +62,15 @@
             var pi = 0;
             foreach (var prime in g.CurrentSet)
             {
+
                 e.MoveNext();
                 ++pi;
             }
 
+            var lastPrime = g.CurrentSet.LastOrDefault();
             UiHelpers.Write(this.ui, () =>
             {
-                this.ui.CurrentPrime = g.CurrentSet.Last.Value;
+                this.ui.CurrentPrime = lastPrime;
             });
 
             this.setCurrentPrimeIndex(pi);
@@ -102,7 +104,7 @@
                 this.setCurrentPrimeIndex(this.currentPrimeIndex + 1);
             }
 
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.LoadKeyVisible = true;
                 this.ui.StopKeyVisible = false;
@@ -111,7 +113,6 @@
                 this.ui.Stopping = false;
             });
 
-            this.ui.WriteFinished.WaitOne();
         }
 
         private void ui_StopKeyTapped()
@@ -128,10 +129,9 @@
                 this.generator.Generate()
                     .GetEnumerator());
             this.setCurrentPrimeIndex(0);
-            UiHelpers.Write(
+            UiHelpers.WriteSync(
                 this.ui,
                 () => this.ui.CurrentPrime = null);
-            this.ui.WriteFinished.WaitOne();
         }
 
         private void setGenerator(PrimeGenerator generator)
@@ -147,31 +147,35 @@
         private void ui_SaveKeyTapped()
         {
             const string location = "Primes - Current Set.txt";
-            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
-            this.ui.WriteFinished.WaitOne();
+            UiHelpers.WriteSync(
+                this.ui, 
+                () => this.ui.SaveKeyVisible = false);
 
             var w = this.web;
             w.Run<PrimeManager>(pm => pm.Save(
                 this.generator.CurrentSet, location));
             w.Run<Messenger>(m =>
             {
-                UiHelpers.Write(m.Subscriber, () =>
+                UiHelpers.WriteSync(m.Subscriber, () =>
                 {
                     m.Inform(
                         "Saved current set of primes to"
                         + Environment.NewLine
                         + location);
                 });
-                m.Subscriber.WriteFinished.WaitOne();
             });
             
-            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
+            UiHelpers.Write(
+                this.ui, 
+                () => this.ui.SaveKeyVisible = true);
         }
 
         private void setCurrentPrimeIndex(int currentPrimeIndex)
         {
             this.currentPrimeIndex = currentPrimeIndex;
-            UiHelpers.Write(this.ui, () => this.ui.CurrentPrimeIndex = currentPrimeIndex);
+            UiHelpers.Write(
+                this.ui, 
+                () => this.ui.CurrentPrimeIndex = currentPrimeIndex);
         }
 
         private int setupIf1;

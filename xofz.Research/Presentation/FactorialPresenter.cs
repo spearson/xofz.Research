@@ -22,7 +22,6 @@
             : base(ui, shell)
         {
             this.ui = ui;
-            this.ui?.AssertStability();
             this.web = web;
         }
 
@@ -52,7 +51,7 @@
 
         private void ui_ComputeKeyTapped()
         {
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.Computing = true;
                 this.ui.SaveKeyVisible = false;
@@ -60,7 +59,6 @@
                 this.ui.Factorial = null;
                 this.ui.DisplayKeyVisible = false;
             });
-            this.ui.WriteFinished.WaitOne();
 
             var w = this.web;
             BigInteger factorial = 0;
@@ -97,7 +95,7 @@
                 return;
             }
 
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.DurationInfo +=
                     Environment.NewLine
@@ -108,7 +106,6 @@
                         "MM/dd/yyyy hh:mm.ss.fff tt");
                 this.ui.Factorial = "Computed, now waiting for ToString()...";
             });
-            this.ui.WriteFinished.WaitOne();
 
             string s;
             var sw2 = Stopwatch.StartNew();
@@ -116,17 +113,16 @@
             sw2.Stop();
 
             this.setCurrentFactorial(s);
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.Factorial = string.Empty;
                 this.ui.DurationInfo += Environment.NewLine +
                                         "ToString() took " + sw2.Elapsed;
             });
-            this.ui.WriteFinished.WaitOne();
 
             if (input < 10001)
             {
-                UiHelpers.Write(this.ui, () =>
+                UiHelpers.WriteSync(this.ui, () =>
                 {
                     var sw3 = Stopwatch.StartNew();
                     this.ui.Factorial = this.currentFactorial;
@@ -134,22 +130,21 @@
                     this.ui.DurationInfo += Environment.NewLine +
                                             "Setting TextBox Text property took " + sw3.Elapsed;
                 });
-            }
-            else
-            {
-                UiHelpers.Write(this.ui, () =>
-                {
-                    this.ui.DisplayKeyVisible = true;
-                });
-            }
-            this.ui.WriteFinished.WaitOne();
 
-            UiHelpers.Write(this.ui, () =>
+                goto finishUp;
+            }
+
+            UiHelpers.WriteSync(this.ui, () =>
+            {
+                this.ui.DisplayKeyVisible = true;
+            });
+
+            finishUp:
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.Computing = false;
                 this.ui.SaveKeyVisible = true;
             });
-            this.ui.WriteFinished.WaitOne();
 
             w.Run<LogEditor>(le => le.AddEntry(
                 "Information",
@@ -159,23 +154,26 @@
         private void ui_SaveKeyTapped()
         {
             var input = UiHelpers.Read(this.ui, () => this.ui.Input);
-            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
-            this.ui.WriteFinished.WaitOne();
+            UiHelpers.WriteSync(
+                this.ui, 
+                () => this.ui.SaveKeyVisible = false);
 
             var w = this.web;
-            w.Run<FactorialSaver>(s => s.Save(input,
+            w.Run<FactorialSaver>(s => s.Save(
+                input,
                 this.currentFactorial));
             w.Run<Messenger>(m =>
             {
-                UiHelpers.Write(
+                UiHelpers.WriteSync(
                     m.Subscriber,
                     () => m.Inform(
                         "Saved the factorial of "
                         + input
                         + " to the current program directory."));
-                m.Subscriber.WriteFinished.WaitOne();
             });
-            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
+            UiHelpers.Write(
+                this.ui, 
+                () => this.ui.SaveKeyVisible = true);
         }
 
         private void ui_DisplayKeyTapped()

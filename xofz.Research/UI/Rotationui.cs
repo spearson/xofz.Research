@@ -17,6 +17,6 @@
 
         int NumberOfRotations { get; set; }
 
-        MaterializedEnumerable<int> Numbers { get; set; }
+        Lot<int> Numbers { get; set; }
     }
 }

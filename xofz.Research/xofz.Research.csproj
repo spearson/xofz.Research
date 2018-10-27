@@ -45,7 +45,10 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="xofz.Core">
-      <HintPath>C:\Dropbox\Libraries\xofz.Core\xofz.Core.dll</HintPath>
+      <HintPath>H:\Dropbox\Libraries\xofz.Core\xofz.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="xofz.Core98">
+      <HintPath>H:\Dropbox\Libraries\xofz.Core\xofz.Core98.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

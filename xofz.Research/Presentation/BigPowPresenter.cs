@@ -21,7 +21,6 @@
             : base(ui, shell)
         {
             this.ui = ui;
-            this.ui?.AssertStability();
             this.web = web;
         }
 
@@ -67,7 +66,7 @@
 
         private void ui_ComputeKeyTapped()
         {
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.Computing = true;
                 this.ui.SaveKeyVisible = false;
@@ -75,7 +74,6 @@
                 this.ui.Power = null;
                 this.ui.DisplayKeyVisible = false;
             });
-            this.ui.WriteFinished.WaitOne();
 
             var number = UiHelpers.Read(this.ui, () => this.ui.NumberInput);
             var exponent = UiHelpers.Read(this.ui, () => this.ui.ExponentInput);
@@ -96,7 +94,7 @@
             computationCompletionTime = DateTime.Now;
             sw.Stop();
 
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.DurationInfo += 
                 Environment.NewLine
@@ -106,7 +104,6 @@
                 + computationCompletionTime.ToString("MM/dd/yyyy hh:mm.ss.fff tt");
                 this.ui.Power = "Computed, now waiting for ToString()...";
             });
-            this.ui.WriteFinished.WaitOne();
 
             string s;
             var sw2 = Stopwatch.StartNew();
@@ -114,13 +111,12 @@
             sw2.Stop();
 
             this.setCurrentPower(s);
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.Power = string.Empty;
                 this.ui.DurationInfo += Environment.NewLine +
                                         "ToString() took " + sw2.Elapsed;
             });
-            this.ui.WriteFinished.WaitOne();
 
             if (number + exponent < 10001)
             {
@@ -135,19 +131,17 @@
             }
             else
             {
-                UiHelpers.Write(this.ui, () =>
+                UiHelpers.WriteSync(this.ui, () =>
                 {
                     this.ui.DisplayKeyVisible = true;
                 });
             }
-            this.ui.WriteFinished.WaitOne();
 
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.Computing = false;
                 this.ui.SaveKeyVisible = true;
             });
-            this.ui.WriteFinished.WaitOne();
 
             w.Run<LogEditor>(le => le.AddEntry(
                 "Information",
@@ -162,8 +156,9 @@
         {
             var number = UiHelpers.Read(this.ui, () => this.ui.NumberInput);
             var exponent = UiHelpers.Read(this.ui, () => this.ui.ExponentInput);
-            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
-            this.ui.WriteFinished.WaitOne();
+            UiHelpers.WriteSync(
+                this.ui, 
+                () => this.ui.SaveKeyVisible = false);
             var w = this.web;
             w.Run<BigPowSaver>(bps => bps.Save(
                 number,
@@ -171,7 +166,7 @@
                 this.currentPower));
             w.Run<Messenger>(m =>
             {
-                UiHelpers.Write(
+                UiHelpers.WriteSync(
                     m.Subscriber,
                     () => m.Inform(
                         "Saved "
@@ -179,7 +174,6 @@
                         + " raised to the "
                         + exponent
                         + " power to the current program directory."));
-                m.Subscriber.WriteFinished.WaitOne();
             });
             
             UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);

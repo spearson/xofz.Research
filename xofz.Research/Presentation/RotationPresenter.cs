@@ -5,7 +5,7 @@
     using System.Threading;
     using UI;
     using xofz.Framework;
-    using xofz.Framework.Materialization;
+    using xofz.Framework.Lots;
     using xofz.Framework.Transformation;
     using xofz.Presentation;
     using xofz.UI;
@@ -54,7 +54,7 @@
                 }
             });
 
-            var me = new LinkedListMaterializedEnumerable<int>(
+            var me = new LinkedListLot<int>(
                 numbers);
             UiHelpers.Write(
                 this.ui,
@@ -78,7 +78,7 @@
             var numbers = UiHelpers.Read(
                 this.ui,
                 () => this.ui.Numbers);
-            MaterializedEnumerable<int> rotatedNumbers;
+            Lot<int> rotatedNumbers;
             if (UiHelpers.Read(this.ui, () => this.ui.RandomizeRotations))
             {
                 w.Run<Random, EnumerableRotator>((rng, rot) =>

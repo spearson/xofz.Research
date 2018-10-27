@@ -3,13 +3,14 @@
     using System;
     using System.Windows.Forms;
     using xofz.Framework.Logging;
-    using xofz.Framework.Materialization;
+    using xofz.Framework.Lotters;
     using xofz.Presentation;
     using xofz.Research.Presentation;
     using xofz.Research.Root.Commands;
     using xofz.Research.UI.Forms;
     using xofz.Root;
     using xofz.Root.Commands;
+    using xofz.UI;
     using xofz.UI.Forms;
 
     public class FormsBootstrapper
@@ -31,7 +32,8 @@
         {
             this.setShell(new FormMainUi());
             var s = this.shell;
-            var fm = new FormsMessenger { Subscriber = s };
+            Messenger fm = new FormsMessenger();
+            fm.Subscriber = s;
             var e = this.executor;
             e.Execute(new SetupMethodWebCommand(
                     fm));
@@ -42,16 +44,14 @@
                     s,
                     w))
                 .Execute(new SetupLogCommand(
-                    new UserControlLogUi(
-                        new LinkedListMaterializer()),
+                    new UserControlLogUi(),
                     s,
-                    new FormLogEditorUi(
-                        s,
-                        new LinkedListMaterializer()),
+                    new FormLogEditorUi(s),
                     new FormLogStatisticsUi(
                         s),
                     w,
                     @"Log.log",
+                    null,
                     AccessLevel.None,
                     AccessLevel.None,
                     true,
@@ -82,7 +82,7 @@
                 .Execute(new SetupRotationCommand(
                     new UserControlRotationNavUi(),
                     new UserControlRotationUi(
-                        new LinkedListMaterializer()),
+                        new LinkedListLotter()),
                     s.NavUi,
                     s,
                     w))

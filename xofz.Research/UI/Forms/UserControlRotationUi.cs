@@ -8,12 +8,12 @@
 
     public partial class UserControlRotationUi : UserControlUi, RotationUi
     {
-        public UserControlRotationUi(Materializer materializer)
+        public UserControlRotationUi(Lotter lotter)
         {
-            this.materializer = materializer;
+            this.lotter = lotter;
             this.InitializeComponent();
             this.numbersTextBoxes =
-                this.materializer.Materialize(
+                this.lotter.Materialize(
                     new List<TextBox>(15)
                     {
                         this.n1TextBox,
@@ -63,7 +63,7 @@
             set => this.rotationsTextBox.Text = value.ToString();
         }
 
-        public MaterializedEnumerable<int> Numbers
+        public Lot<int> Numbers
         {
             get
             {
@@ -73,7 +73,7 @@
                     ll.AddLast(int.Parse(tb.Text));
                 }
 
-                return this.materializer.Materialize(ll);
+                return this.lotter.Materialize(ll);
             }
 
             set
@@ -108,7 +108,7 @@
             new Thread(() => this.RotateLeftKeyTapped?.Invoke()).Start();
         }
 
-        private readonly Materializer materializer;
-        private readonly MaterializedEnumerable<TextBox> numbersTextBoxes;
+        private readonly Lotter lotter;
+        private readonly Lot<TextBox> numbersTextBoxes;
     }
 }

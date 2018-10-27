@@ -15,7 +15,7 @@
             var h = this.Handle;
         }
 
-        public event Action ShutdownRequested;
+        public event Do ShutdownRequested;
 
         public ShellUi NavUi => this.navUi;
 

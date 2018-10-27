@@ -8,7 +8,7 @@
     using xofz.Framework;
     using xofz.Framework.Computation;
     using xofz.Framework.Logging;
-    using xofz.Framework.Materialization;
+    using xofz.Framework.Lots;
     using xofz.Presentation;
     using xofz.Research.Framework;
     using xofz.Research.UI;
@@ -54,7 +54,7 @@
 
         private void ui_ComputeKeyTapped()
         {
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.Computing = true;
                 this.ui.SaveKeyVisible = false;
@@ -62,7 +62,6 @@
                 this.ui.MultiPower = null;
                 this.ui.DisplayKeyVisible = false;
             });
-            this.ui.WriteFinished.WaitOne();
 
             var w = this.web;
             BigInteger multiPower = 0;
@@ -97,7 +96,7 @@
                 return;
             }
 
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.DurationInfo +=
                     Environment.NewLine
@@ -108,7 +107,6 @@
                         "MM/dd/yyyy hh:mm.ss.fff tt");
                 this.ui.MultiPower = "Computed, now waiting for ToString()...";
             });
-            this.ui.WriteFinished.WaitOne();
 
             string s;
             var sw2 = Stopwatch.StartNew();
@@ -116,7 +114,7 @@
             sw2.Stop();
 
             this.setCurrentMultiPow(s);
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.MultiPower = string.Empty;
                 this.ui.DurationInfo += Environment.NewLine +
@@ -125,7 +123,6 @@
                 this.ui.SaveKeyVisible = true;
                 this.ui.DisplayKeyVisible = true;
             });
-            this.ui.WriteFinished.WaitOne();
 
             w.Run<LogEditor>(le => le.AddEntry(
                 "Information",
@@ -140,20 +137,23 @@
         private void ui_SaveKeyTapped()
         {
             var powers = this.readPowers();
-            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = false);
-            this.ui.WriteFinished.WaitOne();
+            UiHelpers.WriteSync(
+                this.ui, 
+                () => this.ui.SaveKeyVisible = false);
             var w = this.web;
-            w.Run<MultiPowSaver>(s => s.Save(powers, this.currentMultiPow));
+            w.Run<MultiPowSaver>(
+                s => s.Save(powers, this.currentMultiPow));
             w.Run<Messenger>(m =>
             {
-                UiHelpers.Write(
+                UiHelpers.WriteSync(
                     m.Subscriber,
                     () => m.Inform(
                         "Saved this multi-pow to the "
                         + "current program directory."));
-                m.Subscriber.WriteFinished.WaitOne();
             });
-            UiHelpers.Write(this.ui, () => this.ui.SaveKeyVisible = true);
+            UiHelpers.Write(
+                this.ui, 
+                () => this.ui.SaveKeyVisible = true);
         }
 
         private void ui_DisplayKeyTapped()
@@ -169,10 +169,10 @@
             });
         }
 
-        private MaterializedEnumerable<BigInteger> readPowers()
+        private Lot<BigInteger> readPowers()
         {
             var input = UiHelpers.Read(this.ui, () => this.ui.PowersInput);
-            return new LinkedListMaterializedEnumerable<BigInteger>(
+            return new LinkedListLot<BigInteger>(
                 input
                     .Split(',')
                     .Select(s => s.Trim())

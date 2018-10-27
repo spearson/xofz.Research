@@ -34,7 +34,7 @@
         {
             var w = this.web;
             w.RegisterDependency(
-                new BinaryTranslator());
+                new BinaryTranslatorV2());
         }
 
         private readonly BinaryVisualizerUi ui;

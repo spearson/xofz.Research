@@ -37,12 +37,11 @@
 
         private void ui_TranslateKeyTapped()
         {
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.Translating = true;
                 this.ui.Binary = null;
             });
-            this.ui.WriteFinished.WaitOne();
 
             var w = this.web;
             
@@ -50,18 +49,17 @@
             var input = UiHelpers.Read(
                 this.ui,
                 () => this.ui.Input);
-            w.Run<BinaryTranslator>(bt =>
+            w.Run<BinaryTranslatorV2>(bt =>
             {
                 bits = bt.GetBits(input);
             });
             var binary = new string(
                 bits.Select(b => b ? '1' : '0').ToArray());
-            UiHelpers.Write(this.ui, () =>
+            UiHelpers.WriteSync(this.ui, () =>
             {
                 this.ui.Binary = binary;
                 this.ui.Translating = false;
             });
-            this.ui.WriteFinished.WaitOne();
 
             w.Run<LogEditor>(le => le.AddEntry(
                 "Information",
