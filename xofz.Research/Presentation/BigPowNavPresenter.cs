@@ -26,19 +26,53 @@
             }
 
             var w = this.web;
-            this.ui.HomeKeyTapped += this.ui_HomeKeyTapped;
-            this.ui.PrimesKeyTapped += this.ui_PrimesKeyTapped;
-            this.ui.FactorialKeyTapped += this.ui_FactorialKeyTapped;
-            this.ui.RotationKeyTapped += this.ui_RotationKeyTapped;
-            this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
-            this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
-            this.ui.ControlHubKeyTapped += this.ui_ControlHubKeyTapped;
+            w.Run<EventSubscriberV2>(subscriber =>
+            {
+                subscriber.Subscribe(
+                    this.ui,
+                    nameof(this.ui.HomeKeyTapped),
+                    this.ui_HomeKeyTapped);
+                subscriber.Subscribe(
+                    this.ui,
+                    nameof(this.ui.PrimesKeyTapped),
+                    this.ui_PrimesKeyTapped);
+                subscriber.Subscribe(
+                    this.ui,
+                    nameof(this.ui.FactorialKeyTapped),
+                    this.ui_FactorialKeyTapped);
+                subscriber.Subscribe(
+                    this.ui,
+                    nameof(this.ui.RotationKeyTapped),
+                    this.ui_RotationKeyTapped);
+                subscriber.Subscribe(
+                    this.ui,
+                    nameof(this.ui.LogInKeyTapped),
+                    this.ui_LogInKeyTapped);
+                subscriber.Subscribe(
+                    this.ui,
+                    nameof(this.ui.ShutdownKeyTapped),
+                    this.ui_ShutdownKeyTapped);
+                subscriber.Subscribe(
+                    this.ui,
+                    nameof(this.ui.ControlHubKeyTapped),
+                    this.ui_ControlHubKeyTapped);
+                w.Run<AccessController>(ac =>
+                {
+                    Do<AccessLevel> alc = this.accessLevelChanged;
+                    subscriber.Subscribe(
+                        ac,
+                        nameof(ac.AccessLevelChanged),
+                        alc);
+                });
+            });
+
             UiHelpers.Write(
                 this.ui,
-                () => this.ui.ControlHubKeyVisible = false);
+                () =>
+                {
+                    this.ui.ControlHubKeyVisible = false;
+                });
 
-            w.Run<AccessController>(ac =>
-                ac.AccessLevelChanged += this.accessLevelChanged);
             w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 

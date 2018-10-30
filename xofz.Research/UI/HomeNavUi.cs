@@ -21,5 +21,7 @@
         event Action ShutdownKeyTapped;
 
         bool ControlHubKeyVisible { get; set; }
+
+        bool HomeKeyVisible { get; set; }
     }
 }

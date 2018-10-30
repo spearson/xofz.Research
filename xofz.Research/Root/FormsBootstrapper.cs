@@ -2,6 +2,7 @@
 {
     using System;
     using System.Windows.Forms;
+    using xofz.Framework;
     using xofz.Framework.Logging;
     using xofz.Framework.Lotters;
     using xofz.Presentation;
@@ -37,8 +38,18 @@
             var e = this.executor;
             e.Execute(new SetupMethodWebCommand(
                     fm));
-            AppDomain.CurrentDomain.UnhandledException += this.logUnhandledException;
             var w = e.Get<SetupMethodWebCommand>().Web;
+            UnhandledExceptionEventHandler unhandledLogger =
+                this.logUnhandledException;
+            var cd = AppDomain.CurrentDomain;
+            w.Run<EventSubscriber>(subscriber =>
+            {
+                subscriber.Subscribe(
+                    cd,
+                    nameof(cd.UnhandledException),
+                    unhandledLogger);
+            });
+            
             e
                 .Execute(new SetupMainCommand(
                     s,

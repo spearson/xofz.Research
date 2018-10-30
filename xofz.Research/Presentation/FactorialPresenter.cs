@@ -33,9 +33,22 @@
             }
 
             var w = this.web;
-            this.ui.ComputeKeyTapped += this.ui_ComputeKeyTapped;
-            this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
-            this.ui.DisplayKeyTapped += this.ui_DisplayKeyTapped;
+            w.Run<EventSubscriberV2>(subV2 =>
+            {
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.ComputeKeyTapped),
+                    this.ui_ComputeKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.SaveKeyTapped),
+                    this.ui_SaveKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.DisplayKeyTapped),
+                    this.ui_DisplayKeyTapped);
+            });
+
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.Input = 1000;
@@ -44,8 +57,14 @@
                 this.ui.DurationInfoVisible = false;
             });
 
-            w.Run<AccessController>(ac =>
-                ac.AccessLevelChanged += this.accessLevelChanged);
+            w.Run<EventSubscriber, AccessController>((sub, ac) =>
+            {
+                sub.Subscribe<AccessLevel>(
+                    ac,
+                    nameof(ac.AccessLevelChanged),
+                    this.accessLevelChanged);
+            });
+
             w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 

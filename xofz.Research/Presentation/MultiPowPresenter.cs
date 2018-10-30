@@ -34,10 +34,26 @@
             }
 
             var w = this.web;
-            this.ui.ComputeKeyTapped += this.ui_ComputeKeyTapped;
-            this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
-            this.ui.DisplayKeyTapped += this.ui_DisplayKeyTapped;
-            this.ui.BigPowKeyTapped += this.ui_BigPowKeyTapped;
+            w.Run<EventSubscriberV2>(subV2 =>
+            {
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.ComputeKeyTapped),
+                    this.ui_ComputeKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.SaveKeyTapped),
+                    this.ui_SaveKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.DisplayKeyTapped),
+                    this.ui_DisplayKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.BigPowKeyTapped),
+                    this.ui_BigPowKeyTapped);
+            });
+
             UiHelpers.Write(this.ui, () =>
             {
                 this.ui.PowersInput = "3, 3, 3";
@@ -46,10 +62,15 @@
                 this.ui.DurationInfoVisible = false;
             });
 
-            w.Run<AccessController>(ac =>
-                ac.AccessLevelChanged += this.accessLevelChanged);
-            w.Run<Navigator>(
-                n => n.RegisterPresenter(this));
+            w.Run<AccessController, EventSubscriber>((ac, sub) =>
+            {
+                sub.Subscribe<AccessLevel>(
+                    ac,
+                    nameof(ac.AccessLevelChanged),
+                    this.accessLevelChanged);
+            });
+
+            w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_ComputeKeyTapped()
@@ -181,7 +202,10 @@
 
         private void ui_BigPowKeyTapped()
         {
-            this.web.Run<Navigator>(n => n.Present<BigPowPresenter>());
+            this.web.Run<Navigator>(n =>
+            {
+                n.Present<BigPowPresenter>();
+            });
         }
 
         private void accessLevelChanged(AccessLevel newAccessLevel)

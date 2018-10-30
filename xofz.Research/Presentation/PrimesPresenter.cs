@@ -30,15 +30,38 @@
                 return;
             }
 
-            this.ui.GenerateKeyTapped += this.ui_GenerateKeyTapped;
-            this.ui.StopKeyTapped += this.ui_StopKeyTapped;
-            this.ui.RestartKeyTapped += this.ui_RestartKeyTapped;
-            this.ui.LoadKeyTapped += this.ui_LoadKeyTapped;
-            this.ui.SaveKeyTapped += this.ui_SaveKeyTapped;
+            var w = this.web;
+            w.Run<EventSubscriberV2>(subV2 =>
+            {
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.GenerateKeyTapped),
+                    this.ui_GenerateKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.StopKeyTapped),
+                    this.ui_StopKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.RestartKeyTapped),
+                    this.ui_RestartKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.LoadKeyTapped),
+                    this.ui_LoadKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.SaveKeyTapped),
+                    this.ui_SaveKeyTapped);
+                w.Run<EventRaiser>(er =>
+                {
+                    er.Raise(
+                        this.ui,
+                        nameof(this.ui.RestartKeyTapped));
+                });
+            });
 
-            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
-
-            this.ui_RestartKeyTapped();
+            w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_LoadKeyTapped()

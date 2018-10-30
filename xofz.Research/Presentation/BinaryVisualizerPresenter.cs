@@ -1,11 +1,9 @@
 ﻿namespace xofz.Research.Presentation
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using xofz.Framework;
     using xofz.Framework.Logging;
-    using xofz.Misc.Framework.Theory;
     using xofz.Presentation;
     using xofz.Research.UI;
     using xofz.UI;
@@ -29,10 +27,20 @@
                 return;
             }
 
-            this.ui.TranslateKeyTapped += this.ui_TranslateKeyTapped;
-            UiHelpers.Write(this.ui, () => this.ui.Input = 1000000);
+            var w = this.web;
+            w.Run<EventSubscriberV2>(subV2 =>
+            {
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.TranslateKeyTapped),
+                    this.ui_TranslateKeyTapped);
+            });
+
+            UiHelpers.Write(
+                this.ui, 
+                () => this.ui.Input = 1000000);
             
-            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
+            w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_TranslateKeyTapped()

@@ -25,19 +25,44 @@
                 return;
             }
 
-            this.ui.LogKeyTapped += this.ui_LogKeyTapped;
-            this.ui.BinaryVisualizerKeyTapped += this.ui_BinaryVisualizerKeyTapped;
-            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
+            var w = this.web;
+            w.Run<EventSubscriberV2>(subV2 =>
+            {
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.LogKeyTapped),
+                    this.ui_LogKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.BinaryVisualizerKeyTapped),
+                    this.ui_BinaryVisualizerKeyTapped);
+            });
+
+            w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_LogKeyTapped()
         {
-            this.web.Run<Navigator>(n => n.Present<LogPresenter>());
+            this.web.Run<Navigator>(n =>
+            {
+                n.Present<LogPresenter>();
+                var hnUi = n.GetUi<HomeNavPresenter, HomeNavUi>();
+                UiHelpers.Write(
+                    hnUi,
+                    () => hnUi.HomeKeyVisible = true);
+            });
         }
 
         private void ui_BinaryVisualizerKeyTapped()
         {
-            this.web.Run<Navigator>(n => n.Present<BinaryVisualizerPresenter>());
+            this.web.Run<Navigator>(n =>
+            {
+                n.Present<BinaryVisualizerPresenter>();
+                var hnUi = n.GetUi<HomeNavPresenter, HomeNavUi>();
+                UiHelpers.Write(
+                    hnUi,
+                    () => hnUi.HomeKeyVisible = true);
+            });
         }
 
         private int setupIf1;

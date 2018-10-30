@@ -25,8 +25,16 @@
                 return;
             }
 
-            this.ui.StopPrimesKeyTapped += this.ui_StopPrimesKeyTapped;
-            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
+            var w = this.web;
+            w.Run<EventSubscriberV2>(subV2 =>
+            {
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.StopPrimesKeyTapped),
+                    this.ui_StopPrimesKeyTapped);
+            });
+
+            w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_StopPrimesKeyTapped()

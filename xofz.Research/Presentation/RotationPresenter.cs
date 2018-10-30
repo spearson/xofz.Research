@@ -29,14 +29,37 @@
                 return;
             }
 
-            this.ui.NumberOfRotations = 1;
-            this.ui.MaxValue = 1000;
-            this.ui.GenerateKeyTapped += this.ui_GenerateKeyTapped;
-            this.ui.RotateRightKeyTapped += this.ui_RotateRightKeyTapped;
-            this.ui.RotateLeftKeyTapped += this.ui_RotateLeftKeyTapped;
-            this.ui_GenerateKeyTapped();
-
-            this.web.Run<Navigator>(n => n.RegisterPresenter(this));
+            var w = this.web;
+            UiHelpers.Write(
+                this.ui,
+                () =>
+                {
+                    this.ui.NumberOfRotations = 1;
+                    this.ui.MaxValue = 1000;
+                });
+            w.Run<EventSubscriberV2>(subV2 =>
+            {
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.GenerateKeyTapped),
+                    this.ui_GenerateKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.RotateRightKeyTapped),
+                    this.ui_RotateRightKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.RotateLeftKeyTapped),
+                    this.ui_RotateLeftKeyTapped);
+                w.Run<EventRaiser>(er =>
+                {
+                    er.Raise(
+                        this.ui,
+                        nameof(this.ui.GenerateKeyTapped));
+                });
+            });
+            
+            w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
         private void ui_GenerateKeyTapped()

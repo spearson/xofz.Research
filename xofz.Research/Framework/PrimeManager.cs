@@ -1,5 +1,6 @@
 ﻿namespace xofz.Research.Framework
 {
+    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -11,16 +12,16 @@
             File.WriteAllLines(location, currentSet.Select(p => p.ToString()));
         }
 
-        public virtual LinkedList<long> LoadSet(string location)
+        public virtual ICollection<long> LoadSet(string location)
         {
-            var ll = new LinkedList<long>();
+            ICollection<long> primes = new LinkedList<long>();
             var lines = File.ReadAllLines(location);
             foreach (var line in lines)
             {
-                ll.AddLast(long.Parse(line));
+                primes.Add(long.Parse(line));
             }
 
-            return ll;
+            return primes;
         }
     }
 }

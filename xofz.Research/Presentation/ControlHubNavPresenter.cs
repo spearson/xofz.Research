@@ -25,17 +25,47 @@
                 return;
             }
 
-            this.ui.HomeKeyTapped += this.ui_HomeKeyTapped;
-            this.ui.PrimesKeyTapped += this.ui_PrimesKeyTapped;
-            this.ui.FactorialKeyTapped += this.ui_FactorialKeyTapped;
-            this.ui.RotationKeyTapped += this.ui_RotationKeyTapped;
-            this.ui.BigPowKeyTapped += this.ui_BigPowKeyTapped;
-            this.ui.LogInKeyTapped += this.ui_LogInKeyTapped;
-            this.ui.ShutdownKeyTapped += this.ui_ShutdownKeyTapped;
-
             var w = this.web;
-            w.Run<AccessController>(ac => ac.AccessLevelChanged
-                += this.accessLevelChanged);
+            w.Run<EventSubscriberV2>(subV2 =>
+            {
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.HomeKeyTapped),
+                    this.ui_HomeKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.PrimesKeyTapped),
+                    this.ui_PrimesKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.FactorialKeyTapped),
+                    this.ui_FactorialKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.RotationKeyTapped),
+                    this.ui_RotationKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.BigPowKeyTapped),
+                    this.ui_BigPowKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.LogInKeyTapped),
+                    this.ui_LogInKeyTapped);
+                subV2.Subscribe(
+                    this.ui,
+                    nameof(this.ui.ShutdownKeyTapped),
+                    this.ui_ShutdownKeyTapped);
+            });
+
+            w.Run<EventSubscriber, AccessController>((sub, ac) =>
+            {
+                sub.Subscribe<AccessLevel>(
+                    ac,
+                    nameof(ac.AccessLevelChanged),
+                    this.accessLevelChanged);
+            });
+
             w.Run<Navigator>(n => n.RegisterPresenter(this));
         }
 
@@ -97,12 +127,18 @@
 
         private void ui_LogInKeyTapped()
         {
-            this.web.Run<Navigator>(n => n.PresentFluidly<LoginPresenter>());
+            this.web.Run<Navigator>(n =>
+            {
+                n.PresentFluidly<LoginPresenter>();
+            });
         }
 
         private void ui_ShutdownKeyTapped()
         {
-            this.web.Run<Navigator>(n => n.Present<ShutdownPresenter>());
+            this.web.Run<Navigator>(n =>
+            {
+                n.Present<ShutdownPresenter>();
+            });
         }
 
         private void accessLevelChanged(AccessLevel newAccessLevel)

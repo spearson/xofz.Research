@@ -43,6 +43,8 @@
             w.RegisterDependency(
                 new TextFileLog("Exceptions.log"),
                 "Exceptions");
+            w.RegisterDependency(
+                new EventSubscriberV2());
         }
 
         private MethodWeb web;
