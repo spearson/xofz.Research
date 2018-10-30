@@ -5,7 +5,10 @@
 
     public class BigPowSaver
     {
-        public virtual void Save(BigInteger number, BigInteger exponent, string power)
+        public virtual void Save(
+            BigInteger number,
+            BigInteger exponent,
+            string power)
         {
             File.WriteAllText(
                 number

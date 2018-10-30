@@ -7,7 +7,9 @@
 
     public class MultiPowSaver
     {
-        public virtual void Save(Lot<BigInteger> powers, string multiPow)
+        public virtual void Save(
+            Lot<BigInteger> powers,
+            string multiPow)
         {
             if (powers == null)
             {
