@@ -32,6 +32,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.logKey = new System.Windows.Forms.Button();
             this.binaryVisualizerKey = new System.Windows.Forms.Button();
+            this.coreVersionLabel = new System.Windows.Forms.Label();
+            this.versionLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // welcomeLabel
@@ -87,9 +89,33 @@
             this.binaryVisualizerKey.UseVisualStyleBackColor = true;
             this.binaryVisualizerKey.Click += new System.EventHandler(this.binaryVisualizerKey_Click);
             // 
+            // coreVersionLabel
+            // 
+            this.coreVersionLabel.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.coreVersionLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.coreVersionLabel.Location = new System.Drawing.Point(713, 552);
+            this.coreVersionLabel.Name = "coreVersionLabel";
+            this.coreVersionLabel.Size = new System.Drawing.Size(375, 18);
+            this.coreVersionLabel.TabIndex = 6;
+            this.coreVersionLabel.Text = "Powered by x(z) Core98 v.";
+            this.coreVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // versionLabel
+            // 
+            this.versionLabel.AutoSize = true;
+            this.versionLabel.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.versionLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.versionLabel.Location = new System.Drawing.Point(-3, 552);
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(14, 14);
+            this.versionLabel.TabIndex = 7;
+            this.versionLabel.Text = "v";
+            // 
             // UserControlHomeUi
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.versionLabel);
+            this.Controls.Add(this.coreVersionLabel);
             this.Controls.Add(this.binaryVisualizerKey);
             this.Controls.Add(this.logKey);
             this.Controls.Add(this.label2);
@@ -108,5 +134,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button logKey;
         private System.Windows.Forms.Button binaryVisualizerKey;
+        private System.Windows.Forms.Label coreVersionLabel;
+        private System.Windows.Forms.Label versionLabel;
     }
 }

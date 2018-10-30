@@ -29,44 +29,86 @@
 
         bool BigPowNavUi.ControlHubKeyVisible
         {
-            get { return this.controlHubKey.Visible; }
+            get => this.controlHubKey.Visible;
 
-            set { this.controlHubKey.Visible = value; }
+            set => this.controlHubKey.Visible = value;
         }
 
         private void homeKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.HomeKeyTapped?.Invoke()).Start();
+            var hkt = this.HomeKeyTapped;
+            if (hkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => hkt.Invoke());
         }
 
         private void primesKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.PrimesKeyTapped?.Invoke()).Start();
+            var pkt = this.PrimesKeyTapped;
+            if (pkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => pkt.Invoke());
         }
 
         private void factorialKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.FactorialKeyTapped?.Invoke()).Start();
+            var fkt = this.FactorialKeyTapped;
+            if (fkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => fkt.Invoke());
         }
 
         private void rotationKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.RotationKeyTapped?.Invoke()).Start();
+            var rkt = this.RotationKeyTapped;
+            if (rkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => rkt.Invoke());
         }
 
         private void controlHubKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.ControlHubKeyTapped?.Invoke()).Start();
+            var chkt = this.ControlHubKeyTapped;
+            if (chkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => chkt.Invoke());
         }
 
         private void loginKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.LogInKeyTapped?.Invoke()).Start();
+            var likt = this.LogInKeyTapped;
+            if (likt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => likt.Invoke());
         }
 
         private void shutdownKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.ShutdownKeyTapped?.Invoke()).Start();
+            var skt = this.ShutdownKeyTapped;
+            if (skt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => skt.Invoke());
         }
     }
 }

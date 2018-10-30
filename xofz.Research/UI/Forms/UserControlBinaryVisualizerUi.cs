@@ -43,7 +43,13 @@
 
         private void translateKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.TranslateKeyTapped?.Invoke()).Start();
+            var tkt = this.TranslateKeyTapped;
+            if (tkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => tkt.Invoke());
         }
     }
 }

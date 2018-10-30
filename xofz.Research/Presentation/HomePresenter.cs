@@ -1,5 +1,6 @@
 ﻿namespace xofz.Research.Presentation
 {
+    using System;
     using System.Threading;
     using UI;
     using xofz.Framework;
@@ -36,6 +37,19 @@
                     this.ui,
                     nameof(this.ui.BinaryVisualizerKeyTapped),
                     this.ui_BinaryVisualizerKeyTapped);
+            });
+
+            w.Run<VersionReader>(vr =>
+            {
+                var version = vr.Read();
+                var core98Version = vr.ReadCoreVersion();
+                UiHelpers.Write(
+                    this.ui,
+                    () =>
+                    {
+                        this.ui.Version = version;
+                        this.ui.Core98Version = core98Version;
+                    });
             });
 
             w.Run<Navigator>(n => n.RegisterPresenter(this));

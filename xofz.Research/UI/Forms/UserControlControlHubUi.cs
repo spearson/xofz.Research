@@ -17,7 +17,13 @@
 
         private void stopPrimesKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.StopPrimesKeyTapped?.Invoke()).Start();
+            var spkt = this.StopPrimesKeyTapped;
+            if (spkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => spkt.Invoke());
         }
     }
 }

@@ -8,5 +8,9 @@
         event Action LogKeyTapped;
 
         event Action BinaryVisualizerKeyTapped;
+
+        string Version { get; set; }
+
+        string Core98Version { get; set; }
     }
 }

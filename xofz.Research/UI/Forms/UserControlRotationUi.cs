@@ -36,6 +36,11 @@
             var h = this.Handle;
         }
 
+        private UserControlRotationUi()
+        {
+            this.InitializeComponent();
+        }
+
         public event Action GenerateKeyTapped;
 
         public event Action RotateLeftKeyTapped;
@@ -95,17 +100,35 @@
 
         private void generateKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.GenerateKeyTapped?.Invoke()).Start();
+            var gkt = this.GenerateKeyTapped;
+            if (gkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => gkt.Invoke());
         }
 
         private void rotateRightKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.RotateRightKeyTapped?.Invoke()).Start();
+            var rrkt = this.RotateRightKeyTapped;
+            if (rrkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => rrkt.Invoke());
         }
 
         private void rotateLeftKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.RotateLeftKeyTapped?.Invoke()).Start();
+            var rlkt = this.RotateLeftKeyTapped;
+            if (rlkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => rlkt.Invoke());
         }
 
         private readonly Lotter lotter;

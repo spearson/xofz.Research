@@ -1,5 +1,6 @@
 ﻿namespace xofz.Research.Root.Commands
 {
+    using System.Reflection;
     using xofz.Framework;
     using xofz.Framework.Logging.Logs;
     using xofz.Presentation;
@@ -45,6 +46,9 @@
                 "Exceptions");
             w.RegisterDependency(
                 new EventSubscriberV2());
+            w.RegisterDependency(
+                new VersionReader(
+                    Assembly.GetExecutingAssembly()));
         }
 
         private MethodWeb web;

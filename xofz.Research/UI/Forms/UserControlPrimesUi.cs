@@ -116,27 +116,57 @@
 
         private void generateKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.GenerateKeyTapped?.Invoke()).Start();
+            var gkt = this.GenerateKeyTapped;
+            if (gkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => gkt.Invoke());
         }
 
         private void restartKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.RestartKeyTapped?.Invoke()).Start();
+            var rkt = this.RestartKeyTapped;
+            if (rkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => rkt.Invoke());
         }
 
         private void saveKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.SaveKeyTapped?.Invoke()).Start();
+            var skt = this.SaveKeyTapped;
+            if (skt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => skt.Invoke());
         }
 
         private void stopKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.StopKeyTapped?.Invoke()).Start();
+            var skt = this.StopKeyTapped;
+            if (skt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => skt.Invoke());
         }
 
         private void loadKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.LoadKeyTapped?.Invoke()).Start();
+            var lkt = this.LoadKeyTapped;
+            if (lkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => lkt.Invoke());
         }
     }
 }

@@ -33,6 +33,12 @@
         {
             e.Cancel = true;
 
-            new Thread(() => this.ShutdownRequested?.Invoke()).Start();
+            var sr = this.ShutdownRequested;
+            if (sr == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => sr.Invoke());
         }}
 }

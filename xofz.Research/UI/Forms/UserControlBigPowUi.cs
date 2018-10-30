@@ -88,22 +88,46 @@
 
         private void computeKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.ComputeKeyTapped?.Invoke()).Start();
+            var ckt = this.ComputeKeyTapped;
+            if (ckt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => ckt.Invoke());
         }
 
         private void saveKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.SaveKeyTapped?.Invoke()).Start();
+            var skt = this.SaveKeyTapped;
+            if (skt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => skt.Invoke());
         }
 
         private void displayKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.DisplayKeyTapped?.Invoke()).Start();
+            var dkt = this.DisplayKeyTapped;
+            if (dkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => dkt.Invoke());
         }
 
         private void multiPowKey_Click(object sender, EventArgs e)
         {
-            new Thread(() => this.MultiPowKeyTapped?.Invoke()).Start();
+            var mpkt = this.MultiPowKeyTapped;
+            if (mpkt == null)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(o => mpkt.Invoke());
         }
     }
 }
